@@ -6,7 +6,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "car_rental_frontend": {
+    "royalbaku_frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -64,10 +64,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "car_rental_frontend:build:production"
+              "buildTarget": "royalbaku_frontend:build:production"
             },
             "development": {
-              "buildTarget": "car_rental_frontend:build:development"
+              "buildTarget": "royalbaku_frontend:build:development"
             }
           },
           "defaultConfiguration": "development"

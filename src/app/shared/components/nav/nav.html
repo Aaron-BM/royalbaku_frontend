@@ -1,0 +1,47 @@
+<header class="sticky top-0 z-50 bg-bg/95 backdrop-blur border-b border-border">
+  <nav class="flex items-center justify-between px-6 lg:px-10 py-4 max-w-7xl mx-auto">
+
+    <!-- Logo -->
+    <a routerLink="/" class="text-xl tracking-widest text-muted">
+      LOGO<span class="text-gold">.</span>
+    </a>
+
+    <!-- Main links -->
+    <ul class="hidden lg:flex items-center gap-8 text-sm uppercase tracking-wide text-muted">
+      <li class="relative group">
+        <button class="hover:text-gold transition-colors py-2">
+          {{ 'nav.carTypes' | translate }}
+        </button>
+        <!-- mega-menu placeholder, wired up next -->
+        <div class="absolute hidden group-hover:block top-full ltr:left-0 rtl:right-0 bg-surface border border-border p-6 min-w-[280px]">
+          <p class="text-xs text-muted">Category links go here</p>
+        </div>
+      </li>
+      <li class="relative group">
+        <button class="hover:text-gold transition-colors py-2">
+          {{ 'nav.carBrands' | translate }}
+        </button>
+        <div class="absolute hidden group-hover:block top-full ltr:left-0 rtl:right-0 bg-surface border border-border p-6 min-w-[280px]">
+          <p class="text-xs text-muted">Brand grid goes here</p>
+        </div>
+      </li>
+      <li><a routerLink="/monthly-rental" class="hover:text-gold transition-colors">{{ 'nav.monthlyRental' | translate }}</a></li>
+      <li><a routerLink="/prices" class="hover:text-gold transition-colors">{{ 'nav.prices' | translate }}</a></li>
+      <li><a routerLink="/about" class="hover:text-gold transition-colors">{{ 'nav.aboutUs' | translate }}</a></li>
+      <li><a routerLink="/faq" class="hover:text-gold transition-colors">{{ 'nav.faqs' | translate }}</a></li>
+      <li><a routerLink="/contact" class="hover:text-gold transition-colors">{{ 'nav.contacts' | translate }}</a></li>
+    </ul>
+
+    <!-- Language toggle -->
+    <select
+        [value]="lang.currentLang()"
+        (change)="lang.setLanguage($any($event.target).value)"
+        class="bg-transparent border border-gold text-gold text-xs tracking-widest uppercase px-3 py-2"
+    >
+        @for (l of lang.languages; track l.code) {
+            <option [value]="l.code">{{ l.label }}</option>
+        }
+    </select>
+
+  </nav>
+</header>

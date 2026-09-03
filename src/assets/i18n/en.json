@@ -1,0 +1,15 @@
+{
+  "nav": {
+    "carTypes": "Car Types",
+    "carBrands": "Car Brands",
+    "monthlyRental": "Monthly Rental",
+    "prices": "Prices",
+    "aboutUs": "About Us",
+    "faqs": "FAQ's",
+    "contacts": "Contacts"
+  },
+  "hero": {
+    "title": "Luxury Car Rental",
+    "cta": "View Collection"
+  }
+}

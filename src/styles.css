@@ -1,3 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import 'tailwindcss';
+
+@theme {
+  --color-bg: #0A0B0D;
+  --color-surface: #16181D;
+  --color-border: #2A2F38;
+  --color-gold: #CFAE3D;
+  --color-muted: #AEB6C2;
+}
+
+html, body {
+  background-color: var(--color-bg);
+  color: var(--color-muted);
+  margin: 0;
+  min-height: 100%;
+}
+
+html[dir="rtl"] {
+  direction: rtl;
+}
