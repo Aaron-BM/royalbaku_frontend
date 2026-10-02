@@ -1,0 +1,321 @@
+<header class="sticky top-3 sm:top-4 z-50 w-full px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto font-sans">
+  <!-- Floating navigation container -->
+  <div
+    class="apple-gold-island relative bg-[var(--bg-base)]/90 backdrop-blur-2xl rounded-2xl lg:rounded-full transition-all duration-200 shadow-xl"
+    [class.rounded-b-2xl]="blnIsMobileMenuOpen()"
+  >
+    <nav class="relative z-10 flex items-center justify-between px-4 sm:px-6 py-2.5 sm:py-3" aria-label="Main">
+      <!-- ==================== Brand ==================== -->
+      <a
+        routerLink="/"
+        (click)="fnCloseDropdowns()"
+        class="flex items-center gap-3 group outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-xl"
+      >
+        <div
+          class="logo-emblem w-9 h-9 rounded-xl bg-surface/80 border border-white/15 flex items-center justify-center group-hover:border-gold group-focus-visible:border-gold transition-colors duration-200"
+        >
+          <svg
+            class="w-5 h-5 text-gold group-hover:scale-105 transition-transform duration-200"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+          >
+            <path d="M12 2L16 6L12 10L8 6L12 2Z" />
+            <path d="M11 9H13V22H11V9Z" />
+            <path d="M13 14H16V16H13V14Z" />
+            <path d="M13 18H16V20H13V18Z" />
+          </svg>
+        </div>
+
+        <div class="flex flex-col">
+          <span
+            class="text-base font-bold tracking-widest text-white leading-tight group-hover:text-gold group-focus-visible:text-gold transition-colors duration-150"
+          >
+            {{ 'nav.brandName' | translate }}
+          </span>
+          <span class="text-[9px] tracking-[0.2em] font-normal text-white/70">
+            {{ 'nav.brandSub' | translate }}
+          </span>
+        </div>
+      </a>
+
+      <!-- ==================== Desktop links ==================== -->
+      <ul
+        #navListRef
+        (mouseleave)="fnOnNavMouseLeave()"
+        class="nav-links-list relative hidden lg:flex items-center gap-1.5 text-xs font-normal text-white/90"
+      >
+        <!-- Sliding indicator -->
+        <span
+          class="nav-sliding-indicator"
+          [style.transform]="'translateX(' + strIndicatorX() + ') scaleX(' + numIndicatorScaleX() + ')'"
+          [style.opacity]="blnIndicatorVisible() ? '1' : '0'"
+          aria-hidden="true"
+        ></span>
+
+        <!-- Car types dropdown -->
+        <li
+          #elTypesItem
+          class="nav-item nav-dropdown relative py-1"
+          (mouseenter)="fnOnMenuEnter('types'); fnOnLinkHover($event)"
+          (mouseleave)="fnOnMenuLeave()"
+          (focusin)="fnOnLinkHover($event)"
+          (focusout)="fnOnMenuFocusOut($event, elTypesItem)"
+        >
+          <button
+            type="button"
+            (click)="fnToggleMenu('types')"
+            [attr.aria-expanded]="blnIsCarTypesOpen()"
+            aria-haspopup="true"
+            aria-controls="nav-menu-types"
+            [class.is-open]="blnIsCarTypesOpen()"
+            class="nav-link-item flex items-center gap-1.5 px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer"
+          >
+            <span>{{ 'nav.carTypes' | translate }}</span>
+            <svg
+              class="nav-chevron w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div
+            id="nav-menu-types"
+            class="nav-dropdown-menu absolute top-full left-0 pt-3 z-50"
+            [class.is-open]="blnIsCarTypesOpen()"
+          >
+            <div
+              class="nav-dropdown-panel bg-[var(--bg-elevated)]/95 backdrop-blur-2xl border border-white/10 rounded-2xl min-w-[200px] shadow-2xl overflow-hidden divide-y divide-white/10"
+            >
+              @for (objCat of arrCarTypes(); track objCat.idCategory) {
+                <a
+                  [routerLink]="objCat.strSlug ? ['/cars', objCat.strSlug] : ['/cars']"
+                  (click)="fnCloseDropdowns()"
+                  class="block px-4.5 py-2.5 text-xs font-normal text-white/90 hover:text-gold hover:bg-white/10 focus-visible:bg-white/10 focus-visible:text-gold outline-none transition-colors text-start whitespace-nowrap"
+                >
+                  {{ objCat.strNameKey | translate }}
+                </a>
+              }
+            </div>
+          </div>
+        </li>
+
+        <!-- Car brands mega dropdown (li is static so the panel centers under the whole link list) -->
+        <li
+          #elBrandsItem
+          class="nav-item nav-dropdown static py-1"
+          (mouseenter)="fnOnMenuEnter('brands'); fnOnLinkHover($event)"
+          (mouseleave)="fnOnMenuLeave()"
+          (focusin)="fnOnLinkHover($event)"
+          (focusout)="fnOnMenuFocusOut($event, elBrandsItem)"
+        >
+          <button
+            type="button"
+            (click)="fnToggleMenu('brands')"
+            [attr.aria-expanded]="blnIsCarBrandsOpen()"
+            aria-haspopup="true"
+            aria-controls="nav-menu-brands"
+            [class.is-open]="blnIsCarBrandsOpen()"
+            class="nav-link-item flex items-center gap-1.5 px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer"
+          >
+            <span>{{ 'nav.carBrands' | translate }}</span>
+            <svg
+              class="nav-chevron w-3 h-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+
+          <div
+            id="nav-menu-brands"
+            class="nav-dropdown-menu absolute top-full left-1/2 -translate-x-1/2 pt-3 z-50"
+            [class.is-open]="blnIsCarBrandsOpen()"
+          >
+            <div
+              class="nav-dropdown-panel bg-[var(--bg-elevated)]/95 backdrop-blur-2xl border border-white/10 rounded-2xl p-6 shadow-2xl w-[780px] max-w-[95vw]"
+            >
+              <div class="grid grid-cols-4 divide-x divide-white/10">
+                @for (arrColumn of arrBrandColumns(); track $index) {
+                  <div class="space-y-3.5 px-5 first:pl-1 last:pr-1">
+                    @for (objBrand of arrColumn; track objBrand.idBrand) {
+                      <a
+                        [routerLink]="['/cars', objBrand.strSlug]"
+                        (click)="fnCloseDropdowns()"
+                        class="group/item flex items-center gap-3 py-1.5 px-2.5 rounded-xl text-xs text-white/90 hover:text-gold hover:bg-white/5 focus-visible:bg-white/5 focus-visible:text-gold outline-none transition-colors cursor-pointer"
+                      >
+                        <div class="w-7 h-6 flex items-center justify-center shrink-0">
+                          @if (objBrand.strIconSvg) {
+                            <img
+                              [src]="objBrand.strIconSvg"
+                              [alt]="objBrand.strName"
+                              loading="lazy"
+                              class="h-5 w-auto max-w-[26px] object-contain group-hover/item:scale-110 transition-transform duration-200"
+                            />
+                          } @else {
+                            <span class="text-xs uppercase">{{ objBrand.strName.charAt(0) }}</span>
+                          }
+                        </div>
+                        <span class="whitespace-nowrap">{{ objBrand.strName }}</span>
+                      </a>
+                    }
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <!-- Simple links -->
+        @for (objLink of arrNavLinks; track objLink.strPath) {
+          <li class="nav-item relative py-1" (mouseenter)="fnOnLinkHover($event)" (focusin)="fnOnLinkHover($event)">
+            <a
+              [routerLink]="objLink.strPath"
+              routerLinkActive="active"
+              class="nav-link-item inline-block px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40"
+            >
+              {{ objLink.strKey | translate }}
+            </a>
+          </li>
+        }
+      </ul>
+
+      <!-- ==================== Language & Currency toggles + hamburger ==================== -->
+      <div class="flex items-center gap-3">
+        <!-- Currency toggle -->
+        <div class="lang-toggle-container relative flex items-center">
+          <span
+            class="lang-pill-indicator"
+            [class.is-az]="svcCurrency.strCurrentCurrency() === 'AZN'"
+            aria-hidden="true"
+          ></span>
+          <button
+            type="button"
+            (click)="fnSetCurrency('USD')"
+            [class.is-active]="svcCurrency.strCurrentCurrency() === 'USD'"
+            [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'USD'"
+            class="lang-btn px-3 py-0.5 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+          >
+            USD
+          </button>
+          <button
+            type="button"
+            (click)="fnSetCurrency('AZN')"
+            [class.is-active]="svcCurrency.strCurrentCurrency() === 'AZN'"
+            [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'AZN'"
+            class="lang-btn px-3 py-0.5 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+          >
+            AZN
+          </button>
+        </div>
+
+        <!-- Language toggle -->
+        <div class="lang-toggle-container relative flex items-center">
+          <span
+            class="lang-pill-indicator"
+            [class.is-az]="svcLanguage.strCurrentLang() === 'az'"
+            aria-hidden="true"
+          ></span>
+          <button
+            type="button"
+            (click)="fnSetLanguage('en')"
+            [class.is-active]="svcLanguage.strCurrentLang() === 'en'"
+            [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'en'"
+            class="lang-btn px-3 py-0.5 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+          >
+            EN
+          </button>
+          <button
+            type="button"
+            (click)="fnSetLanguage('az')"
+            [class.is-active]="svcLanguage.strCurrentLang() === 'az'"
+            [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'az'"
+            class="lang-btn px-3 py-0.5 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+          >
+            AZ
+          </button>
+        </div>
+
+        <button
+          type="button"
+          (click)="fnToggleMobileMenu()"
+          [attr.aria-expanded]="blnIsMobileMenuOpen()"
+          aria-controls="nav-mobile-menu"
+          aria-label="Toggle navigation menu"
+          class="lg:hidden p-2 rounded-xl bg-white/5 border border-white/15 text-white hover:text-gold focus-visible:text-gold hover:bg-white/10 transition-colors outline-none focus-visible:ring-1 focus-visible:ring-gold/50"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+            @if (!blnIsMobileMenuOpen()) {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            } @else {
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            }
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ==================== Mobile drawer ==================== -->
+    @if (blnIsMobileMenuOpen()) {
+      <div
+        id="nav-mobile-menu"
+        class="relative z-10 lg:hidden border-t border-white/10 px-5 sm:px-6 py-5 space-y-4 rounded-b-2xl bg-[var(--bg-base)]/95 backdrop-blur-2xl"
+      >
+        <div class="space-y-1.5">
+          <p class="text-[10px] tracking-widest font-semibold uppercase text-gold">
+            {{ 'nav.navigation' | translate }}
+          </p>
+          <a
+            routerLink="/"
+            (click)="fnCloseMobileMenu()"
+            class="block py-2 text-xs font-medium text-white hover:text-gold focus-visible:text-gold transition-colors outline-none"
+          >
+            {{ 'nav.home' | translate }}
+          </a>
+          @for (objLink of arrNavLinks; track objLink.strPath) {
+            <a
+              [routerLink]="objLink.strPath"
+              (click)="fnCloseMobileMenu()"
+              class="block py-2 text-xs font-medium text-white hover:text-gold focus-visible:text-gold transition-colors outline-none"
+            >
+              {{ objLink.strKey | translate }}
+            </a>
+          }
+        </div>
+
+        <div class="pt-4 border-t border-white/10 space-y-2.5">
+          <p class="text-[10px] tracking-widest font-semibold uppercase text-gold">
+            {{ 'nav.carBrands' | translate }}
+          </p>
+          <div class="grid grid-cols-2 gap-2 max-h-[40vh] overflow-y-auto pr-1">
+            @for (objBrand of arrCarBrands(); track objBrand.idBrand) {
+              <a
+                [routerLink]="['/cars', objBrand.strSlug]"
+                (click)="fnCloseMobileMenu()"
+                class="flex items-center gap-2.5 text-xs font-normal text-white/90 hover:text-gold py-1.5 px-2 rounded-lg hover:bg-white/5 transition-colors outline-none"
+              >
+                <div
+                  class="w-5.5 h-5.5 rounded-full bg-[#161820] border border-gold/60 flex items-center justify-center text-[9px] text-white shrink-0 shadow overflow-hidden p-0.5"
+                >
+                  @if (objBrand.strIconSvg) {
+                    <img [src]="objBrand.strIconSvg" [alt]="objBrand.strName" loading="lazy" class="w-full h-full object-contain" />
+                  } @else {
+                    <span class="leading-none text-[8px]">{{ objBrand.strName.charAt(0) }}</span>
+                  }
+                </div>
+                <span class="truncate">{{ objBrand.strName }}</span>
+              </a>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  </div>
+</header>

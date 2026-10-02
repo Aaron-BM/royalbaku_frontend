@@ -1,0 +1,19 @@
+/* Floating Contact Buttons Animations & Styles */
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.65);
+  }
+}
+
+@keyframes pulseGoldGlow {
+  0%, 100% {
+    box-shadow: 0 10px 25px rgba(217, 163, 38, 0.4);
+  }
+  50% {
+    box-shadow: 0 12px 30px rgba(217, 163, 38, 0.65);
+  }
+}

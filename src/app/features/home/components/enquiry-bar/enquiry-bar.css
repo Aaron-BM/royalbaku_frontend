@@ -1,0 +1,124 @@
+/* Premium Luxury Enquiry Bar Component Styles */
+
+.enquiry-card-container {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enquiry-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 6px;
+  user-select: none;
+}
+
+.enquiry-input-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #14161F;
+  border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.1));
+  border-radius: 12px;
+  padding: 8px 12px;
+  height: 44px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.enquiry-input-wrapper:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.enquiry-input-wrapper:focus-within {
+  border-color: var(--accent, #CFAE3D);
+  box-shadow: 0 0 0 2px rgba(207, 174, 61, 0.2);
+}
+
+.enquiry-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.enquiry-input:focus {
+  outline: none;
+}
+
+.enquiry-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Custom styling for standard browser date picker input */
+.enquiry-date-input::-webkit-calendar-picker-indicator {
+  filter: invert(0.8) sepia(1) saturate(5) hue-rotate(5deg);
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+}
+.enquiry-date-input::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+.enquiry-select {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  appearance: none;
+  cursor: pointer;
+  padding-right: 8px;
+}
+
+.enquiry-select:focus {
+  outline: none;
+}
+
+.enquiry-select option {
+  background-color: #14161F;
+  color: #ffffff;
+  padding: 8px;
+}
+
+.enquiry-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  background-color: var(--accent, #CFAE3D);
+  color: #000000;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 12px;
+  border: none;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(207, 174, 61, 0.25);
+}
+
+.enquiry-submit-btn:hover {
+  background-color: #e5be3a;
+  box-shadow: 0 6px 22px rgba(207, 174, 61, 0.45);
+}
+
+.enquiry-submit-btn:active {
+  transform: scale(0.98);
+}
+
+.enquiry-error-msg {
+  font-size: 10px;
+  color: #f87171;
+  margin-top: 4px;
+  font-weight: 600;
+}

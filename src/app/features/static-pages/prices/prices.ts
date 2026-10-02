@@ -1,9 +1,105 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { NgClass } from '@angular/common';
+import { CarService } from '../../../core/services/car.service';
+import { PriceTableItem, CarBrand } from '../../../core/models/car.model';
+
+import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 
 @Component({
-  imports: [],
   selector: 'app-prices',
-  styleUrl: './prices.css',
+  standalone: true,
+  imports: [RouterLink, TranslatePipe, NgClass, AppCurrencyPipe],
   templateUrl: './prices.html',
+  styleUrl: './prices.css',
 })
-export class Prices {}
+export class Prices implements OnInit {
+  private readonly carService = inject(CarService);
+
+  protected readonly arrBrands = signal<CarBrand[]>([]);
+  protected readonly arrPrices = signal<PriceTableItem[]>([]);
+  protected readonly strSelectedBrand = signal<string>('all');
+  protected readonly strSelectedSort = signal<string>('default');
+  protected readonly strSearchQuery = signal<string>('');
+  protected readonly blnLoading = signal<boolean>(true);
+  protected readonly strViewMode = signal<'table' | 'grid'>('table');
+
+  /**
+   * Computed list filtering by client-side search input keyword
+   */
+  protected readonly arrFilteredPrices = computed(() => {
+    const strQuery = this.strSearchQuery().toLowerCase().trim();
+    const arrList = this.arrPrices();
+    if (!strQuery) return arrList;
+
+    return arrList.filter(
+      (item) =>
+        (item.strCarName && item.strCarName.toLowerCase().includes(strQuery)) ||
+        (item.strBrandSlug && item.strBrandSlug.toLowerCase().includes(strQuery)) ||
+        (item.strBrandName && item.strBrandName.toLowerCase().includes(strQuery)) ||
+        (item.strCategoryName && item.strCategoryName.toLowerCase().includes(strQuery))
+    );
+  });
+
+
+  ngOnInit(): void {
+    this.fnLoadBrands();
+    this.fnLoadPrices();
+  }
+
+  protected fnLoadBrands(): void {
+    this.carService.getBrands().subscribe({
+      next: (arrData) => this.arrBrands.set(arrData),
+      error: (err) => console.warn('Error fetching brands:', err),
+    });
+  }
+
+  protected fnLoadPrices(): void {
+    this.blnLoading.set(true);
+    this.carService
+      .getRentalPrices(this.strSelectedBrand(), this.strSelectedSort())
+      .subscribe({
+        next: (arrData) => {
+          this.arrPrices.set(arrData);
+          this.blnLoading.set(false);
+        },
+        error: (err) => {
+          console.warn('Error fetching rental prices:', err);
+          this.blnLoading.set(false);
+        },
+      });
+  }
+
+  protected onBrandChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.strSelectedBrand.set(target.value);
+    this.fnLoadPrices();
+  }
+
+  protected onSortChange(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    this.strSelectedSort.set(target.value);
+    this.fnLoadPrices();
+  }
+
+  protected onSearchInput(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    this.strSearchQuery.set(target.value);
+  }
+
+  protected fnApplyFilter(): void {
+    this.fnLoadPrices();
+  }
+
+  protected fnResetFilters(): void {
+    this.strSelectedBrand.set('all');
+    this.strSelectedSort.set('default');
+    this.strSearchQuery.set('');
+    this.fnLoadPrices();
+  }
+
+  protected fnSetViewMode(mode: 'table' | 'grid'): void {
+    this.strViewMode.set(mode);
+  }
+}

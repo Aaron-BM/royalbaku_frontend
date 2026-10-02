@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { CarItem } from '../../../core/models/car.model';
 
 @Component({
-  imports: [],
   selector: 'app-car-card',
-  styleUrl: './car-card.css',
+  standalone: true,
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './car-card.html',
+  styleUrl: './car-card.css',
 })
-export class CarCard {}
+export class CarCard {
+  @Input({ required: true }) objCar!: CarItem;
+}

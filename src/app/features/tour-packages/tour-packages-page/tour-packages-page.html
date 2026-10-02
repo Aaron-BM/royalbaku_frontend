@@ -1,0 +1,191 @@
+<div class="bg-[var(--bg-base)] min-h-screen text-white font-sans overflow-x-hidden">
+  
+  <!-- ==================== HERO HEADER ==================== -->
+  <section class="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 tours-hero-bg border-b border-white/10 text-center">
+    <div class="max-w-4xl mx-auto animate-fade-in-up">
+      <!-- Breadcrumbs -->
+      <nav class="flex items-center justify-center gap-2 text-xs text-white/60 mb-4 uppercase tracking-wider font-medium">
+        <a routerLink="/" class="hover:text-gold transition-colors">Home</a>
+        <span>/</span>
+        <span class="text-gold">Tour Packages</span>
+      </nav>
+
+      <p class="text-xs sm:text-sm uppercase font-semibold text-gold tracking-[0.35em] mb-2">
+        ROYAL BAKU CAR RENTAL & TOURISM
+      </p>
+
+      <div class="title-accent-bar !my-2">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line reverse"></span>
+      </div>
+
+      <h1 class="font-hero-title text-3xl sm:text-5xl font-extrabold text-white mb-4">
+        CITY TOUR <span class="title-accent-gold">PACKAGES</span>
+      </h1>
+
+      <p class="max-w-2xl mx-auto text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
+        Explore Azerbaijan's iconic landmarks, historical monuments, and breathtaking natural wonders with private luxury transfers and dedicated chauffeur service.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== DATA-DRIVEN PACKAGES LIST ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-10">
+
+    <!-- LOADING STATE -->
+    @if (blnIsLoading()) {
+      <div class="space-y-6">
+        @for (i of [1, 2]; track i) {
+          <div class="bg-[#0e1018] border border-white/10 rounded-3xl p-6 sm:p-8 animate-pulse space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between gap-4">
+              <div class="space-y-3">
+                <div class="h-4 bg-white/10 rounded w-32"></div>
+                <div class="h-8 bg-white/20 rounded w-64"></div>
+              </div>
+              <div class="h-10 bg-gold/20 rounded-full w-40"></div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              @for (j of [1, 2, 3, 4]; track j) {
+                <div class="h-28 bg-white/5 rounded-2xl"></div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- EMPTY STATE -->
+    @if (!blnIsLoading() && arrPackages().length === 0) {
+      <div class="text-center py-20 px-4 bg-[#0e1018] border border-white/10 rounded-3xl max-w-2xl mx-auto">
+        <div class="w-16 h-16 rounded-full bg-gold/10 border border-gold/40 flex items-center justify-center mx-auto text-gold mb-4">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">No tour packages available yet</h3>
+        <p class="text-xs text-white/60 mb-6">Please check back soon or contact our 24/7 concierge for customized private itineraries.</p>
+        <a routerLink="/contact" class="btn-shimmer bg-gold text-black font-extrabold text-xs px-6 py-3 rounded-full hover:bg-amber-400 transition-all">
+          Contact Concierge
+        </a>
+      </div>
+    }
+
+    <!-- PACKAGES LIST -->
+    @if (!blnIsLoading() && arrPackages().length > 0) {
+      @for (pkg of arrPackages(); track pkg.id) {
+        <app-tour-package-card
+          [objPackage]="pkg"
+          [blnIsExpanded]="strExpandedId() === pkg.id"
+          (toggleExpand)="onToggleExpand(pkg.id)"
+          (openInquiry)="openInquiryModal($event)"
+        ></app-tour-package-card>
+      }
+    }
+
+  </section>
+
+  <!-- ==================== BOOKING / INQUIRY MODAL ==================== -->
+  @if (blnIsModalOpen()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in-up">
+      <div class="bg-[#12141C] border border-gold/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+        <!-- Close Button -->
+        <button
+          type="button"
+          (click)="closeModal()"
+          class="absolute top-5 right-5 text-white/60 hover:text-gold p-2 rounded-full hover:bg-white/10 transition-colors"
+          aria-label="Close modal"
+        >
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
+        @if (!blnSubmitSuccess()) {
+          <div class="mb-6">
+            <span class="text-[10px] font-bold text-gold uppercase tracking-widest">ROYAL BAKU TOURISM</span>
+            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Book Tour Package</h3>
+            @if (objSelectedPackage(); as sel) {
+              <p class="text-xs text-gold font-semibold mt-1">{{ sel.title }} — {{ sel.subtitle }}</p>
+            }
+          </div>
+
+          <form (ngSubmit)="onSubmitInquiry()" class="space-y-4">
+            <div>
+              <label class="block text-xs font-semibold text-white/90 mb-1.5">Full Name *</label>
+              <input
+                type="text"
+                [(ngModel)]="strCustomerName"
+                name="customerName"
+                required
+                placeholder="Enter your full name"
+                class="w-full bg-[#1A1D28] border border-white/15 focus:border-gold rounded-xl px-4 py-3 text-xs text-white outline-none transition-colors"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-white/90 mb-1.5">Phone / WhatsApp Number *</label>
+              <input
+                type="tel"
+                [(ngModel)]="strCustomerPhone"
+                name="customerPhone"
+                required
+                placeholder="+994 or international phone number"
+                class="w-full bg-[#1A1D28] border border-white/15 focus:border-gold rounded-xl px-4 py-3 text-xs text-white outline-none transition-colors"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-white/90 mb-1.5">Preferred Travel Date</label>
+              <input
+                type="date"
+                [(ngModel)]="strTravelDate"
+                name="travelDate"
+                class="w-full bg-[#1A1D28] border border-white/15 focus:border-gold rounded-xl px-4 py-3 text-xs text-white outline-none transition-colors"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-white/90 mb-1.5">Special Requests / Notes</label>
+              <textarea
+                [(ngModel)]="strSpecialRequest"
+                name="specialRequest"
+                rows="3"
+                placeholder="Number of guests, pickup location or specific preferences..."
+                class="w-full bg-[#1A1D28] border border-white/15 focus:border-gold rounded-xl px-4 py-3 text-xs text-white outline-none transition-colors resize-none"
+              ></textarea>
+            </div>
+
+            <div class="pt-2 flex flex-col gap-3">
+              <button
+                type="submit"
+                class="btn-shimmer w-full bg-gold text-black font-extrabold text-xs uppercase tracking-wider py-3.5 rounded-xl hover:bg-amber-400 transition-all cursor-pointer shadow-lg"
+              >
+                Submit Booking Request
+              </button>
+            </div>
+          </form>
+        } @else {
+          <div class="text-center py-8 space-y-4">
+            <div class="w-16 h-16 rounded-full bg-gold/20 border border-gold flex items-center justify-center mx-auto text-gold">
+              <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h3 class="text-2xl font-extrabold text-white">Inquiry Sent Successfully!</h3>
+            <p class="text-xs text-white/80 max-w-sm mx-auto">
+              Our tourism concierge team will contact you within 15 minutes to confirm your reservation.
+            </p>
+            <button
+              type="button"
+              (click)="closeModal()"
+              class="btn-shimmer bg-gold text-black font-extrabold text-xs px-8 py-3 rounded-full hover:bg-amber-400 transition-all cursor-pointer mt-4"
+            >
+              Close
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

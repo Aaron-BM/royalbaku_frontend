@@ -1,1 +1,493 @@
-<p>contact works!</p>
+<div class="bg-[var(--bg-base)] min-h-screen text-white pb-24 font-sans">
+  <!-- 1. Hero Banner Section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pt-10 pb-12">
+    <div
+      class="bg-gradient-to-br from-[#141620] via-[#10121A] to-[#0A0B0E] border border-white/15 rounded-3xl p-8 sm:p-12 shadow-2xl text-center max-w-4xl mx-auto relative overflow-hidden"
+    >
+      <div
+        class="inline-flex items-center gap-2 text-[10px] sm:text-xs tracking-[0.2em] font-extrabold text-gold bg-gold/10 border border-gold/30 px-4 py-1.5 rounded-full mb-4"
+      >
+        <span>♦</span> <span>{{ 'contact.badge' | translate }}</span>
+      </div>
+      <h1
+        class="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-white leading-tight mb-4"
+      >
+        {{ 'contact.mainTitle' | translate }}
+      </h1>
+      <p class="text-xs sm:text-sm text-muted/90 max-w-2xl mx-auto leading-relaxed mb-8">
+        {{ 'contact.heroDesc' | translate }}
+      </p>
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        @if (strWhatsappHref()) {
+          <a
+            [href]="strWhatsappHref()!"
+            target="_blank"
+            class="bg-gold hover:bg-amber-400 text-black font-extrabold text-xs sm:text-sm px-7 py-3 rounded-xl tracking-wider transition-all flex items-center gap-2.5 shadow-lg shadow-gold/20 cursor-pointer"
+          >
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"
+              />
+            </svg>
+            <span>{{ 'contact.btnWhatsapp' | translate }}</span>
+          </a>
+        }
+        @if (strPhoneHref()) {
+          <a
+            [href]="strPhoneHref()!"
+            class="bg-surface hover:bg-white/10 border border-white/20 text-white font-extrabold text-xs sm:text-sm px-7 py-3 rounded-xl tracking-wider transition-all flex items-center gap-2.5 shadow-md cursor-pointer"
+          >
+            <svg class="w-4 h-4 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+            <span>{{ 'contact.btnCall' | translate }}</span>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+  <!-- 2. Contact Information Channels Grid Section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 border-t border-white/10">
+    <div class="mb-8 text-center max-w-xl mx-auto">
+      <div class="text-[10px] font-bold tracking-widest text-gold mb-1">
+        {{ 'contact.channelsTag' | translate }}
+      </div>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+        {{ 'contact.channelsTitle' | translate }}
+      </h2>
+      <p class="text-xs text-muted mt-1">{{ 'contact.channelsDesc' | translate }}</p>
+    </div>
+    <!-- 6 Contact Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Card 1: Phone Us -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardPhoneTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardPhoneSub' | translate }}</p>
+          </div>
+        </div>
+        <p class="text-xs font-semibold text-white/90 pt-2 border-t border-white/10">
+          {{ strPhoneNumberDisplay() || ('contact.cardPhoneValue' | translate) }}
+        </p>
+      </div>
+      <!-- Card 2: Email Us -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardEmailTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardEmailSub' | translate }}</p>
+          </div>
+        </div>
+        <p class="text-xs font-semibold text-white/90 pt-2 border-t border-white/10">
+          {{ strEmailDisplay() || ('contact.cardEmailValue' | translate) }}
+        </p>
+      </div>
+      <!-- Card 3: Social Media -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardSocialTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardSocialSub' | translate }}</p>
+          </div>
+        </div>
+        <p class="text-xs font-semibold text-white/90 pt-2 border-t border-white/10">
+          {{ 'contact.cardSocialValue' | translate }}
+        </p>
+      </div>
+      <!-- Card 4: WhatsApp Direct -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path
+                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardWhatsappTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardWhatsappSub' | translate }}</p>
+          </div>
+        </div>
+        @if (strWhatsappHref()) {
+          <a
+            [href]="strWhatsappHref()!"
+            target="_blank"
+            class="text-xs font-semibold text-gold hover:underline pt-2 border-t border-white/10"
+          >
+            {{ strWhatsappNumberDisplay() || ('contact.cardWhatsappValue' | translate) }} →
+          </a>
+        }
+      </div>
+      <!-- Card 5: Main Showroom Address -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardAddressTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardAddressSub' | translate }}</p>
+          </div>
+        </div>
+        <p class="text-xs font-semibold text-white/90 pt-2 border-t border-white/10">
+          {{ 'contact.cardAddressValue' | translate }}
+        </p>
+      </div>
+      <!-- Card 6: Operating Hours -->
+      <div
+        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-6 rounded-2xl hover:border-gold/40 transition-all shadow-lg flex flex-col justify-between space-y-3"
+      >
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 rounded-xl bg-surface border border-white/15 flex items-center justify-center text-gold"
+          >
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="1.8"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-xs font-extrabold text-white">
+              {{ 'contact.cardHoursTitle' | translate }}
+            </h3>
+            <p class="text-[10px] text-muted">{{ 'contact.cardHoursSub' | translate }}</p>
+          </div>
+        </div>
+        <p class="text-xs font-semibold text-white/90 pt-2 border-t border-white/10">
+          {{ 'contact.cardHoursValue' | translate }}
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- 3. Doorstep Delivery & Booking Form Section (2 Columns) -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 border-t border-white/10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+      <!-- Left Column: Doorstep Delivery Info & Bullets -->
+      <div class="lg:col-span-6 space-y-6">
+        <div>
+          <div class="text-[10px] font-bold tracking-widest text-gold mb-1">
+            {{ 'contact.deliveryTag' | translate }}
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+            {{ 'contact.deliveryTitle' | translate }}
+          </h2>
+          <p class="text-xs sm:text-sm text-muted mt-2 leading-relaxed">
+            {{ 'contact.deliveryDesc' | translate }}
+          </p>
+        </div>
+        <!-- 4 Bullet Highlights -->
+        <div class="space-y-4 pt-2">
+          <div class="flex items-start gap-3.5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-4 rounded-xl">
+            <div
+              class="w-8 h-8 rounded-lg bg-surface border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="text-xs font-extrabold text-white">
+                {{ 'contact.bullet1Title' | translate }}
+              </h3>
+              <p class="text-[11px] text-muted">{{ 'contact.bullet1Desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-4 rounded-xl">
+            <div
+              class="w-8 h-8 rounded-lg bg-surface border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="text-xs font-extrabold text-white">
+                {{ 'contact.bullet2Title' | translate }}
+              </h3>
+              <p class="text-[11px] text-muted">{{ 'contact.bullet2Desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-4 rounded-xl">
+            <div
+              class="w-8 h-8 rounded-lg bg-surface border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="text-xs font-extrabold text-white">
+                {{ 'contact.bullet3Title' | translate }}
+              </h3>
+              <p class="text-[11px] text-muted">{{ 'contact.bullet3Desc' | translate }}</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3.5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-4 rounded-xl">
+            <div
+              class="w-8 h-8 rounded-lg bg-surface border border-gold/30 flex items-center justify-center text-gold shrink-0 mt-0.5"
+            >
+              ✓
+            </div>
+            <div>
+              <h3 class="text-xs font-extrabold text-white">
+                {{ 'contact.bullet4Title' | translate }}
+              </h3>
+              <p class="text-[11px] text-muted">{{ 'contact.bullet4Desc' | translate }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right Column: Booking Request Form Card -->
+      <div
+        class="lg:col-span-6 bg-[#12141C] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl"
+      >
+        <h2 class="text-lg font-extrabold tracking-wider text-white mb-6">
+          {{ 'contact.formTitle' | translate }}
+        </h2>
+        @if (blnSubmitted()) {
+          <div class="bg-gold/10 border border-gold/40 p-4 rounded-xl text-center space-y-2">
+            <div class="text-gold font-extrabold text-sm">✓ Request Submitted Successfully!</div>
+            <p class="text-xs text-muted">{{ 'contact.successMsg' | translate }}</p>
+          </div>
+        } @else {
+          <form (ngSubmit)="fnOnSubmit()" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1">Name</label>
+                <input
+                  type="text"
+                  [(ngModel)]="objFormData().strName"
+                  name="strName"
+                  [placeholder]="'contact.namePlaceholder' | translate"
+                  required
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1">Email</label>
+                <input
+                  type="email"
+                  [(ngModel)]="objFormData().strEmail"
+                  name="strEmail"
+                  [placeholder]="'contact.emailPlaceholder' | translate"
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1">Phone Number</label>
+                <input
+                  type="tel"
+                  [(ngModel)]="objFormData().strPhone"
+                  name="strPhone"
+                  [placeholder]="'contact.phonePlaceholder' | translate"
+                  required
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1"
+                  >Vehicle Selection</label
+                >
+                <input
+                  type="text"
+                  [(ngModel)]="objFormData().strCar"
+                  name="strCar"
+                  [placeholder]="'contact.carPlaceholder' | translate"
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1">Pickup Date</label>
+                <input
+                  type="date"
+                  [(ngModel)]="objFormData().strStartDate"
+                  name="strStartDate"
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+              <div>
+                <label class="block text-[11px] font-extrabold text-white mb-1">Return Date</label>
+                <input
+                  type="date"
+                  [(ngModel)]="objFormData().strEndDate"
+                  name="strEndDate"
+                  class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[11px] font-extrabold text-white mb-1"
+                >Additional Notes</label
+              >
+              <textarea
+                rows="3"
+                [(ngModel)]="objFormData().strMessage"
+                name="strMessage"
+                [placeholder]="'contact.messagePlaceholder' | translate"
+                class="w-full bg-[#0D0E12] border border-white/20 rounded-xl px-4 py-2.5 text-xs text-white placeholder-muted focus:border-gold outline-none transition-colors resize-none"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-gold hover:bg-amber-400 text-black font-extrabold text-xs py-3.5 rounded-xl tracking-wider transition-all cursor-pointer shadow-lg shadow-gold/20"
+            >
+              {{ 'contact.btnSubmit' | translate }}
+            </button>
+          </form>
+        }
+      </div>
+    </div>
+  </section>
+  <!-- 4. Trust Highlights Bar Section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 border-t border-white/10">
+    <div class="mb-6 text-center">
+      <div class="text-[10px] font-bold tracking-widest text-gold mb-1">
+        {{ 'contact.trustTag' | translate }}
+      </div>
+      <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+        {{ 'contact.trustTitle' | translate }}
+      </h2>
+    </div>
+    <!-- 6 Trust Feature Badges Bar -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">FAST DELIVERY</div>
+        <p class="text-[10px] text-muted">Doorstep & Airport</p>
+      </div>
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">24/7 SUPPORT</div>
+        <p class="text-[10px] text-muted">Client Concierge</p>
+      </div>
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">NO DEPOSIT</div>
+        <p class="text-[10px] text-muted">On Selected Models</p>
+      </div>
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">NO HIDDEN FEES</div>
+        <p class="text-[10px] text-muted">100% Transparent</p>
+      </div>
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">100+ FLEET</div>
+        <p class="text-[10px] text-muted">Luxury & Sports</p>
+      </div>
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] p-3 rounded-xl text-center">
+        <div class="text-xs font-extrabold text-gold">VIP SERVICE</div>
+        <p class="text-[10px] text-muted">Bespoke Experience</p>
+      </div>
+    </div>
+  </section>
+  <!-- 5. Showroom Google Map Location Card Section -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6">
+    <div
+      class="relative bg-[#12141C] border border-white/15 rounded-3xl overflow-hidden shadow-2xl h-[320px] flex items-end p-6"
+    >
+      <!-- Background Map Visual Placeholder / Image -->
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent z-10"
+      ></div>
+      <img
+        src="/assets/images/home/supercars-banner.png"
+        alt="Baku Showroom Location"
+        class="absolute inset-0 w-full h-full object-cover mix-blend-luminosity opacity-40 scale-105"
+      />
+      <div class="relative z-20 space-y-2">
+        <div class="text-xs font-extrabold text-gold tracking-wider">
+          {{ 'contact.mapTitle' | translate }}
+        </div>
+        <p class="text-sm font-semibold text-white">
+          Royal Baku Showroom — 39 Al Rasaas Rd, Central Baku, Azerbaijan
+        </p>
+        <a
+          href="https://maps.google.com"
+          target="_blank"
+          class="inline-flex items-center gap-2 bg-gold hover:bg-amber-400 text-black font-extrabold text-xs px-5 py-2 rounded-xl tracking-wider transition-all cursor-pointer shadow-lg"
+        >
+          <span>{{ 'contact.btnOpenMaps' | translate }}</span> <span>→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

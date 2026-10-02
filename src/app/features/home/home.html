@@ -1,1 +1,809 @@
-<p>home works!</p>
+<!-- Main Home Page Container -->
+<div class="bg-[var(--bg-base)] min-h-screen text-white font-sans overflow-y-hidden">
+  <!-- ==================== 1. HERO SECTION ==================== -->
+  <!-- Previous background image implementation (COMMENTED OUT DO NOT DELETE):
+  <section
+    class="relative min-h-[85vh] flex items-center justify-center pt-24 pb-16 px-4 sm:px-6 lg:px-8 bg-[var(--bg-base)] bg-cover bg-center overflow-hidden text-center"
+    style="background-image: url('/assets/images/home/hero-baku.png')"
+  >
+  -->
+  <section
+    class="relative min-h-[70vh] sm:min-h-[75vh] flex items-center justify-center pt-20 sm:pt-24 pb-32 sm:pb-40 px-4 sm:px-6 lg:px-8 bg-[var(--bg-base)] overflow-hidden text-center"
+  >
+    <!-- Background Video Implementation (Desktop) -->
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      [muted]="true"
+      class="hero-bg-video hidden md:block absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+    >
+      <source src="/assets/videos/home/hero-video.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Background Video Implementation (Mobile) -->
+    <video
+      autoplay
+      loop
+      muted
+      playsinline
+      [muted]="true"
+      class="hero-bg-video block md:hidden absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
+    >
+      <source src="/assets/videos/home/hero-video-mobile.mp4" type="video/mp4" />
+    </video>
+
+    <!-- Dark Backdrop Overlay for text contrast -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/55 to-bg pointer-events-none z-[1]"></div>
+
+    <!-- Soft Overhead Studio Spotlight Glow with dynamic subtle pulse -->
+    <div
+      class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[480px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gold/15 via-white/4 to-transparent blur-3xl pointer-events-none animate-spotlight"
+    ></div>
+
+    <div class="max-w-5xl mx-auto relative z-10 animate-fade-in-up -translate-y-28 sm:-translate-y-32 md:-translate-y-36">
+      <!-- Eyebrow Subtitle -->
+      <p class="font-hero-sub text-xs sm:text-sm tracking-[0.35em] uppercase font-semibold text-gold/90 mb-0.5">
+        {{ 'home.welcomeSub' | translate }}
+      </p>
+
+      <!-- Decorative Title Accent Bar (unchanged) -->
+      <div class="title-accent-bar !my-1.5">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line reverse"></span>
+      </div>
+
+      <!-- Hero Main Title -->
+      <h1 class="font-hero-title text-[1.75rem] sm:text-4xl md:text-[2.75rem] lg:text-5xl font-semibold tracking-[0.03em] leading-[1.2] text-white mb-3 sm:mb-4">
+        <span class="font-bold text-gradient-gold-hero">{{ 'home.mainTitleBold' | translate }}</span>
+        <span class="font-medium text-white/90"> {{ 'home.mainTitleRest' | translate }}</span>
+      </h1>
+
+    </div>
+  </section>
+  <!-- ==================== 2. QUICK ENQUIRY BAR ==================== -->
+  <app-enquiry-bar></app-enquiry-bar>
+  <!-- ==================== 3. BRAND LOGOS CONTINUOUS MARQUEE ==================== -->
+  <section class="py-5 sm:py-6 md:py-7 bg-[#050505] relative overflow-hidden border-y border-white/[0.06] my-4 sm:my-6 reveal-on-scroll">
+    <!-- Soft Subtle Ambient Radial Glow in background -->
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/[0.02] via-transparent to-transparent pointer-events-none"
+    ></div>
+
+    <!-- Left and Right Gradient Edge Overlay Fade Masks -->
+    <div
+      class="absolute left-0 top-0 bottom-0 w-16 sm:w-28 md:w-44 lg:w-56 bg-gradient-to-r from-[#050505] via-[#050505]/90 to-transparent z-10 pointer-events-none"
+    ></div>
+    <div
+      class="absolute right-0 top-0 bottom-0 w-16 sm:w-28 md:w-44 lg:w-56 bg-gradient-to-l from-[#050505] via-[#050505]/90 to-transparent z-10 pointer-events-none"
+    ></div>
+
+    <div
+      class="marquee-wrapper flex overflow-hidden select-none group py-2.5 sm:py-3"
+      style="-webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%); mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);"
+    >
+      <!-- Animated Continuous Marquee Track -->
+      <div class="animate-marquee flex items-center group-hover:[animation-play-state:paused]">
+        <!-- First set of brand logos track -->
+        <div class="marquee-track flex items-center shrink-0 gap-3 sm:gap-4.5 md:gap-5 pr-3 sm:pr-4.5 md:pr-5">
+          @for (objBrand of arrBrands(); track $index) {
+            <a
+              [routerLink]="['/cars', objBrand.strSlug]"
+              class="group/item flex flex-col items-center justify-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-white/[0.08] bg-[#0E1017]/90 hover:border-gold/40 hover:bg-[#141724] hover:-translate-y-1 shrink-0 transition-all duration-300 min-w-[92px] sm:min-w-[108px] md:min-w-[118px] h-16 sm:h-18 md:h-[72px] shadow-sm"
+            >
+              <!-- Brand Logo Container -->
+              <div class="h-7 sm:h-8.5 w-full flex items-center justify-center">
+                @if (objBrand.strLogo) {
+                  <img
+                    [src]="objBrand.strLogo"
+                    [alt]="objBrand.strName"
+                    class="max-h-6 sm:max-h-7.5 md:max-h-8 max-w-[68px] sm:max-w-[80px] md:max-w-[88px] w-auto h-auto object-contain transition-transform duration-300"
+                    loading="lazy"
+                  />
+                } @else {
+                  <span class="text-sm sm:text-base font-bold text-white/80 group-hover/item:text-gold uppercase tracking-wider transition-colors">{{
+                    objBrand.strName.charAt(0)
+                  }}</span>
+                }
+              </div>
+              <!-- Compact Brand Name Label -->
+              <span
+                class="text-[10px] sm:text-[11px] font-semibold tracking-wider text-white/60 group-hover/item:text-gold uppercase transition-colors whitespace-nowrap"
+              >
+                {{ objBrand.strName }}
+              </span>
+            </a>
+          }
+        </div>
+
+        <!-- Duplicate set of logos track for 100% seamless continuous loop -->
+        <div class="marquee-track flex items-center shrink-0 gap-3 sm:gap-4.5 md:gap-5 pr-3 sm:pr-4.5 md:pr-5" aria-hidden="true">
+          @for (objBrand of arrBrands(); track 'dup-' + $index) {
+            <a
+              [routerLink]="['/cars', objBrand.strSlug]"
+              class="group/item flex flex-col items-center justify-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-white/[0.08] bg-[#0E1017]/90 hover:border-gold/40 hover:bg-[#141724] hover:-translate-y-1 shrink-0 transition-all duration-300 min-w-[92px] sm:min-w-[108px] md:min-w-[118px] h-16 sm:h-18 md:h-[72px] shadow-sm"
+            >
+              <div class="h-7 sm:h-8.5 w-full flex items-center justify-center">
+                @if (objBrand.strLogo) {
+                  <img
+                    [src]="objBrand.strLogo"
+                    [alt]="objBrand.strName"
+                    class="max-h-6 sm:max-h-7.5 md:max-h-8 max-w-[68px] sm:max-w-[80px] md:max-w-[88px] w-auto h-auto object-contain transition-transform duration-300"
+                    loading="lazy"
+                  />
+                } @else {
+                  <span class="text-sm sm:text-base font-bold text-white/80 group-hover/item:text-gold uppercase tracking-wider transition-colors">{{
+                    objBrand.strName.charAt(0)
+                  }}</span>
+                }
+              </div>
+              <span
+                class="text-[10px] sm:text-[11px] font-semibold tracking-wider text-white/60 group-hover/item:text-gold uppercase transition-colors whitespace-nowrap"
+              >
+                {{ objBrand.strName }}
+              </span>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 4. CAR CATEGORIES GRID (MK RENT A CAR STYLE) ==================== -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8 reveal-on-scroll">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+      @for (objCat of arrCategories(); track objCat.strId) {
+        <a
+          [routerLink]="['/cars', objCat.strSlug]"
+          class="group relative block rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-gold/60 aspect-[16/9] shadow-xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1"
+        >
+          <!-- Background Category Image with smooth scale -->
+          <img
+            [src]="objCat.strImagePath"
+            [alt]="objCat.strNameKey | translate"
+            class="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700 ease-out"
+            loading="lazy"
+          />
+          <!-- Dark Gradient Overlay for text contrast -->
+          <div
+            class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent group-hover:from-black/90 transition-all duration-300 pointer-events-none"
+          ></div>
+          <!-- Category Label & Chevron (Bottom Right - MK Rent A Car Style) -->
+          <div
+            class="absolute bottom-3.5 sm:bottom-4 ltr:right-4 rtl:left-4 ltr:sm:right-5 rtl:sm:left-5 flex items-center gap-1.5 z-10 pointer-events-none"
+          >
+            <span
+              class="text-base sm:text-lg md:text-xl font-black tracking-wider uppercase text-white group-hover:text-gold transition-colors duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+            >
+              {{ objCat.strNameKey | translate }}
+            </span>
+            <svg
+              class="w-4 h-4 sm:w-5 sm:h-5 text-white group-hover:text-gold group-hover:translate-x-1 ltr:rotate-0 rtl:rotate-180 transition-all duration-300 drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="3"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </div>
+        </a>
+      }
+    </div>
+  </section>
+  <!-- ==================== 7. DAILY OFFERS SECTION (FIRST IMAGE) ==================== -->
+  <!-- <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 pb-24 border-t border-white/5 text-center section-divider reveal-on-scroll"> -->
+    <!-- Section Heading -->
+    <!-- <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+      {{ 'home.dailyOffers.title' | translate }}
+    </h2>
+    <div class="title-accent-bar">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div> -->
+    <!-- Section Subtitle / Description -->
+    <!-- <p class="max-w-3xl mx-auto text-xs sm:text-sm text-muted/80 leading-relaxed font-normal mb-10">
+      {{ 'home.dailyOffers.description' | translate }}
+    </p> -->
+    <!-- 3 Daily Offer Car Cards Grid (with Red Offer Badge) -->
+    <!-- <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left ltr:text-left rtl:text-right">
+      @for (objCar of arrDailyOfferCars(); track objCar.idCar) {
+        <app-car-card [objCar]="objCar"></app-car-card>
+      }
+    </div> -->
+    <!-- View All Cars Button -->
+    <!-- <div class="text-center">
+      <a
+        routerLink="/cars"
+        class="btn-shimmer bg-[#1C1F28] hover:bg-gold hover:text-black border border-white/15 hover:border-gold/50 text-white font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
+      >
+        {{ 'cars.viewAllCars' | translate }}
+      </a>
+    </div>
+  </section> -->
+  <!-- ==================== 6. RENT LUXURY CAR IN BAKU SECTION (SECOND IMAGE) ==================== -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 text-center section-divider reveal-on-scroll">
+    <!-- Section Heading -->
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+      {{ 'home.rentLuxury.title' | translate }}
+    </h2>
+    <div class="title-accent-bar">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div>
+    <!-- Section Subtitle / Description -->
+    <p class="max-w-3xl mx-auto text-xs sm:text-sm text-muted/80 leading-relaxed font-normal mb-10">
+      {{ 'home.rentLuxury.description' | translate }}
+    </p>
+    <!-- 3 Luxury Car Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-left ltr:text-left rtl:text-right">
+      @for (objCar of arrLuxuryCars(); track objCar.idCar) {
+        <app-car-card [objCar]="objCar"></app-car-card>
+      }
+    </div>
+    <!-- View All Cars Button -->
+    <div class="text-center">
+      <a
+        routerLink="/cars"
+        class="btn-shimmer bg-[#1C1F28] hover:bg-gold hover:text-black border border-white/15 hover:border-gold/50 text-white font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
+      >
+        {{ 'cars.viewAllCars' | translate }}
+      </a>
+    </div>
+  </section>
+  <!-- ==================== NEW SECTION 1: LATEST CAR RENTAL OFFERS IN BAKU ==================== -->
+  <!-- <section class="max-w-5xl mx-auto px-4 sm:px-6 py-14 border-t border-white/5 section-divider reveal-on-scroll"> -->
+    <!-- Section Heading -->
+    <!-- <h2 class="text-xl sm:text-2xl font-extrabold text-white text-center tracking-tight mb-2">
+      {{ 'home.latestOffers.title' | translate }}
+    </h2>
+    <div class="title-accent-bar">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div> -->
+    <!-- Intro Text -->
+    <!-- <p
+      class="text-xs sm:text-sm text-muted/80 text-center leading-relaxed font-normal mb-8 max-w-3xl mx-auto"
+    >
+      {{ 'home.latestOffers.intro' | translate }}
+    </p> -->
+    <!-- Bulleted Highlights List with Gold Headers -->
+    <!-- <div
+      class="glass-panel rounded-2xl p-6 shadow-xl space-y-4 text-xs text-muted/90 leading-relaxed"
+    >
+      @for (objItem of arrLatestOffers(); track objItem.strTitleKey) {
+        <div>
+          <span
+            class="font-extrabold text-gold text-xs underline decoration-gold/50 underline-offset-4 mr-1"
+          >
+            {{ objItem.strTitleKey | translate }}
+          </span>
+          <span class="text-white/80"> {{ objItem.strDescKey | translate }} </span>
+        </div>
+      }
+    </div>
+  </section> -->
+  <!-- ==================== NEW SECTION 2: RENT A CAR IN REGIONAL AZERBAIJAN (SUPERCAR BANNER) ==================== -->
+  <section
+    class="relative bg-gradient-to-r from-black via-[#180A0C] to-black py-16 px-4 sm:px-6 border-t border-white/5 overflow-hidden reveal-on-scroll"
+  >
+    <!-- Dark Red Supercar Background Backdrop Overlay -->
+    <div
+      class="absolute inset-0 opacity-25 mix-blend-luminosity bg-cover bg-center pointer-events-none"
+      style="background-image: url('/assets/images/cars/ferrari-sf90.png')"
+    ></div>
+    <div class="max-w-4xl mx-auto text-center relative z-10">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4">
+        {{ 'home.regionalService.title' | translate }}
+      </h2>
+      <p
+        class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-2xl mx-auto mb-8 font-normal"
+      >
+        {{ 'home.regionalService.description' | translate }}
+      </p>
+      <a
+        routerLink="/cars"
+        class="btn-shimmer bg-gold text-black font-extrabold text-xs tracking-wider px-8 py-3 rounded-full hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all duration-300 shadow-2xl inline-block cursor-pointer"
+      >
+        {{ 'home.regionalService.cta' | translate }}
+      </a>
+    </div>
+  </section>
+  <!-- ==================== NEW SECTION 3: BAKU'S LEADING LUXURY SUPERCARS RENTAL COMPANY ==================== -->
+  <section class="relative bg-black py-20 px-4 sm:px-6 border-t border-white/5 overflow-hidden reveal-on-scroll">
+    <!-- Range Rover / Luxury SUV Background Image -->
+    <div
+      class="absolute inset-0 opacity-40 bg-cover bg-right pointer-events-none"
+      style="background-image: url('/assets/images/cars/rolls-royce-cullinan.png')"
+    ></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+    <div class="max-w-6xl mx-auto relative z-10">
+      <!-- Left Glassmorphic Content Card -->
+      <div
+        class="glass-panel-gold rounded-3xl p-6 sm:p-8 max-w-md sm:max-w-lg shadow-2xl"
+      >
+        <h2 class="text-xl sm:text-2xl font-extrabold text-white leading-tight mb-4">
+          {{ 'home.supercarsBanner.title' | translate }}
+        </h2>
+        <p class="text-xs text-muted/90 leading-relaxed mb-6 font-normal">
+          {{ 'home.supercarsBanner.description' | translate }}
+        </p>
+        <a
+          routerLink="/cars"
+          class="btn-shimmer bg-gold hover:bg-amber-400 text-black font-extrabold text-xs tracking-wider px-8 py-3 rounded-full hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all duration-300 shadow-xl inline-block cursor-pointer"
+        >
+          {{ 'home.supercarsBanner.cta' | translate }}
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== NEW SECTION 4: ECONOMY AND LUXURY CAR RENTAL PRICES IN BAKU ==================== -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5 text-center section-divider reveal-on-scroll">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+      {{ 'home.rentalPrices.title' | translate }}
+    </h2>
+    <div class="title-accent-bar">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div>
+    <!-- 4 Column Price Grid Cards -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 text-left ltr:text-left rtl:text-right"
+    >
+      @for (objGroup of arrPriceCategories(); track objGroup.strCategoryTitleKey) {
+        <div
+          class="luxury-card-hover bg-[#12141C]/90 border border-white/10 rounded-2xl p-5 shadow-xl flex flex-col justify-between"
+        >
+          <div>
+            <h3
+              class="text-sm font-extrabold text-white text-center border-b border-white/10 pb-3 mb-3"
+            >
+              {{ objGroup.strCategoryTitleKey | translate }}
+            </h3>
+            <p class="text-[11px] text-muted/70 text-center leading-relaxed mb-4 min-h-[40px]">
+              {{ objGroup.strCategoryDescKey | translate }}
+            </p>
+            <ul class="space-y-2.5 text-xs border-t border-white/5 pt-3">
+              @for (objCarPrice of objGroup.arrCarPrices; track objCarPrice.strCarName) {
+                <li class="flex items-center justify-between text-[11px]">
+                  <span class="text-white/90 font-medium">• {{ objCarPrice.strCarName }}</span>
+                  <span class="text-gold font-bold shrink-0 ml-2 ltr:ml-2 rtl:mr-2">{{
+                    objCarPrice.strPrice
+                  }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+  <!-- ==================== NEW SECTION 5: TIPS FOR RENTING LUXURY CAR IN BAKU ==================== -->
+  <!-- <section class="relative bg-[#0B0D13] py-16 px-4 sm:px-6 border-t border-white/5 overflow-hidden section-divider reveal-on-scroll"> -->
+    <!-- Dark Luxury Car Grille Overlay Background -->
+    <!-- <div
+      class="absolute inset-0 opacity-15 bg-cover bg-center pointer-events-none"
+      style="background-image: url('/assets/images/home/cat-luxury.png')"
+    ></div>
+    <div class="max-w-5xl mx-auto relative z-10">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center tracking-tight mb-2">
+        {{ 'home.rentalTips.title' | translate }}
+      </h2>
+      <div class="title-accent-bar">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line reverse"></span>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs text-muted/90 leading-relaxed"> -->
+        <!-- Column 1 Tips -->
+        <!-- <div class="space-y-6 glass-panel rounded-2xl p-6 shadow-xl">
+          @for (objTip of objRentalTips().col1; track objTip.strTitleKey) {
+            <div>
+              <h4
+                class="font-bold text-gold text-xs mb-1.5 underline decoration-gold/40 underline-offset-4"
+              >
+                {{ objTip.strTitleKey | translate }}
+              </h4>
+              <p class="text-[11px] text-white/80 leading-relaxed">
+                {{ objTip.strDescKey | translate }}
+              </p>
+            </div>
+          }
+        </div> -->
+        <!-- Column 2 Tips -->
+        <!-- <div class="space-y-6 glass-panel rounded-2xl p-6 shadow-xl">
+          @for (objTip of objRentalTips().col2; track objTip.strTitleKey) {
+            <div>
+              <h4
+                class="font-bold text-gold text-xs mb-1.5 underline decoration-gold/40 underline-offset-4"
+              >
+                {{ objTip.strTitleKey | translate }}
+              </h4>
+              <p class="text-[11px] text-white/80 leading-relaxed">
+                {{ objTip.strDescKey | translate }}
+              </p>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </section> -->
+  <!-- ==================== 8. STEP-BY-STEP RENTAL PROCESS ==================== -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5 text-center section-divider reveal-on-scroll">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+      {{ 'home.stepProcess.title' | translate }}
+    </h2>
+    <div class="title-accent-bar">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div>
+    <p class="max-w-2xl mx-auto text-xs sm:text-sm text-muted/80 leading-relaxed font-normal mb-14">
+      {{ 'home.stepProcess.description' | translate }}
+    </p>
+    <!-- Vertical Timeline Step Flow -->
+    <div class="relative max-w-3xl mx-auto mb-10">
+      <!-- Center Dashed Line -->
+      <div
+        class="absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-gold/30 hidden md:block"
+      ></div>
+      <div class="space-y-8 md:space-y-12 relative">
+        @for (objStep of arrRentalSteps(); track objStep.strNumber; let blnEven = $even) {
+          <div
+            class="flex flex-col md:flex-row items-center gap-6 group"
+            [class.md:flex-row-reverse]="blnEven"
+          >
+            <!-- Content Box -->
+            <div
+              class="w-full md:w-1/2 text-center"
+              [class.md:text-right]="!blnEven"
+              [class.md:text-left]="blnEven"
+            >
+              <div
+                class="luxury-card-hover bg-[#14161E]/90 border border-white/10 hover:border-gold/40 rounded-2xl p-5 shadow-xl inline-block w-full max-w-sm"
+              >
+                <div
+                  class="flex items-center gap-3 mb-2"
+                  [class.justify-end]="!blnEven"
+                  [class.justify-start]="blnEven"
+                >
+                  <span
+                    class="w-7 h-7 rounded-lg bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/40 text-gold font-extrabold text-xs flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"
+                  >
+                    {{ objStep.strNumber }}
+                  </span>
+                  <h4 class="text-sm font-bold text-white tracking-wide group-hover:text-gold transition-colors">
+                    {{ objStep.strTitleKey | translate }}
+                  </h4>
+                </div>
+                <p class="text-xs text-muted/80 leading-relaxed">
+                  {{ objStep.strDescKey | translate }}
+                </p>
+              </div>
+            </div>
+            <!-- Center Timeline Connector Icon -->
+            <div
+              class="icon-pop w-10 h-10 rounded-full bg-[#1C1F2A] border-2 border-gold text-gold flex items-center justify-center shrink-0 z-10 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:border-amber-400 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]"
+            >
+              @switch (objStep.strIcon) {
+                @case ('car') {
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM3 9l2-4h14l2 4M3 9v7a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"
+                    />
+                  </svg>
+                }
+                @case ('whatsapp') {
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                      d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.337a9.96 9.96 0 004.77 1.218h.005c5.505 0 9.988-4.478 9.989-9.984 0-2.668-1.037-5.176-2.923-7.062A9.925 9.925 0 0012.012 2z"
+                    />
+                  </svg>
+                }
+                @case ('confirm') {
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                }
+                @default {
+                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                }
+              }
+            </div>
+            <!-- Empty Spacer for 50/50 Layout -->
+            <div class="hidden md:block w-1/2"></div>
+          </div>
+        }
+      </div>
+    </div>
+    <!-- Start Booking Button -->
+    <a
+      routerLink="/cars"
+      class="btn-shimmer bg-gold text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
+    >
+      {{ 'home.stepProcess.cta' | translate }}
+    </a>
+  </section>
+  <!-- ==================== 9. WHY RENT WITH US / TRUST BADGE ==================== -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 section-divider reveal-on-scroll">
+    <div
+      class="glass-panel rounded-3xl p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 hover:border-gold/30 transition-all duration-300"
+    >
+      <!-- Left Heading Content -->
+      <div class="text-center md:text-left ltr:md:text-left rtl:md:text-right">
+        <p class="text-xs tracking-[0.25em] uppercase font-semibold text-gold mb-2">
+          {{ 'home.whyUs.eyebrow' | translate }}
+        </p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+          {{ 'home.whyUs.title' | translate }}
+        </h2>
+        <p class="text-xs sm:text-sm text-muted/80 font-medium">
+          {{ 'home.whyUs.description' | translate }}
+        </p>
+      </div>
+      <!-- Right Google Rating Badge Card -->
+      <div
+        class="bg-[#1B1E28] border border-gold/20 rounded-2xl p-5 flex items-center gap-4 shrink-0 shadow-xl hover:border-gold/40 hover:scale-105 transition-all duration-300"
+      >
+        <div
+          class="w-12 h-12 rounded-xl bg-gold/10 border border-gold/40 flex items-center justify-center shrink-0"
+        >
+          <svg class="w-7 h-7 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"
+            />
+          </svg>
+        </div>
+        <div>
+          <h4 class="text-sm font-extrabold text-white">
+            {{ 'home.whyUs.badgeTitle' | translate }}
+          </h4>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="text-xs font-bold text-amber-400"
+              >★★★★★ {{ 'home.whyUs.rating' | translate }}</span
+            >
+            <span class="text-[11px] text-muted font-medium"
+              >({{ 'home.whyUs.googleReviews' | translate }})</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ==================== 10. GOOGLE REVIEWS SLIDER SECTION ==================== -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 section-divider reveal-on-scroll">
+    <!-- Header with Rating and Controls -->
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+      <div class="flex items-center gap-3 text-center sm:text-left">
+        <div
+          class="w-9 h-9 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center font-extrabold text-sm text-gold shadow-sm"
+        >
+          G
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-white leading-tight">
+            {{ 'home.reviews.title' | translate }}
+          </h3>
+          <p class="text-xs text-amber-400 font-medium">
+            {{ 'home.reviews.ratingText' | translate }}
+          </p>
+        </div>
+      </div>
+      <!-- Action Button -->
+      <a
+        href="https://google.com"
+        target="_blank"
+        class="btn-shimmer bg-[#1D202A] hover:bg-gold hover:text-black border border-white/10 hover:border-gold/40 text-white font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-300 shadow-md"
+      >
+        {{ 'home.reviews.writeReview' | translate }}
+      </a>
+    </div>
+    <!-- Reviews Grid Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      @for (objRev of arrReviews(); track objRev.strNameKey) {
+        <div
+          class="luxury-card-hover bg-[#14161E]/90 border border-white/10 rounded-2xl p-5 flex flex-col justify-between shadow-lg group"
+        >
+          <div>
+            <!-- User Header -->
+            <div class="flex items-center gap-3 mb-3">
+              <div
+                class="icon-pop w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{
+                  objRev.strColor
+                }}"
+              >
+                {{ objRev.strInitial }}
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-white truncate group-hover:text-gold transition-colors">
+                  {{ objRev.strNameKey | translate }}
+                </h4>
+                <p class="text-[10px] text-muted truncate">{{ objRev.strTagKey | translate }}</p>
+              </div>
+            </div>
+            <!-- Star Rating -->
+            <div class="text-amber-400 text-xs mb-2">★★★★★</div>
+            <!-- Review Content -->
+            <p class="text-xs text-white/80 leading-relaxed font-normal">
+              "{{ objRev.strTextKey | translate }}"
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+  <!-- ==================== 11. FOLLOW US ON SOCIAL MEDIA ==================== -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 text-center section-divider reveal-on-scroll">
+    <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-2">
+      {{ 'home.social.title' | translate }}
+    </h2>
+    <div class="title-accent-bar mb-8">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      @for (objSoc of arrSocialLinks(); track objSoc.strNameKey) {
+        <a
+          [href]="objSoc.strUrl"
+          target="_blank"
+          class="luxury-card-hover bg-[#14161E]/90 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-2 group transition-all duration-300 shadow-md hover:bg-[#1C1F2B]"
+        >
+          <!-- Social Platform Badge Icon -->
+          <div
+            class="icon-pop w-10 h-10 rounded-full bg-[#1F222E] border border-white/10 flex items-center justify-center text-white group-hover:text-gold group-hover:border-gold/40 transition-colors"
+          >
+            @switch (objSoc.strIcon) {
+              @case ('instagram') {
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+              }
+              @case ('facebook') {
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+              }
+              @case ('youtube') {
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+                  />
+                </svg>
+              }
+              @default {
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                  <path
+                    d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.82.56-1.31 1.52-1.36 2.51-.07.99.37 1.97 1.12 2.6.76.65 1.83.89 2.8.69 1.05-.21 1.96-.96 2.37-1.96.22-.52.31-1.1.3-1.67V.02z"
+                  />
+                </svg>
+              }
+            }
+          </div>
+          <span class="text-xs font-bold text-white group-hover:text-gold transition-colors">
+            {{ objSoc.strNameKey | translate }}
+          </span>
+          <span class="text-[10px] text-muted"> {{ objSoc.strHandle }} </span>
+        </a>
+      }
+    </div>
+  </section>
+  <!-- ==================== 12. FREQUENTLY ASKED QUESTIONS (FAQ GRID) ==================== -->
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5 section-divider reveal-on-scroll">
+    <h2 class="text-2xl sm:text-3xl font-extrabold text-white text-center tracking-tight mb-2">
+      {{ 'home.faq.title' | translate }}
+    </h2>
+    <div class="title-accent-bar mb-12">
+      <span class="line"></span>
+      <span class="dot"></span>
+      <span class="line reverse"></span>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Column 1 FAQ Groups -->
+      <div class="space-y-8">
+        @for (objGroup of arrFaqColumn1(); track objGroup.strTitleKey) {
+          <div>
+            <h3 class="text-xs font-extrabold tracking-widest text-gold uppercase mb-3 px-1">
+              {{ objGroup.strTitleKey | translate }}
+            </h3>
+            <div class="space-y-2.5">
+              @for (objQ of objGroup.arrQuestions; track objQ.strId) {
+                <div
+                  class="bg-[#14161E]/90 border border-white/10 hover:border-gold/40 rounded-xl overflow-hidden transition-all duration-300 shadow-md group"
+                >
+                  <!-- Accordion Question Trigger Button -->
+                  <button
+                    type="button"
+                    (click)="toggleFaq(objQ.strId)"
+                    class="w-full p-4 flex items-center justify-between text-left ltr:text-left rtl:text-right text-xs font-bold text-white hover:text-gold transition-colors cursor-pointer"
+                  >
+                    <span>{{ objQ.strQuestionKey | translate }}</span>
+                    <span
+                      class="icon-pop w-5 h-5 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-sm shrink-0 ml-3 ltr:ml-3 rtl:mr-3 group-hover:bg-gold group-hover:text-black transition-colors"
+                    >
+                      {{ strOpenFaqId() === objQ.strId ? '−' : '+' }}
+                    </span>
+                  </button>
+                  <!-- Accordion Answer Content -->
+                  @if (strOpenFaqId() === objQ.strId) {
+                    <div
+                      class="faq-answer-enter px-4 pb-4 pt-2 text-xs text-muted/90 border-t border-white/5 leading-relaxed bg-[#181B26]"
+                    >
+                      {{ objQ.strAnswerKey | translate }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+      <!-- Column 2 FAQ Groups -->
+      <div class="space-y-8">
+        @for (objGroup of arrFaqColumn2(); track objGroup.strTitleKey) {
+          <div>
+            <h3 class="text-xs font-extrabold tracking-widest text-gold uppercase mb-3 px-1">
+              {{ objGroup.strTitleKey | translate }}
+            </h3>
+            <div class="space-y-2.5">
+              @for (objQ of objGroup.arrQuestions; track objQ.strId) {
+                <div
+                  class="bg-[#14161E]/90 border border-white/10 hover:border-gold/40 rounded-xl overflow-hidden transition-all duration-300 shadow-md group"
+                >
+                  <!-- Accordion Question Trigger Button -->
+                  <button
+                    type="button"
+                    (click)="toggleFaq(objQ.strId)"
+                    class="w-full p-4 flex items-center justify-between text-left ltr:text-left rtl:text-right text-xs font-bold text-white hover:text-gold transition-colors cursor-pointer"
+                  >
+                    <span>{{ objQ.strQuestionKey | translate }}</span>
+                    <span
+                      class="icon-pop w-5 h-5 rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-sm shrink-0 ml-3 ltr:ml-3 rtl:mr-3 group-hover:bg-gold group-hover:text-black transition-colors"
+                    >
+                      {{ strOpenFaqId() === objQ.strId ? '−' : '+' }}
+                    </span>
+                  </button>
+                  <!-- Accordion Answer Content -->
+                  @if (strOpenFaqId() === objQ.strId) {
+                    <div
+                      class="faq-answer-enter px-4 pb-4 pt-2 text-xs text-muted/90 border-t border-white/5 leading-relaxed bg-[#181B26]"
+                    >
+                      {{ objQ.strAnswerKey | translate }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+</div>

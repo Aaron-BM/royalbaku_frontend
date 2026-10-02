@@ -1,0 +1,261 @@
+/* ==========================================================================
+   Nav: fonts
+   ========================================================================== */
+:host header,
+:host nav,
+:host nav a,
+:host nav button,
+:host nav span,
+:host nav li {
+  font-family: 'Montserrat', 'Tajawal', sans-serif;
+}
+
+/* ==========================================================================
+   Floating island + travelling gold border
+   ========================================================================== */
+@property --nav-gold-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes navGoldTravel {
+  to {
+    --nav-gold-angle: 360deg;
+  }
+}
+
+.apple-gold-island {
+  position: relative;
+  border: 1px solid var(--border-medium);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+  transition: border-color 150ms ease-out;
+}
+
+.apple-gold-island:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.apple-gold-island::before,
+.apple-gold-island::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  border-radius: inherit;
+  animation: navGoldTravel 5.5s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+}
+
+/* Sharp metallic highlight */
+.apple-gold-island::before {
+  inset: -1px;
+  padding: 1.5px;
+  z-index: 2;
+  background: conic-gradient(
+    from var(--nav-gold-angle) at 50% 50%,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(207, 174, 61, 0.1) 310deg,
+    rgba(207, 174, 61, 0.45) 330deg,
+    #fff8d6 348deg,
+    #ffffff 354deg,
+    #d4af37 358deg,
+    transparent 360deg
+  );
+}
+
+/* Soft ambient glow behind the highlight */
+.apple-gold-island::after {
+  inset: -2px;
+  padding: 3px;
+  z-index: 1;
+  filter: blur(4px);
+  opacity: 0.85;
+  background: conic-gradient(
+    from var(--nav-gold-angle) at 50% 50%,
+    transparent 0deg,
+    transparent 270deg,
+    rgba(207, 174, 61, 0.15) 310deg,
+    rgba(207, 174, 61, 0.6) 340deg,
+    rgba(255, 248, 214, 0.9) 354deg,
+    rgba(212, 175, 55, 0.5) 358deg,
+    transparent 360deg
+  );
+}
+
+/* ==========================================================================
+   Logo
+   ========================================================================== */
+@keyframes logoEntrance {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.logo-emblem {
+  opacity: 0;
+  animation: logoEntrance 250ms cubic-bezier(0.16, 1, 0.3, 1) 100ms 1 forwards;
+}
+
+/* ==========================================================================
+   Desktop links
+   ========================================================================== */
+.nav-link-item {
+  position: relative;
+  z-index: 2;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  transition: color 150ms ease-out;
+}
+
+.nav-link-item:hover,
+.nav-link-item:focus-visible,
+.nav-link-item.active,
+.nav-link-item.is-open {
+  color: #cfae3d;
+}
+
+/* Soft hover glow */
+.nav-link-item::before {
+  content: '';
+  position: absolute;
+  inset: -2px -4px;
+  z-index: -1;
+  border-radius: 8px;
+  background: radial-gradient(circle, rgba(207, 174, 61, 0.4) 0%, rgba(207, 174, 61, 0.05) 75%);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+  pointer-events: none;
+}
+
+.nav-link-item:hover::before,
+.nav-link-item:focus-visible::before,
+.nav-link-item.is-open::before {
+  opacity: 0.35;
+  transform: scale(1);
+}
+
+/* Chevron follows the open state only (no separate hover state) */
+.nav-chevron {
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform 200ms ease-out, color 150ms ease-out;
+}
+
+.nav-link-item.is-open .nav-chevron {
+  transform: rotate(180deg);
+  color: #cfae3d;
+}
+
+/* Sliding underline */
+.nav-sliding-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  width: 1px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, rgba(207, 174, 61, 0.2), #cfae3d, rgba(207, 174, 61, 0.2));
+  transform-origin: left center;
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), opacity 150ms ease-out;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   Dropdowns
+   The wrapper handles visibility only (so its positioning classes such as
+   -translate-x-1/2 are never overwritten). The inner panel handles the slide.
+   ========================================================================== */
+.nav-dropdown-menu {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  /* Keep visible until the fade-out finishes, then hide */
+  transition: opacity 160ms ease-out, visibility 0s linear 160ms;
+}
+
+.nav-dropdown-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 160ms ease-out, visibility 0s;
+}
+
+.nav-dropdown-panel {
+  transform: translateY(6px);
+  transform-origin: top center;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-dropdown-menu.is-open .nav-dropdown-panel {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Language toggle
+   ========================================================================== */
+.lang-toggle-container {
+  padding: 3px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: #14151c;
+}
+
+.lang-pill-indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  border-radius: 9999px;
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transform: translateX(0);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.lang-pill-indicator.is-az {
+  transform: translateX(100%);
+}
+
+.lang-btn {
+  position: relative;
+  z-index: 10;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 150ms ease-out;
+}
+
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  color: #ffffff;
+}
+
+.lang-btn.is-active {
+  color: #000000;
+}
+
+/* ==========================================================================
+   Reduced motion
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  :host *,
+  :host ::before,
+  :host ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+}
