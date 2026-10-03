@@ -48,6 +48,7 @@
                       [src]="strImg"
                       [alt]="car.strTitle"
                       [attr.loading]="$index === 0 ? 'eager' : 'lazy'"
+                      (click)="openPreviewModal(strImg, car.strTitle)"
                       class="w-full h-full object-cover transition-transform duration-700 ease-out cursor-zoom-in drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
                       [class.group-hover:scale-110]="$index === numActiveImageIndex()"
                     />
@@ -55,6 +56,18 @@
                 }
               </div>
             </div>
+
+            <!-- Full-screen Expand Zoom Button -->
+            <button
+              type="button"
+              (click)="openPreviewModal(strActiveImage(), car.strTitle)"
+              title="Expand image preview"
+              class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-lg hover:scale-105"
+            >
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+              </svg>
+            </button>
 
             <!-- Right Slider Control Arrow -->
             @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
@@ -261,7 +274,7 @@
             <!-- Call us -->
             <a
               [href]="'tel:' + (car.strWhatsappNumber || '')"
-              class="bg-white hover:bg-gold text-black font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
+              class="bg-gold hover:bg-gold text-black font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
             >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -469,3 +482,11 @@
     </div>
   </div>
 </div>
+
+<!-- Full Screen Lightbox Image Preview Modal -->
+<app-image-preview-modal
+  [blnIsOpen]="blnIsImageModalOpen()"
+  [strImageUrl]="strPreviewImageUrl()"
+  [strAltText]="strPreviewAltText()"
+  (closeModal)="closePreviewModal()"
+></app-image-preview-modal>

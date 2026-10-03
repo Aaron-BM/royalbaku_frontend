@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnInit, Output, inject, signal } from '
 import { CommonModule } from '@angular/common';
 import { TourPackage } from '../../../../core/models/tour-package.model';
 import { SiteSettingService } from '../../../../core/services/site-setting.service';
+import { ImagePreviewModal } from '../../../../shared/components/image-preview-modal/image-preview-modal';
 
 @Component({
   selector: 'app-tour-package-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ImagePreviewModal],
   templateUrl: './tour-package-card.html',
   styleUrl: './tour-package-card.css',
 })
@@ -21,6 +22,11 @@ export class TourPackageCard implements OnInit {
 
   protected readonly strPhoneHref = signal<string | null>(null);
   protected readonly strPhoneDisplay = signal<string>('');
+
+  // Image Preview Lightbox Modal State
+  protected readonly blnIsImageModalOpen = signal<boolean>(false);
+  protected readonly strPreviewImageUrl = signal<string | null>(null);
+  protected readonly strPreviewAltText = signal<string>('');
 
   ngOnInit(): void {
     this.siteSettingService.getSiteSettings().subscribe((settings) => {
@@ -44,6 +50,17 @@ export class TourPackageCard implements OnInit {
     if (strWaUrl && typeof window !== 'undefined') {
       window.open(strWaUrl, '_blank');
     }
+  }
+
+  protected openPreviewModal(strUrl: string, strAlt: string = ''): void {
+    this.strPreviewImageUrl.set(strUrl);
+    this.strPreviewAltText.set(strAlt);
+    this.blnIsImageModalOpen.set(true);
+  }
+
+  protected closePreviewModal(): void {
+    this.blnIsImageModalOpen.set(false);
+    this.strPreviewImageUrl.set(null);
   }
 
   get previewStops() {

@@ -4,12 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CarService } from '../../../core/services/car.service';
 import { InquiryService } from '../../../core/services/inquiry.service';
+import { SiteSettingService } from '../../../core/services/site-setting.service';
 import { CarDetailItem } from '../../../core/models/car.model';
+import { ImagePreviewModal } from '../../../shared/components/image-preview-modal/image-preview-modal';
 
 @Component({
   selector: 'app-app-car-detail',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, FormsModule],
+  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal],
   templateUrl: './car-detail.html',
   styleUrl: './car-detail.css',
 })
@@ -17,11 +19,17 @@ export class CarDetail implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly carService = inject(CarService);
   private readonly inquiryService = inject(InquiryService);
+  private readonly siteSettingService = inject(SiteSettingService);
 
   // Car details signal state
   protected readonly objCar = signal<CarDetailItem | null>(null);
   protected readonly strActiveImage = signal<string>('');
   protected readonly numActiveImageIndex = signal<number>(0);
+
+  // Full-screen Image Preview Modal state
+  protected readonly blnIsImageModalOpen = signal<boolean>(false);
+  protected readonly strPreviewImageUrl = signal<string | null>(null);
+  protected readonly strPreviewAltText = signal<string>('');
 
   // Booking Form Fields
   protected strCustomerName = '';
@@ -55,6 +63,17 @@ export class CarDetail implements OnInit {
   protected selectGalleryImage(strImg: string, numIndex: number): void {
     this.strActiveImage.set(strImg);
     this.numActiveImageIndex.set(numIndex);
+  }
+
+  protected openPreviewModal(strUrl: string, strAlt: string = ''): void {
+    this.strPreviewImageUrl.set(strUrl);
+    this.strPreviewAltText.set(strAlt);
+    this.blnIsImageModalOpen.set(true);
+  }
+
+  protected closePreviewModal(): void {
+    this.blnIsImageModalOpen.set(false);
+    this.strPreviewImageUrl.set(null);
   }
 
   protected prevImage(): void {
@@ -108,10 +127,10 @@ export class CarDetail implements OnInit {
       });
 
     // Open WhatsApp redirect
-    const strEncoded = encodeURIComponent(strMessage);
-    const strWaNum = currentCar?.strWhatsappNumber || '';
-    if (typeof window !== 'undefined') {
-      window.open(`https://wa.me/${strWaNum}?text=${strEncoded}`, '_blank');
+    const strWaNum = currentCar?.strWhatsappNumber || '994102357434';
+    const urlWa = this.siteSettingService.getWhatsappUrl(strWaNum, strMessage);
+    if (typeof window !== 'undefined' && urlWa) {
+      window.open(urlWa, '_blank');
     }
   }
 }
