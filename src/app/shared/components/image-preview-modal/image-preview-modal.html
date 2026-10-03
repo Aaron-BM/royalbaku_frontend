@@ -1,0 +1,46 @@
+@if (blnIsOpen && strImageUrl) {
+  <div
+    class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-6 md:p-10 select-none overflow-hidden"
+    data-backdrop="true"
+    (click)="onBackdropClick($event)"
+  >
+    <!-- Top Bar Controls -->
+    <div class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-3">
+      <!-- Close Button (×) -->
+      <button
+        type="button"
+        (click)="onClose()"
+        aria-label="Close image preview"
+        class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-2xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/50"
+      >
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Main Image Preview Container -->
+    <div
+      class="modal-content relative max-w-full max-h-full flex flex-col items-center justify-center"
+      (click)="$event.stopPropagation()"
+    >
+      <img
+        [src]="strImageUrl"
+        [alt]="strAltText || 'Full screen preview'"
+        class="modal-image max-w-[92vw] max-h-[85vh] sm:max-w-[90vw] sm:max-h-[88vh] object-contain rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/10 transition-all duration-300"
+      />
+
+      <!-- Optional Caption Tag -->
+      @if (strAltText) {
+        <div class="mt-4 px-4 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-sm text-xs sm:text-sm text-white/90 font-medium tracking-wide text-center max-w-lg truncate shadow-lg">
+          {{ strAltText }}
+        </div>
+      }
+    </div>
+  </div>
+}

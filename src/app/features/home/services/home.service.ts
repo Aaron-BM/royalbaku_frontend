@@ -28,15 +28,6 @@ export class HomeService {
   private readonly strApiBaseUrl = `${environment.apiBaseUrl}/home`;
 
   /**
-   * Fetches latest offers list for home section.
-   */
-  // getLatestOffers(): Observable<LatestOfferItem[]> {
-  //   return this.http.get<LatestOfferItem[]>(`${this.strApiBaseUrl}/latest-offers/`).pipe(
-  //     catchError(() => of([]))
-  //   );
-  // }
-
-  /**
    * Fetches price category groups for home price grid.
    */
   getPriceCategories(): Observable<PriceCategoryGroup[]> {
@@ -44,13 +35,4 @@ export class HomeService {
       catchError(() => of([]))
     );
   }
-
-  /**
-   * Fetches tips for renting luxury car list.
-   */
-  // getRentalTips(): Observable<{ col1: RentalTipItem[]; col2: RentalTipItem[] }> {
-  //   return this.http.get<{ col1: RentalTipItem[]; col2: RentalTipItem[] }>(`${this.strApiBaseUrl}/tips/`).pipe(
-  //     catchError(() => of({ col1: [], col2: [] }))
-  //   );
-  // }
 }

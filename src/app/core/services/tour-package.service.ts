@@ -179,12 +179,9 @@ export class TourPackageService {
     return this.http.get<TourPackageApi[] | { results: TourPackageApi[] }>(`${this.strApiUrl}/`).pipe(
       map((res) => {
         const arrRaw = Array.isArray(res) ? res : res?.results || [];
-        if (!arrRaw || arrRaw.length === 0) {
-          return this.arrFallbackPackages;
-        }
         return arrRaw.map((pkg) => this.mapApiToTourPackage(pkg));
       }),
-      catchError(() => of(this.arrFallbackPackages))
+      catchError(() => of([]))
     );
   }
 
@@ -201,10 +198,7 @@ export class TourPackageService {
   getPackageBySlug(slug: string): Observable<TourPackage | null> {
     return this.http.get<TourPackageApi>(`${this.strApiUrl}/${slug}/`).pipe(
       map((res) => this.mapApiToTourPackage(res)),
-      catchError(() => {
-        const fallback = this.arrFallbackPackages.find((p) => p.slug === slug || p.id === slug);
-        return of(fallback || this.arrFallbackPackages[0]);
-      })
+      catchError(() => of(null))
     );
   }
 }

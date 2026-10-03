@@ -56,7 +56,6 @@ export class CurrencyService {
         this.blnIsLoading.set(false);
       },
       error: (err) => {
-        console.warn('Could not fetch external exchange rates, using fallback rate 1.70', err);
         this.blnIsLoading.set(false);
       },
     });
