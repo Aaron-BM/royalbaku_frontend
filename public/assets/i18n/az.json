@@ -36,8 +36,14 @@
   },
   "home": {
     "welcomeSub": "Royal Baku Rent A Car-a xoş gəlmisiniz",
-    "mainTitleBold": "Lüks",
-    "mainTitleRest": "Bakıda avtomobil icarəsi",
+    "heroFixedWord": "Kəşf edin:",
+    "heroRotating": {
+      "style": "Bakını zövqlə",
+      "rentals": "Premium avtomobil icarəsini",
+      "tours": "Unudulmaz turları",
+      "drives": "Bakının ən möhtəşəm sürüşlərini",
+      "limits": "Sərhədsiz lüksü"
+    },
     "locationDubai": "Bakı",
     "searchCars": "Avtomobil axtar",
     "viewCollection": "Kolleksiyaya baxın",

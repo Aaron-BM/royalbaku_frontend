@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, inject, signal, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, inject, signal, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
@@ -37,10 +37,23 @@ import { EnquiryBar } from './components/enquiry-bar/enquiry-bar';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home implements OnInit, AfterViewInit {
+export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly homeService = inject(HomeService);
   private readonly carService = inject(CarService);
   private readonly elementRef = inject(ElementRef);
+
+  // Rotating Hero Title Phrases & State
+  protected readonly arrHeroPhrases = [
+    'home.heroRotating.style',
+    'home.heroRotating.rentals',
+    'home.heroRotating.tours',
+    'home.heroRotating.drives',
+    'home.heroRotating.limits',
+  ];
+  protected readonly numCurrentPhraseIndex = signal<number>(0);
+  protected readonly numExitingPhraseIndex = signal<number | null>(null);
+  private timerHandle: any = null;
+  private visibilityListener: (() => void) | null = null;
 
   // Home Service Signal State (Backend API driven)
   protected readonly arrLatestOffers = signal<LatestOfferItem[]>([]);
@@ -252,6 +265,54 @@ export class Home implements OnInit, AfterViewInit {
         this.arrBrands.set(tiled);
       }
     });
+
+    // Start hero rotating headline interval
+    this.startHeroRotation();
+  }
+
+  private startHeroRotation(): void {
+    if (typeof window === 'undefined') return;
+
+    // Check prefers-reduced-motion media query
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (mediaQuery.matches) {
+      return; // Respect reduced motion: do not auto-rotate
+    }
+
+    const advancePhrase = () => {
+      const current = this.numCurrentPhraseIndex();
+      const next = (current + 1) % this.arrHeroPhrases.length;
+      this.numExitingPhraseIndex.set(current);
+      this.numCurrentPhraseIndex.set(next);
+
+      setTimeout(() => {
+        if (this.numExitingPhraseIndex() === current) {
+          this.numExitingPhraseIndex.set(null);
+        }
+      }, 500);
+    };
+
+    this.timerHandle = setInterval(() => {
+      if (typeof document !== 'undefined' && !document.hidden) {
+        advancePhrase();
+      }
+    }, 3500);
+
+    // Pause on page visibility change
+    if (typeof document !== 'undefined') {
+      this.visibilityListener = () => {
+        if (document.hidden && this.timerHandle) {
+          clearInterval(this.timerHandle);
+          this.timerHandle = null;
+        } else if (!document.hidden && !this.timerHandle) {
+          this.timerHandle = setInterval(() => {
+            advancePhrase();
+          }, 3500);
+        }
+      };
+
+      document.addEventListener('visibilitychange', this.visibilityListener);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -276,6 +337,17 @@ export class Home implements OnInit, AfterViewInit {
         const revealElements = this.elementRef.nativeElement.querySelectorAll('.reveal-on-scroll');
         revealElements.forEach((el: Element) => observer.observe(el));
       }, 50);
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.timerHandle) {
+      clearInterval(this.timerHandle);
+      this.timerHandle = null;
+    }
+    if (this.visibilityListener && typeof document !== 'undefined') {
+      document.removeEventListener('visibilitychange', this.visibilityListener);
+      this.visibilityListener = null;
     }
   }
 }

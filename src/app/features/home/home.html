@@ -57,8 +57,25 @@
 
       <!-- Hero Main Title -->
       <h1 class="font-hero-title text-[1.75rem] sm:text-4xl md:text-[2.75rem] lg:text-5xl font-semibold tracking-[0.03em] leading-[1.2] text-white mb-3 sm:mb-4">
-        <span class="font-bold text-gradient-gold-hero">{{ 'home.mainTitleBold' | translate }}</span>
-        <span class="font-medium text-white/90"> {{ 'home.mainTitleRest' | translate }}</span>
+        <span class="sr-only">Royal Baku - Experience Premium Car Rentals & Tour Packages in Baku</span>
+
+        <span class="inline-flex flex-wrap justify-center items-baseline gap-x-2.5" aria-hidden="true">
+          <span class="font-bold text-gradient-gold-hero shrink-0">
+            {{ 'home.heroFixedWord' | translate }}
+          </span>
+
+          <span class="hero-rotating-container inline-grid align-baseline text-center sm:text-left">
+            @for (strKey of arrHeroPhrases; track strKey; let idx = $index) {
+              <span
+                class="hero-phrase-item font-medium text-white/90"
+                [class.is-active]="numCurrentPhraseIndex() === idx"
+                [class.is-exiting]="numExitingPhraseIndex() === idx"
+              >
+                {{ strKey | translate }}
+              </span>
+            }
+          </span>
+        </span>
       </h1>
 
     </div>
@@ -287,60 +304,6 @@
       }
     </div>
   </section> -->
-  <!-- ==================== NEW SECTION 2: RENT A CAR IN REGIONAL AZERBAIJAN (SUPERCAR BANNER) ==================== -->
-  <section
-    class="relative bg-gradient-to-r from-black via-[#180A0C] to-black py-16 px-4 sm:px-6 border-t border-white/5 overflow-hidden reveal-on-scroll"
-  >
-    <!-- Dark Red Supercar Background Backdrop Overlay -->
-    <div
-      class="absolute inset-0 opacity-25 mix-blend-luminosity bg-cover bg-center pointer-events-none"
-      style="background-image: url('/assets/images/cars/ferrari-sf90.png')"
-    ></div>
-    <div class="max-w-4xl mx-auto text-center relative z-10">
-      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-4">
-        {{ 'home.regionalService.title' | translate }}
-      </h2>
-      <p
-        class="text-xs sm:text-sm text-white/80 leading-relaxed max-w-2xl mx-auto mb-8 font-normal"
-      >
-        {{ 'home.regionalService.description' | translate }}
-      </p>
-      <a
-        routerLink="/cars"
-        class="btn-shimmer bg-gold text-black font-extrabold text-xs tracking-wider px-8 py-3 rounded-full hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all duration-300 shadow-2xl inline-block cursor-pointer"
-      >
-        {{ 'home.regionalService.cta' | translate }}
-      </a>
-    </div>
-  </section>
-  <!-- ==================== NEW SECTION 3: BAKU'S LEADING LUXURY SUPERCARS RENTAL COMPANY ==================== -->
-  <section class="relative bg-black py-20 px-4 sm:px-6 border-t border-white/5 overflow-hidden reveal-on-scroll">
-    <!-- Range Rover / Luxury SUV Background Image -->
-    <div
-      class="absolute inset-0 opacity-40 bg-cover bg-right pointer-events-none"
-      style="background-image: url('/assets/images/cars/rolls-royce-cullinan.png')"
-    ></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
-    <div class="max-w-6xl mx-auto relative z-10">
-      <!-- Left Glassmorphic Content Card -->
-      <div
-        class="glass-panel-gold rounded-3xl p-6 sm:p-8 max-w-md sm:max-w-lg shadow-2xl"
-      >
-        <h2 class="text-xl sm:text-2xl font-extrabold text-white leading-tight mb-4">
-          {{ 'home.supercarsBanner.title' | translate }}
-        </h2>
-        <p class="text-xs text-muted/90 leading-relaxed mb-6 font-normal">
-          {{ 'home.supercarsBanner.description' | translate }}
-        </p>
-        <a
-          routerLink="/cars"
-          class="btn-shimmer bg-gold hover:bg-amber-400 text-black font-extrabold text-xs tracking-wider px-8 py-3 rounded-full hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] transition-all duration-300 shadow-xl inline-block cursor-pointer"
-        >
-          {{ 'home.supercarsBanner.cta' | translate }}
-        </a>
-      </div>
-    </div>
-  </section>
   <!-- ==================== NEW SECTION 4: ECONOMY AND LUXURY CAR RENTAL PRICES IN BAKU ==================== -->
   <section class="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5 text-center section-divider reveal-on-scroll">
     <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">

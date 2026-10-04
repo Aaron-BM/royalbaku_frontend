@@ -24,6 +24,13 @@ export class TourPackagesPage implements OnInit {
   protected readonly strExpandedId = signal<string | null>(null);
   protected readonly blnIsLoading = signal<boolean>(true);
 
+  // Dynamic Contact Signals (Driven by SiteSettingService)
+  protected readonly strPhoneHref = signal<string | null>(null);
+  protected readonly strPhoneDisplay = signal<string>('');
+  protected readonly strWhatsappHref = signal<string | null>(null);
+  protected readonly strWhatsappDisplay = signal<string>('');
+  protected readonly strEmailDisplay = signal<string>('');
+
   // Inquiry / Booking Modal State
   protected readonly blnIsModalOpen = signal(false);
   protected readonly blnSubmitSuccess = signal(false);
@@ -35,6 +42,22 @@ export class TourPackagesPage implements OnInit {
   protected strSpecialRequest = '';
 
   ngOnInit(): void {
+    // Fetch backend Site Settings for contacts
+    this.siteSettingService.getSiteSettings().subscribe((settings) => {
+      const rawPhone = settings?.phone_number;
+      const rawWa = settings?.whatsapp_number;
+      this.strPhoneDisplay.set(rawPhone || '');
+      this.strPhoneHref.set(this.siteSettingService.getPhoneUrl(rawPhone));
+      this.strWhatsappDisplay.set(rawWa || '');
+      this.strWhatsappHref.set(
+        this.siteSettingService.getWhatsappUrl(
+          rawWa,
+          'Hello Royal Baku, I would like to inquire about your private tour packages in Azerbaijan.'
+        )
+      );
+      this.strEmailDisplay.set(settings?.email || 'info@royalbaku.az');
+    });
+
     this.blnIsLoading.set(true);
     this.tourService.getTourPackages().subscribe({
       next: (pkgs) => {

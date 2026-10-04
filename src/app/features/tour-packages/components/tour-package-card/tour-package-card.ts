@@ -22,6 +22,8 @@ export class TourPackageCard implements OnInit {
 
   protected readonly strPhoneHref = signal<string | null>(null);
   protected readonly strPhoneDisplay = signal<string>('');
+  protected readonly strWhatsappHref = signal<string | null>(null);
+  protected readonly strWhatsappDisplay = signal<string>('');
 
   // Image Preview Lightbox Modal State
   protected readonly blnIsImageModalOpen = signal<boolean>(false);
@@ -31,8 +33,16 @@ export class TourPackageCard implements OnInit {
   ngOnInit(): void {
     this.siteSettingService.getSiteSettings().subscribe((settings) => {
       const rawPhone = this.objPackage?.phone || settings?.phone_number;
+      const rawWa = this.objPackage?.whatsapp || settings?.whatsapp_number;
       this.strPhoneDisplay.set(rawPhone || '');
       this.strPhoneHref.set(this.siteSettingService.getPhoneUrl(rawPhone));
+      this.strWhatsappDisplay.set(rawWa || '');
+      this.strWhatsappHref.set(
+        this.siteSettingService.getWhatsappUrl(
+          rawWa,
+          `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}).`
+        )
+      );
     });
   }
 

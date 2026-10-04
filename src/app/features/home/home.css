@@ -71,6 +71,44 @@
   font-family: 'Inter', sans-serif;
 }
 
+/* ==========================================================================
+   Hero Rotating Headline Container & Transition Animations
+   ========================================================================== */
+.hero-rotating-container {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  align-items: baseline;
+}
+
+.hero-phrase-item {
+  grid-area: 1 / 1;
+  white-space: normal;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  visibility: hidden;
+  will-change: opacity, transform;
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-phrase-item.is-active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-phrase-item.is-exiting {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  visibility: visible;
+  z-index: 1;
+}
+
 /* Hero-only gold gradient (leaves .text-gradient-gold untouched elsewhere) */
 /* Hero gold: sleek, continuous sweep */
 .text-gradient-gold-hero {
@@ -98,6 +136,11 @@
 @media (prefers-reduced-motion: reduce) {
   .text-gradient-gold-hero {
     animation: none;
+  }
+
+  .hero-phrase-item {
+    transition: none !important;
+    transform: none !important;
   }
 }
 

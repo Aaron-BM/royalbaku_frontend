@@ -38,8 +38,14 @@
   },
   "home": {
     "welcomeSub": "PREMIUM CAR RENTAL IN BAKU",
-    "mainTitleBold": "Experience",
-    "mainTitleRest": "the Royal Drive",
+    "heroFixedWord": "Experience",
+    "heroRotating": {
+      "style": "Royal Baku in Style",
+      "rentals": "Premium Car Rentals",
+      "tours": "Unforgettable Tours",
+      "drives": "Baku's Finest Drives",
+      "limits": "Luxury Without Limits"
+    },
     "locationDubai": "Baku",
     "searchCars": "Search Cars",
     "viewCollection": "View Collection",
