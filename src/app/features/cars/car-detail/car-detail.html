@@ -124,9 +124,9 @@
                 <span class="text-muted/80 font-normal"
                   >{{ 'carDetail.specs.deposit' | translate }}:
                 </span>
-                <span class="text-gold font-normal">{{
-                  car.objSpecs?.strDepositKey || ''
-                }}</span>
+                <span class="text-gold font-normal">
+                  {{ car.numDepositUsd ? (car.numDepositUsd | appCurrency) : (car.objSpecs?.strDepositValue || car.objSpecs?.strDepositKey || '0') }}
+                </span>
               </div>
               <div>
                 <span class="text-muted/80 font-normal"
@@ -232,25 +232,25 @@
                 <span class="text-[10px] font-normal text-muted/70 block">{{
                   'cars.daily' | translate
                 }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block"
-                  >{{ car.strCurrency }} {{ car.numDailyPrice }}</span
-                >
+                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
+                  {{ car.numDailyPrice | appCurrency }}
+                </span>
               </div>
               <div>
                 <span class="text-[10px] font-normal text-muted/70 block">{{
                   'cars.weekly' | translate
                 }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">{{
-                  car.strWeeklyPriceValue || ''
-                }}</span>
+                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
+                  {{ car.numWeeklyPrice ? (car.numWeeklyPrice | appCurrency) : (car.strWeeklyPriceValue || 'N/A') }}
+                </span>
               </div>
               <div>
                 <span class="text-[10px] font-normal text-muted/70 block">{{
                   'cars.monthly' | translate
                 }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">{{
-                  car.strMonthlyPriceValue || ''
-                }}</span>
+                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
+                  {{ car.numMonthlyPrice ? (car.numMonthlyPrice | appCurrency) : (car.strMonthlyPriceValue || 'N/A') }}
+                </span>
               </div>
             </div>
           </div>

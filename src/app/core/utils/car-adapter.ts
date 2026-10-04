@@ -203,6 +203,12 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
 
   const numDailyPrice =
     typeof car.price_daily === 'number' ? car.price_daily : parseFloat(car.price_daily) || 0;
+  const numWeeklyPrice =
+    car.price_weekly != null ? (typeof car.price_weekly === 'number' ? car.price_weekly : parseFloat(car.price_weekly) || undefined) : undefined;
+  const numMonthlyPrice =
+    car.price_monthly != null ? (typeof car.price_monthly === 'number' ? car.price_monthly : parseFloat(car.price_monthly) || undefined) : undefined;
+  const numDepositUsd =
+    car.specs?.deposit != null ? parseFloat(car.specs.deposit) || undefined : undefined;
 
   const arrRawImages: string[] = [];
 
@@ -238,6 +244,9 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     strImagePath: arrGalleryImages[0] || '',
     blnIsOffer: Boolean(car.is_offer),
     numDailyPrice: numDailyPrice,
+    numWeeklyPrice: numWeeklyPrice,
+    numMonthlyPrice: numMonthlyPrice,
+    numDepositUsd: numDepositUsd,
     strCurrency: '$',
     strWeeklyPriceValue: car.price_weekly ? `$${car.price_weekly}` : '',
     strMonthlyPriceValue: car.price_monthly ? `$${car.price_monthly}` : '',

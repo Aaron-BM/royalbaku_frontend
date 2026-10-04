@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { TourPackageService } from '../../../core/services/tour-package.service';
 import { TourPackage } from '../../../core/models/tour-package.model';
 import { TourPackageCard } from '../components/tour-package-card/tour-package-card';
@@ -19,6 +19,7 @@ export class TourPackagesPage implements OnInit {
   private readonly tourService = inject(TourPackageService);
   private readonly inquiryService = inject(InquiryService);
   private readonly siteSettingService = inject(SiteSettingService);
+  private readonly route = inject(ActivatedRoute);
 
   protected readonly arrPackages = signal<TourPackage[]>([]);
   protected readonly strExpandedId = signal<string | null>(null);
@@ -61,17 +62,73 @@ export class TourPackagesPage implements OnInit {
     this.blnIsLoading.set(true);
     this.tourService.getTourPackages().subscribe({
       next: (pkgs) => {
-        this.arrPackages.set(pkgs || []);
-        if (pkgs && pkgs.length > 0) {
-          this.strExpandedId.set(pkgs[0].id); // Expand first package by default
-        }
+        const arrList = pkgs || [];
+        this.arrPackages.set(arrList);
         this.blnIsLoading.set(false);
+
+        // Process route params once packages are loaded
+        this.handleRouteParams(arrList);
       },
       error: () => {
         this.arrPackages.set([]);
         this.blnIsLoading.set(false);
       },
     });
+
+    // Subscribe to paramMap to dynamically update when slug changes (e.g., navigating between details pages)
+    this.route.paramMap.subscribe((paramMap) => {
+      if (!this.blnIsLoading()) {
+        this.handleRouteParams(this.arrPackages());
+      }
+    });
+
+    // Also support query param `?package=slug` or `?slug=slug`
+    this.route.queryParamMap.subscribe(() => {
+      if (!this.blnIsLoading()) {
+        this.handleRouteParams(this.arrPackages());
+      }
+    });
+  }
+
+  private handleRouteParams(pkgs: TourPackage[]): void {
+    if (!pkgs || pkgs.length === 0) return;
+
+    const strSlug =
+      this.route.snapshot.paramMap.get('slug') ||
+      this.route.snapshot.queryParamMap.get('package') ||
+      this.route.snapshot.queryParamMap.get('slug');
+
+    if (strSlug) {
+      const matched = pkgs.find(
+        (p) => p.slug?.toLowerCase() === strSlug.toLowerCase() || p.id?.toLowerCase() === strSlug.toLowerCase()
+      );
+      if (matched) {
+        // Hard reset accordion: expand ONLY matched package
+        this.strExpandedId.set(matched.id);
+        this.scrollToPackage(matched.slug || matched.id);
+      } else {
+        // Fallback if slug doesn't match any package: expand first package by default
+        this.strExpandedId.set(pkgs[0].id);
+      }
+    } else {
+      // Default state when no slug in URL: expand first package
+      this.strExpandedId.set(pkgs[0].id);
+    }
+  }
+
+  private scrollToPackage(strSlugOrId: string): void {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    // Small delay ensures Angular DOM has rendered the expanded card height
+    setTimeout(() => {
+      const elemCard =
+        document.getElementById(`pkg-${strSlugOrId}`) ||
+        document.getElementById(strSlugOrId);
+
+      if (elemCard) {
+        elemCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 150);
   }
 
   protected onToggleExpand(id: string): void {

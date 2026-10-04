@@ -81,4 +81,11 @@ export class TourPackageCard implements OnInit {
     const total = this.objPackage?.stops?.length || 0;
     return Math.max(0, total - 4);
   }
+
+  get coverImageUrl(): string | null {
+    if (!this.objPackage || !this.objPackage.stops || this.objPackage.stops.length === 0) return null;
+    const stop1 = this.objPackage.stops.find((s) => s.order === 1);
+    const img = stop1?.image || this.objPackage.stops[0]?.image;
+    return img && img.trim().length > 0 ? img : null;
+  }
 }

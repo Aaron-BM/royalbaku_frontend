@@ -22,6 +22,9 @@ export interface CarItem {
   strOfferTextKey?: string;
   strDepositInfoKey?: string;
   numDailyPrice: number;
+  numWeeklyPrice?: number;
+  numMonthlyPrice?: number;
+  numDepositUsd?: number;
   strCurrency: string;
   strWeeklyPriceKey?: string;
   strMonthlyPriceKey?: string;

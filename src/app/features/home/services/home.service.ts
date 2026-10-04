@@ -12,7 +12,7 @@ export interface LatestOfferItem {
 export interface PriceCategoryGroup {
   strCategoryTitleKey: string;
   strCategoryDescKey: string;
-  arrCarPrices: { strCarName: string; strPrice: string }[];
+  arrCarPrices: { strCarName: string; numDailyPrice?: number; strPrice?: string }[];
 }
 
 export interface RentalTipItem {

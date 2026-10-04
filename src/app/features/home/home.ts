@@ -7,11 +7,23 @@ import { CarItem } from '../../core/models/car.model';
 import { HomeService, LatestOfferItem, PriceCategoryGroup, RentalTipItem } from './services/home.service';
 import { CarService } from '../../core/services/car.service';
 
+import { SiteSettingService } from '../../core/services/site-setting.service';
+import { TourPackageService } from '../../core/services/tour-package.service';
+import { TourPackage } from '../../core/models/tour-package.model';
+
 export interface HomeBrand {
   strId: string;
   strName: string;
   strSlug: string;
   strLogo?: string;
+}
+
+export interface HomeSocialItem {
+  idSocial: string;
+  strName: string;
+  strHandle?: string;
+  strUrl: string;
+  strIcon: string;
 }
 
 export interface HomeFeature {
@@ -29,17 +41,20 @@ export interface HomeCategory {
 }
 
 import { EnquiryBar } from './components/enquiry-bar/enquiry-bar';
+import { AppCurrencyPipe } from '../../shared/pipes/app-currency.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar],
+  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar, AppCurrencyPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly homeService = inject(HomeService);
   private readonly carService = inject(CarService);
+  private readonly siteSettingService = inject(SiteSettingService);
+  private readonly tourPackageService = inject(TourPackageService);
   private readonly elementRef = inject(ElementRef);
 
   // Rotating Hero Title Phrases & State
@@ -66,6 +81,10 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   // Featured Cars & Promotional Offers Signals (Backend API driven)
   protected readonly arrLuxuryCars = signal<CarItem[]>([]);
   protected readonly arrDailyOfferCars = signal<CarItem[]>([]);
+
+  // Tour Packages Signals (Backend API driven)
+  protected readonly arrTourPackages = signal<TourPackage[]>([]);
+  protected readonly numTotalTourPackages = signal<number>(0);
 
   // Brand Marquee Signal (Backend API driven - zero hardcoded data)
   protected readonly arrBrands = signal<HomeBrand[]>([]);
@@ -126,13 +145,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     { strNameKey: 'home.reviews.review4Name', strTagKey: 'home.reviews.review4Tag', strTextKey: 'home.reviews.review4Text', strInitial: 'M', strColor: 'bg-purple-600' },
   ]);
 
-  // Social Links
-  protected readonly arrSocialLinks = signal<{ strNameKey: string; strHandle: string; strUrl: string; strIcon: string }[]>([
-    { strNameKey: 'home.social.instagram', strHandle: '@royalbaku_car', strUrl: 'https://instagram.com', strIcon: 'instagram' },
-    { strNameKey: 'home.social.facebook', strHandle: 'Royal Baku Rent A Car', strUrl: 'https://facebook.com', strIcon: 'facebook' },
-    { strNameKey: 'home.social.youtube', strHandle: 'Royal Baku Channel', strUrl: 'https://youtube.com', strIcon: 'youtube' },
-    { strNameKey: 'home.social.tiktok', strHandle: '@royalbaku', strUrl: 'https://tiktok.com', strIcon: 'tiktok' },
-  ]);
+  // Dynamic Social Links (Backend API driven)
+  protected readonly arrSocialLinks = signal<HomeSocialItem[]>([]);
 
   // FAQ Column 1 & Column 2 Groups
   protected readonly arrFaqColumn1 = signal<{ strTitleKey: string; arrQuestions: { strId: string; strQuestionKey: string; strAnswerKey: string }[] }[]>([
@@ -205,7 +219,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
               strCategoryDescKey: `Rent ${strTitle} in Baku. Top-tier comfort, exceptional performance, and competitive daily rental rates.`,
               arrCarPrices: targetCars.map((c) => ({
                 strCarName: c.strCarName,
-                strPrice: `$${c.numDailyPrice} / day`,
+                numDailyPrice: c.numDailyPrice,
               })),
             };
           });
@@ -215,7 +229,7 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
           const buildCarPrices = (list: typeof prices) =>
             list.map((c) => ({
               strCarName: c.strCarName,
-              strPrice: `$${c.numDailyPrice} / day`,
+              numDailyPrice: c.numDailyPrice,
             }));
 
           this.arrPriceCategories.set([
@@ -266,8 +280,55 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
+    // Fetch social links dynamically from backend site settings
+    this.siteSettingService.getSiteSettings().subscribe((settings) => {
+      if (settings && settings.social_links && typeof settings.social_links === 'object') {
+        const arrLinks: HomeSocialItem[] = [];
+        Object.entries(settings.social_links).forEach(([key, url]) => {
+          if (url && typeof url === 'string' && url.trim().length > 0) {
+            const strPlatform = key.toLowerCase();
+            let strHandle = '';
+            try {
+              const objUrl = new URL(url);
+              strHandle = objUrl.pathname && objUrl.pathname !== '/' ? objUrl.pathname.replace(/^\//, '@') : objUrl.hostname;
+            } catch {
+              strHandle = url;
+            }
+
+            arrLinks.push({
+              idSocial: key,
+              strName: key.charAt(0).toUpperCase() + key.slice(1),
+              strIcon: strPlatform,
+              strUrl: url,
+              strHandle: strHandle,
+            });
+          }
+        });
+        this.arrSocialLinks.set(arrLinks);
+      }
+    });
+
+    // Fetch Tour Packages for Home Preview Section
+    this.tourPackageService.getTourPackages().subscribe((pkgs) => {
+      const arrList = pkgs || [];
+      this.numTotalTourPackages.set(arrList.length);
+      this.arrTourPackages.set(arrList.slice(0, 2));
+    });
+
     // Start hero rotating headline interval
     this.startHeroRotation();
+  }
+
+  private mutationObserver: MutationObserver | null = null;
+
+  /**
+   * Resolves cover image URL for a tour package (prefers stop order === 1, falls back to first stop)
+   */
+  protected getCoverImage(pkg: TourPackage): string | null {
+    if (!pkg || !pkg.stops || pkg.stops.length === 0) return null;
+    const stop1 = pkg.stops.find((s) => s.order === 1);
+    const img = stop1?.image || pkg.stops[0]?.image;
+    return img && img.trim().length > 0 ? img : null;
   }
 
   private startHeroRotation(): void {
@@ -332,15 +393,34 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
         });
       }, observerOptions);
 
-      // Attach observer to all elements with class .reveal-on-scroll
-      setTimeout(() => {
-        const revealElements = this.elementRef.nativeElement.querySelectorAll('.reveal-on-scroll');
+      const observeAllRevealElements = () => {
+        const revealElements = this.elementRef.nativeElement.querySelectorAll('.reveal-on-scroll:not(.is-revealed)');
         revealElements.forEach((el: Element) => observer.observe(el));
-      }, 50);
+      };
+
+      // Initial observation scans
+      observeAllRevealElements();
+      setTimeout(observeAllRevealElements, 50);
+      setTimeout(observeAllRevealElements, 300);
+
+      // MutationObserver automatically watches for newly inserted @if DOM elements (e.g. tour packages or social links loaded asynchronously)
+      if ('MutationObserver' in window) {
+        this.mutationObserver = new MutationObserver(() => {
+          observeAllRevealElements();
+        });
+        this.mutationObserver.observe(this.elementRef.nativeElement, {
+          childList: true,
+          subtree: true,
+        });
+      }
     }
   }
 
   ngOnDestroy(): void {
+    if (this.mutationObserver) {
+      this.mutationObserver.disconnect();
+      this.mutationObserver = null;
+    }
     if (this.timerHandle) {
       clearInterval(this.timerHandle);
       this.timerHandle = null;

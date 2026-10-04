@@ -25,6 +25,7 @@ export class TourPackageService {
       phone: '',
       website: 'www.royalbakucarrental.com',
       price: '$600',
+      priceUsd: 600,
       stops: [
         {
           order: 1,
@@ -81,6 +82,7 @@ export class TourPackageService {
       phone: '',
       website: 'www.royalbakucarrental.com',
       price: '$600',
+      priceUsd: 600,
       stops: [
         {
           order: 1,
@@ -144,6 +146,26 @@ export class TourPackageService {
     return rawUrl;
   }
 
+  private parseNumericPriceUsd(item: TourPackageApi): number | undefined {
+    if (typeof item.price_usd === 'number' && !isNaN(item.price_usd)) {
+      return item.price_usd;
+    }
+    if (item.price && typeof item.price === 'string') {
+      const cleaned = item.price.replace(/[^0-9.]/g, '');
+      const numVal = parseFloat(cleaned);
+      if (!isNaN(numVal)) {
+        return numVal;
+      }
+    }
+    if (typeof item.price === 'number' && !isNaN(item.price as any)) {
+      return item.price;
+    }
+    if (typeof window !== 'undefined') {
+      console.warn('[TourPackageService] Failed to parse numeric USD price for tour package:', item.title || item.slug, item.price);
+    }
+    return undefined;
+  }
+
   /**
    * Maps DRF API response to TourPackage interface
    */
@@ -168,6 +190,7 @@ export class TourPackageService {
       phone: item.phone || '',
       website: item.website || 'www.royalbakucarrental.com',
       price: item.price || '$600',
+      priceUsd: this.parseNumericPriceUsd(item),
       stops,
     };
   }

@@ -4,10 +4,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { CarItem } from '../../../core/models/car.model';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 
+import { AppCurrencyPipe } from '../../pipes/app-currency.pipe';
+
 @Component({
   selector: 'app-car-card',
   standalone: true,
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, AppCurrencyPipe],
   templateUrl: './car-card.html',
   styleUrl: './car-card.css',
 })

@@ -3,9 +3,16 @@
   <!-- ==================== HEADER (Always Visible) ==================== -->
   <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/10">
     <div class="flex items-center gap-4">
-      <!-- Royal Baku Crest Logo Icon -->
-      <div class="w-14 h-14 rounded-full bg-gradient-to-br from-gold/30 via-black to-gold/20 border border-gold/60 flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(207,174,61,0.2)]">
-        <span class="font-hero-title text-gold font-extrabold text-lg tracking-tighter">RB</span>
+      <!-- Cover Image Thumbnail (order === 1 stop image or first stop image) -->
+      <div class="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border border-gold/50 shrink-0 shadow-[0_0_15px_rgba(207,174,61,0.25)]">
+        @if (coverImageUrl; as strCoverImg) {
+          <img [src]="strCoverImg" [alt]="objPackage.title" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        } @else {
+          <div class="w-full h-full bg-gradient-to-br from-gold/30 via-black to-gold/20 flex items-center justify-center">
+            <span class="font-hero-title text-gold font-extrabold text-lg tracking-tighter">RB</span>
+          </div>
+        }
       </div>
 
       <div>

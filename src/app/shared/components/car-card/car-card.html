@@ -52,7 +52,7 @@
           {{ 'cars.daily' | translate }}
         </span>
         <span class="text-xs sm:text-sm font-semibold text-white mt-1 block">
-          {{ objCar.strCurrency }} {{ objCar.numDailyPrice }}
+          {{ objCar.numDailyPrice | appCurrency }}
         </span>
       </div>
 
@@ -62,7 +62,7 @@
           {{ 'cars.weekly' | translate }}
         </span>
         <span class="text-xs sm:text-sm font-medium text-white/90 mt-1 block">
-          {{ objCar.strWeeklyPriceKey || 'cars.askNow' | translate }}
+          {{ objCar.numWeeklyPrice ? (objCar.numWeeklyPrice | appCurrency) : (objCar.strWeeklyPriceKey || 'cars.askNow' | translate) }}
         </span>
       </div>
 
@@ -72,7 +72,7 @@
           {{ 'cars.monthly' | translate }}
         </span>
         <span class="text-xs sm:text-sm font-medium text-white/90 mt-1 block">
-          {{ objCar.strMonthlyPriceKey || 'cars.askNow' | translate }}
+          {{ objCar.numMonthlyPrice ? (objCar.numMonthlyPrice | appCurrency) : (objCar.strMonthlyPriceKey || 'cars.askNow' | translate) }}
         </span>
       </div>
     </div>

@@ -599,5 +599,9 @@
     "ins3A": "Contact our 24/7 emergency hotline immediately. Our concierge handles police reports, vehicle replacement, and roadside service.",
     "ins4Q": "Do you offer 24/7 roadside assistance?",
     "ins4A": "Yes, 24/7 roadside assistance, towing, and replacement vehicle services are guaranteed nationwide."
+  },
+  "tours": {
+    "contactForPrice": "Contact for pricing",
+    "from": "From"
   }
 }

@@ -597,5 +597,9 @@
     "ins3A": "Dərhal 24/7 təcili xəttimizə zəng edin. Konsyerj komandamız hesabatlar, avtomobilin dəyişdirilməsi və yolda kömək xidmətini təmin edir.",
     "ins4Q": "24/7 yolda kömək xidməti təqdim edirsinizmi?",
     "ins4A": "Bəli, ölkə miqyasında 24/7 təcili yolda kömək, evakuasiya və avtomobil dəyişdirilməsi zəmanət verilir."
+  },
+  "tours": {
+    "contactForPrice": "Qiymət üçün əlaqə saxlayın",
+    "from": "Qiyməti:"
   }
 }

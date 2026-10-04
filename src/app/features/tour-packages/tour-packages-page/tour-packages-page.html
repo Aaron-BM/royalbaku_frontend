@@ -101,12 +101,14 @@
     <!-- PACKAGES LIST -->
     @if (!blnIsLoading() && arrPackages().length > 0) {
       @for (pkg of arrPackages(); track pkg.id) {
-        <app-tour-package-card
-          [objPackage]="pkg"
-          [blnIsExpanded]="strExpandedId() === pkg.id"
-          (toggleExpand)="onToggleExpand(pkg.id)"
-          (openInquiry)="openInquiryModal($event)"
-        ></app-tour-package-card>
+        <div [id]="'pkg-' + pkg.slug" class="scroll-mt-28 block">
+          <app-tour-package-card
+            [objPackage]="pkg"
+            [blnIsExpanded]="strExpandedId() === pkg.id"
+            (toggleExpand)="onToggleExpand(pkg.id)"
+            (openInquiry)="openInquiryModal($event)"
+          ></app-tour-package-card>
+        </div>
       }
     }
 

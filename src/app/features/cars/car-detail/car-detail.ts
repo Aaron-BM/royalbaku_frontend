@@ -7,11 +7,12 @@ import { InquiryService } from '../../../core/services/inquiry.service';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 import { CarDetailItem } from '../../../core/models/car.model';
 import { ImagePreviewModal } from '../../../shared/components/image-preview-modal/image-preview-modal';
+import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 
 @Component({
   selector: 'app-app-car-detail',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal],
+  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe],
   templateUrl: './car-detail.html',
   styleUrl: './car-detail.css',
 })
