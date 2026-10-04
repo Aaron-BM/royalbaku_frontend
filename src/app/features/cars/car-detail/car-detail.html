@@ -259,7 +259,7 @@
           <div class="grid grid-cols-3 gap-2">
             <!-- WhatsApp -->
             <a
-              [href]="'https://wa.me/' + (car.strWhatsappNumber || '')"
+              [href]="strWhatsappHref"
               target="_blank"
               class="bg-[#00D95A] hover:bg-[#00b84c] text-white font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
             >
@@ -273,7 +273,7 @@
 
             <!-- Call us -->
             <a
-              [href]="'tel:' + (car.strWhatsappNumber || '')"
+              [href]="strPhoneHref"
               class="bg-gold hover:bg-gold text-black font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
             >
               <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

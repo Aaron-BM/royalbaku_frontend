@@ -127,10 +127,20 @@ export class CarDetail implements OnInit {
       });
 
     // Open WhatsApp redirect
-    const strWaNum = currentCar?.strWhatsappNumber || '994102357434';
-    const urlWa = this.siteSettingService.getWhatsappUrl(strWaNum, strMessage);
+    const urlWa = this.siteSettingService.getWhatsappUrl(currentCar?.strWhatsappNumber, strMessage);
     if (typeof window !== 'undefined' && urlWa) {
       window.open(urlWa, '_blank');
     }
+  }
+
+  protected get strWhatsappHref(): string | null {
+    const objCurrent = this.objCar();
+    const strMsg = `Hello Royal Baku, I would like to inquire about renting ${objCurrent?.strTitle || 'a car'}.`;
+    return this.siteSettingService.getWhatsappUrl(objCurrent?.strWhatsappNumber, strMsg);
+  }
+
+  protected get strPhoneHref(): string | null {
+    const objCurrent = this.objCar();
+    return this.siteSettingService.getPhoneUrl(objCurrent?.strWhatsappNumber);
   }
 }

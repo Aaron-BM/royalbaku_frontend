@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CarItem } from '../../../core/models/car.model';
+import { SiteSettingService } from '../../../core/services/site-setting.service';
 
 @Component({
   selector: 'app-car-card',
@@ -12,4 +13,11 @@ import { CarItem } from '../../../core/models/car.model';
 })
 export class CarCard {
   @Input({ required: true }) objCar!: CarItem;
+
+  protected readonly siteSettingService = inject(SiteSettingService);
+
+  protected get strWhatsappHref(): string | null {
+    const strMsg = `Hello Royal Baku, I am interested in renting ${this.objCar?.strTitle || 'a car'}.`;
+    return this.siteSettingService.getWhatsappUrl(this.objCar?.strWhatsappNumber, strMsg);
+  }
 }

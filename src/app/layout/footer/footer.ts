@@ -40,67 +40,18 @@ export class Footer implements OnInit {
   protected readonly intCurrentYear = signal<number>(new Date().getFullYear());
 
   protected readonly arrMainLinks = signal<FooterLink[]>([
-    { strLabelKey: 'footer.ourCars', urlPath: '/cars/all' },
+    { strLabelKey: 'footer.ourCars', urlPath: '/cars' },
     { strLabelKey: 'footer.aboutUs', urlPath: '/about' },
     { strLabelKey: 'footer.contacts', urlPath: '/contact' },
     { strLabelKey: 'footer.rentalPrices', urlPath: '/prices' },
     { strLabelKey: 'footer.faqs', urlPath: '/faq' },
   ]);
 
-  protected readonly arrCarTypeLinks = signal<FooterLink[]>([
-    { strLabelKey: 'categories.luxury', urlPath: '/cars/luxury' },
-    { strLabelKey: 'categories.sports', urlPath: '/cars/sports' },
-    { strLabelKey: 'categories.suv', urlPath: '/cars/suv' },
-    { strLabelKey: 'categories.economy', urlPath: '/cars/economy' },
-    { strLabelKey: 'categories.exotic', urlPath: '/cars/exotic' },
-    { strLabelKey: 'categories.convertible', urlPath: '/cars/convertible' },
-  ]);
+  protected readonly arrCarTypeLinks = signal<FooterLink[]>([]);
 
-  protected readonly arrContactItems = signal<ContactInfoItem[]>([
-    {
-      idContact: 'phone',
-      strValue: '+994 50 123 4567',
-      strIcon: 'phone',
-      urlHref: 'tel:+994501234567',
-    },
-    {
-      idContact: 'whatsapp',
-      strValue: '+994 10 235 7434',
-      strIcon: 'whatsapp',
-      urlHref: 'https://wa.me/994102357434',
-    },
-    {
-      idContact: 'email',
-      strValue: 'info@royalbakucar.com',
-      strIcon: 'email',
-      urlHref: 'mailto:info@royalbakucar.com',
-    },
-    {
-      idContact: 'address',
-      strTextKey: 'footer.addressText',
-      strValue: 'Nizami Street, Baku, Azerbaijan',
-      strIcon: 'location',
-    },
-    {
-      idContact: 'hours',
-      strTextKey: 'footer.service247',
-      strValue: '',
-      strIcon: 'clock',
-    },
-  ]);
+  protected readonly arrContactItems = signal<ContactInfoItem[]>([]);
 
-  protected readonly arrBrands = signal<string[]>(['Mercedes-Benz', 'Kia', 'Rolls-Royce', 'Lamborghini', 'Ferrari', 'Porsche', 'BMW', 'Bentley']);
-
-  protected readonly arrLocations = signal<string[]>([
-    'Central Baku',
-    'Heydar Aliyev Airport',
-    'Baku Boulevard',
-    'Port Baku',
-    'Flame Towers',
-    'Ganja',
-    'Qabala',
-    'Shahdag',
-  ]);
+  protected readonly arrBrands = signal<string[]>([]);
 
   protected readonly arrSocialLinks = signal<SocialLink[]>([
     { idSocial: 'fb', strName: 'Facebook', strIcon: 'facebook', urlHref: 'https://facebook.com' },
@@ -110,25 +61,27 @@ export class Footer implements OnInit {
   ]);
 
   ngOnInit(): void {
-    // Optionally override contact details with live backend site settings if configured
+    // Populate contact items and social links dynamically from backend site settings
     this.siteSettingService.getSiteSettings().subscribe((settings) => {
       if (settings) {
-        this.arrContactItems.update((items) =>
-          items.map((item) => {
-            if (item.idContact === 'phone' && settings.phone_number) {
-              const url = this.siteSettingService.getPhoneUrl(settings.phone_number);
-              return { ...item, strValue: settings.phone_number, urlHref: url || '' };
+        this.arrContactItems.set(this.buildContactItems(settings));
+
+        if (settings.social_links && typeof settings.social_links === 'object') {
+          const links: SocialLink[] = [];
+          Object.entries(settings.social_links).forEach(([key, url]) => {
+            if (url && typeof url === 'string') {
+              links.push({
+                idSocial: key,
+                strName: key.charAt(0).toUpperCase() + key.slice(1),
+                strIcon: key.toLowerCase(),
+                urlHref: url,
+              });
             }
-            if (item.idContact === 'whatsapp' && settings.whatsapp_number) {
-              const url = this.siteSettingService.getWhatsappUrl(settings.whatsapp_number);
-              return { ...item, strValue: settings.whatsapp_number, urlHref: url || '' };
-            }
-            if (item.idContact === 'email' && settings.email) {
-              return { ...item, strValue: settings.email, urlHref: `mailto:${settings.email}` };
-            }
-            return item;
-          })
-        );
+          });
+          if (links.length > 0) {
+            this.arrSocialLinks.set(links);
+          }
+        }
       }
     });
 
@@ -138,5 +91,78 @@ export class Footer implements OnInit {
         this.arrBrands.set(backendBrands.map((b) => b.strName));
       }
     });
+
+    // Fetch car categories dynamically from DRF backend API
+    this.carService.getCategories().subscribe((backendCategories) => {
+      if (backendCategories && backendCategories.length > 0) {
+        const mappedLinks: FooterLink[] = backendCategories.map((cat) => ({
+          strLabelKey: cat.strNameKey || `categories.${cat.strSlug}`,
+          urlPath: `/cars/${cat.strSlug}`,
+        }));
+        this.arrCarTypeLinks.set(mappedLinks);
+      }
+    });
+  }
+
+  private buildContactItems(settings: any): ContactInfoItem[] {
+    if (!settings) return [];
+
+    const strLang = this.svcLanguage.strCurrentLang() || 'en';
+    const items: ContactInfoItem[] = [];
+
+    if (settings.phone_number) {
+      items.push({
+        idContact: 'phone',
+        strValue: settings.phone_number,
+        strIcon: 'phone',
+        urlHref: this.siteSettingService.getPhoneUrl(settings.phone_number) || '',
+      });
+    }
+
+    if (settings.whatsapp_number) {
+      items.push({
+        idContact: 'whatsapp',
+        strValue: settings.whatsapp_number,
+        strIcon: 'whatsapp',
+        urlHref: this.siteSettingService.getWhatsappUrl(settings.whatsapp_number) || '',
+      });
+    }
+
+    if (settings.email) {
+      items.push({
+        idContact: 'email',
+        strValue: settings.email,
+        strIcon: 'email',
+        urlHref: `mailto:${settings.email}`,
+      });
+    }
+
+    if (settings.address) {
+      const strAddr = typeof settings.address === 'object'
+        ? (settings.address[strLang] || settings.address['en'] || settings.address['az'] || '')
+        : String(settings.address);
+      if (strAddr) {
+        items.push({
+          idContact: 'address',
+          strValue: strAddr,
+          strIcon: 'location',
+        });
+      }
+    }
+
+    if (settings.working_hours) {
+      const strHours = typeof settings.working_hours === 'object'
+        ? (settings.working_hours[strLang] || settings.working_hours['en'] || settings.working_hours['az'] || '')
+        : String(settings.working_hours);
+      if (strHours) {
+        items.push({
+          idContact: 'hours',
+          strValue: strHours,
+          strIcon: 'clock',
+        });
+      }
+    }
+
+    return items;
   }
 }

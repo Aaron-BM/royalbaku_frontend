@@ -81,7 +81,7 @@
     <div class="grid grid-cols-3 gap-2 mt-auto">
       <!-- WhatsApp Button -->
       <a
-        [href]="'https://wa.me/' + (objCar.strWhatsappNumber || '')"
+        [href]="strWhatsappHref"
         target="_blank"
         rel="noopener noreferrer"
         (click)="$event.stopPropagation()"

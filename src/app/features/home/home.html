@@ -543,68 +543,7 @@
       </div>
     </div>
   </section>
-  <!-- ==================== 10. GOOGLE REVIEWS SLIDER SECTION ==================== -->
-  <section class="max-w-6xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 section-divider reveal-on-scroll">
-    <!-- Header with Rating and Controls -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
-      <div class="flex items-center gap-3 text-center sm:text-left">
-        <div
-          class="w-9 h-9 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center font-extrabold text-sm text-gold shadow-sm"
-        >
-          G
-        </div>
-        <div>
-          <h3 class="text-base font-bold text-white leading-tight">
-            {{ 'home.reviews.title' | translate }}
-          </h3>
-          <p class="text-xs text-amber-400 font-medium">
-            {{ 'home.reviews.ratingText' | translate }}
-          </p>
-        </div>
-      </div>
-      <!-- Action Button -->
-      <a
-        href="https://google.com"
-        target="_blank"
-        class="btn-shimmer bg-[#1D202A] hover:bg-gold hover:text-black border border-white/10 hover:border-gold/40 text-white font-bold text-xs px-5 py-2.5 rounded-full transition-all duration-300 shadow-md"
-      >
-        {{ 'home.reviews.writeReview' | translate }}
-      </a>
-    </div>
-    <!-- Reviews Grid Cards -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      @for (objRev of arrReviews(); track objRev.strNameKey) {
-        <div
-          class="luxury-card-hover bg-[#14161E]/90 border border-white/10 rounded-2xl p-5 flex flex-col justify-between shadow-lg group"
-        >
-          <div>
-            <!-- User Header -->
-            <div class="flex items-center gap-3 mb-3">
-              <div
-                class="icon-pop w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm shrink-0 {{
-                  objRev.strColor
-                }}"
-              >
-                {{ objRev.strInitial }}
-              </div>
-              <div class="min-w-0">
-                <h4 class="text-xs font-bold text-white truncate group-hover:text-gold transition-colors">
-                  {{ objRev.strNameKey | translate }}
-                </h4>
-                <p class="text-[10px] text-muted truncate">{{ objRev.strTagKey | translate }}</p>
-              </div>
-            </div>
-            <!-- Star Rating -->
-            <div class="text-amber-400 text-xs mb-2">★★★★★</div>
-            <!-- Review Content -->
-            <p class="text-xs text-white/80 leading-relaxed font-normal">
-              "{{ objRev.strTextKey | translate }}"
-            </p>
-          </div>
-        </div>
-      }
-    </div>
-  </section>
+
   <!-- ==================== 11. FOLLOW US ON SOCIAL MEDIA ==================== -->
   <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 text-center section-divider reveal-on-scroll">
     <h2 class="text-xl sm:text-2xl font-extrabold text-white tracking-tight mb-2">

@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, inject, signal, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { forkJoin } from 'rxjs';
 import { CarCard } from '../../shared/components/car-card/car-card';
 import { CarItem } from '../../core/models/car.model';
 import { HomeService, LatestOfferItem, PriceCategoryGroup, RentalTipItem } from './services/home.service';
@@ -162,45 +163,56 @@ export class Home implements OnInit, AfterViewInit {
   ]);
 
   ngOnInit(): void {
-    // Fetch rental price items dynamically from DRF backend API
-    this.carService.getRentalPrices().subscribe((prices) => {
+    // Fetch rental price categories and cars dynamically from DRF backend API
+    forkJoin({
+      backendCategories: this.carService.getCategories(),
+      prices: this.carService.getRentalPrices(),
+    }).subscribe(({ backendCategories, prices }) => {
       if (prices && prices.length > 0) {
-        const getCat = (p: typeof prices[0]) => (p.strCategoryName || '').toLowerCase();
-        const sportsCars = prices.filter((p) => getCat(p).includes('sport') || getCat(p).includes('exotic')).slice(0, 4);
-        const luxuryCars = prices.filter((p) => getCat(p).includes('luxur') || getCat(p).includes('vip')).slice(0, 4);
-        const economyCars = prices.filter((p) => getCat(p).includes('econom') || getCat(p).includes('sedan')).slice(0, 4);
-        const suvCars = prices.filter((p) => getCat(p).includes('suv') || getCat(p).includes('4x4')).slice(0, 4);
+        if (backendCategories && backendCategories.length > 0) {
+          const groups: PriceCategoryGroup[] = backendCategories.map((cat) => {
+            const catNameLower = (cat.strNameKey || '').toLowerCase();
+            const catSlugLower = (cat.strSlug || '').toLowerCase();
 
-        const buildCarPrices = (list: typeof prices) =>
-          list.map((c) => ({
-            strCarName: c.strCarName,
-            strPrice: `$${c.numDailyPrice} / day`,
-          }));
+            const matchingCars = prices.filter((p) => {
+              const pCatLower = (p.strCategoryName || '').toLowerCase();
+              return (
+                pCatLower.includes(catSlugLower) ||
+                pCatLower.includes(catNameLower) ||
+                catSlugLower.includes(pCatLower) ||
+                catNameLower.includes(pCatLower)
+              );
+            });
 
-        const fallbackAll = prices.slice(0, 4);
+            const targetCars = matchingCars.length > 0 ? matchingCars.slice(0, 4) : prices.slice(0, 4);
+            const strTitle = cat.strNameKey || `${cat.strSlug.toUpperCase()} Cars`;
 
-        this.arrPriceCategories.set([
-          {
-            strCategoryTitleKey: 'home.rentalPrices.sportsTitle',
-            strCategoryDescKey: 'home.rentalPrices.sportsDesc',
-            arrCarPrices: sportsCars.length > 0 ? buildCarPrices(sportsCars) : buildCarPrices(fallbackAll),
-          },
-          {
-            strCategoryTitleKey: 'home.rentalPrices.luxuryTitle',
-            strCategoryDescKey: 'home.rentalPrices.luxuryDesc',
-            arrCarPrices: luxuryCars.length > 0 ? buildCarPrices(luxuryCars) : buildCarPrices(fallbackAll),
-          },
-          {
-            strCategoryTitleKey: 'home.rentalPrices.economyTitle',
-            strCategoryDescKey: 'home.rentalPrices.economyDesc',
-            arrCarPrices: economyCars.length > 0 ? buildCarPrices(economyCars) : buildCarPrices(fallbackAll),
-          },
-          {
-            strCategoryTitleKey: 'home.rentalPrices.suvTitle',
-            strCategoryDescKey: 'home.rentalPrices.suvDesc',
-            arrCarPrices: suvCars.length > 0 ? buildCarPrices(suvCars) : buildCarPrices(fallbackAll),
-          },
-        ]);
+            return {
+              strCategoryTitleKey: strTitle,
+              strCategoryDescKey: `Rent ${strTitle} in Baku. Top-tier comfort, exceptional performance, and competitive daily rental rates.`,
+              arrCarPrices: targetCars.map((c) => ({
+                strCarName: c.strCarName,
+                strPrice: `$${c.numDailyPrice} / day`,
+              })),
+            };
+          });
+
+          this.arrPriceCategories.set(groups);
+        } else {
+          const buildCarPrices = (list: typeof prices) =>
+            list.map((c) => ({
+              strCarName: c.strCarName,
+              strPrice: `$${c.numDailyPrice} / day`,
+            }));
+
+          this.arrPriceCategories.set([
+            {
+              strCategoryTitleKey: 'Car Rental Prices',
+              strCategoryDescKey: 'Transparent daily rental rates for all active cars in Baku.',
+              arrCarPrices: buildCarPrices(prices.slice(0, 4)),
+            },
+          ]);
+        }
       }
     });
 
