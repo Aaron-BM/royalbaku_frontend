@@ -118,140 +118,156 @@
               {{ car.strTitle }}
             </h1>
 
-            <!-- Specifications 2-Column Grid -->
-            <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs mb-6">
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.deposit' | translate }}:
-                </span>
-                <span class="text-gold font-normal">
-                  {{ car.numDepositUsd ? (car.numDepositUsd | appCurrency) : (car.objSpecs?.strDepositValue || car.objSpecs?.strDepositKey || '0') }}
-                </span>
+            <!-- Specifications 2-Column Grid (Reflows dynamically) -->
+            @if (hasAnySpecs(car)) {
+              <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs mb-6">
+                <!-- Deposit -->
+                @if (car.numDepositUsd != null || car.objSpecs?.strDepositValue != null) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.deposit' | translate }}: </span>
+                    <span class="text-gold font-normal">
+                      {{ car.numDepositUsd != null ? (car.numDepositUsd | appCurrency) : car.objSpecs?.strDepositValue }}
+                    </span>
+                  </div>
+                }
+
+                <!-- Mileage Limit -->
+                @if (car.objSpecs?.numMileageLimitKm) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.mileageLimit' | translate }}: </span>
+                    <span class="text-gold font-normal">{{ car.objSpecs?.numMileageLimitKm }} km</span>
+                  </div>
+                }
+
+                <!-- Extra Mileage -->
+                @if (car.objSpecs?.strExtraMileageRate) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.extraMileage' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strExtraMileageRate }}</span>
+                  </div>
+                }
+
+                <!-- Payment Methods -->
+                @if (car.objSpecs?.strPaymentMethodsKey) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.payment' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strPaymentMethodsKey | translate }}</span>
+                  </div>
+                }
+
+                <!-- Color -->
+                @if (car.objSpecs?.strColor) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.color' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strColor }}</span>
+                  </div>
+                }
+
+                <!-- Transmission -->
+                @if (car.objSpecs?.strTransmission) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.transmission' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strTransmission }}</span>
+                  </div>
+                }
+
+                <!-- Car Type -->
+                @if (car.objSpecs?.strCarType) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.carType' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strCarType }}</span>
+                  </div>
+                }
+
+                <!-- Engine -->
+                @if (car.objSpecs?.strEngine) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.engine' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strEngine }}</span>
+                  </div>
+                }
+
+                <!-- Seats -->
+                @if (car.objSpecs?.numSeats) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.seats' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.numSeats }}</span>
+                  </div>
+                }
+
+                <!-- Doors -->
+                @if (car.objSpecs?.numDoors) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.doors' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.numDoors }}</span>
+                  </div>
+                }
+
+                <!-- Acceleration 0-100 -->
+                @if (car.objSpecs?.strAcceleration0To100) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.acceleration' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strAcceleration0To100 }}</span>
+                  </div>
+                }
+
+                <!-- Drivetrain -->
+                @if (car.objSpecs?.strDriveTrain) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.drive' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strDriveTrain }}</span>
+                  </div>
+                }
+
+                <!-- Fuel Type -->
+                @if (car.objSpecs?.strFuelType) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.fuel' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.strFuelType }}</span>
+                  </div>
+                }
+
+                <!-- Luggage Count -->
+                @if (car.objSpecs?.numLuggageCount) {
+                  <div>
+                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.luggage' | translate }}: </span>
+                    <span class="text-white font-normal">{{ car.objSpecs?.numLuggageCount }}</span>
+                  </div>
+                }
               </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.mileageLimit' | translate }}:
-                </span>
-                <span class="text-gold font-normal"
-                  >{{ car.objSpecs?.numMileageLimitKm || 0 }} km</span
-                >
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.extraMileage' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strExtraMileageRate || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.payment' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  'carDetail.specs.paymentMethods' | translate
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.color' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{ car.objSpecs?.strColor || '' }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.transmission' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strTransmission || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.carType' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strCarType || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.engine' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{ car.objSpecs?.strEngine || '' }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.seats' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{ car.objSpecs?.numSeats || 0 }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.doors' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{ car.objSpecs?.numDoors || 0 }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.acceleration' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strAcceleration0To100 || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.drive' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strDriveTrain || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.fuel' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{
-                  car.objSpecs?.strFuelType || ''
-                }}</span>
-              </div>
-              <div>
-                <span class="text-muted/80 font-normal"
-                  >{{ 'carDetail.specs.luggage' | translate }}:
-                </span>
-                <span class="text-white font-normal">{{ car.objSpecs?.numLuggageCount || 0 }}</span>
-              </div>
-            </div>
+            }
 
             <!-- Pricing Table (Daily / Weekly / Monthly) -->
             <div
-              class="grid grid-cols-3 gap-2 text-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-3 mb-6"
+              class="flex flex-wrap items-center justify-around gap-2 text-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-3 mb-6"
             >
-              <div>
-                <span class="text-[10px] font-normal text-muted/70 block">{{
-                  'cars.daily' | translate
-                }}</span>
+              <!-- Daily Price (Required) -->
+              <div class="flex-1 min-w-[80px]">
+                <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.daily' | translate }}</span>
                 <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
                   {{ car.numDailyPrice | appCurrency }}
                 </span>
               </div>
-              <div>
-                <span class="text-[10px] font-normal text-muted/70 block">{{
-                  'cars.weekly' | translate
-                }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
-                  {{ car.numWeeklyPrice ? (car.numWeeklyPrice | appCurrency) : (car.strWeeklyPriceValue || 'N/A') }}
-                </span>
-              </div>
-              <div>
-                <span class="text-[10px] font-normal text-muted/70 block">{{
-                  'cars.monthly' | translate
-                }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
-                  {{ car.numMonthlyPrice ? (car.numMonthlyPrice | appCurrency) : (car.strMonthlyPriceValue || 'N/A') }}
-                </span>
-              </div>
+
+              <!-- Weekly Price (Optional) -->
+              @if (car.numWeeklyPrice || car.strWeeklyPriceValue) {
+                <div class="flex-1 min-w-[80px]">
+                  <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.weekly' | translate }}</span>
+                  <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
+                    {{ car.numWeeklyPrice ? (car.numWeeklyPrice | appCurrency) : car.strWeeklyPriceValue }}
+                  </span>
+                </div>
+              }
+
+              <!-- Monthly Price (Optional) -->
+              @if (car.numMonthlyPrice || car.strMonthlyPriceValue) {
+                <div class="flex-1 min-w-[80px]">
+                  <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.monthly' | translate }}</span>
+                  <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
+                    {{ car.numMonthlyPrice ? (car.numMonthlyPrice | appCurrency) : car.strMonthlyPriceValue }}
+                  </span>
+                </div>
+              }
             </div>
           </div>
 

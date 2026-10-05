@@ -204,11 +204,23 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
   const numDailyPrice =
     typeof car.price_daily === 'number' ? car.price_daily : parseFloat(car.price_daily) || 0;
   const numWeeklyPrice =
-    car.price_weekly != null ? (typeof car.price_weekly === 'number' ? car.price_weekly : parseFloat(car.price_weekly) || undefined) : undefined;
+    car.price_weekly != null && !isNaN(Number(car.price_weekly))
+      ? Number(car.price_weekly)
+      : undefined;
   const numMonthlyPrice =
-    car.price_monthly != null ? (typeof car.price_monthly === 'number' ? car.price_monthly : parseFloat(car.price_monthly) || undefined) : undefined;
-  const numDepositUsd =
-    car.specs?.deposit != null ? parseFloat(car.specs.deposit) || undefined : undefined;
+    car.price_monthly != null && !isNaN(Number(car.price_monthly))
+      ? Number(car.price_monthly)
+      : undefined;
+
+  let numDepositUsd: number | undefined = undefined;
+  let strDepositValue: string | undefined = undefined;
+  if (car.specs?.deposit != null && String(car.specs.deposit).trim() !== '') {
+    strDepositValue = String(car.specs.deposit);
+    const parsedDep = parseFloat(car.specs.deposit);
+    if (!isNaN(parsedDep)) {
+      numDepositUsd = parsedDep;
+    }
+  }
 
   const arrRawImages: string[] = [];
 
@@ -248,30 +260,34 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     numMonthlyPrice: numMonthlyPrice,
     numDepositUsd: numDepositUsd,
     strCurrency: '$',
-    strWeeklyPriceValue: car.price_weekly ? `$${car.price_weekly}` : '',
-    strMonthlyPriceValue: car.price_monthly ? `$${car.price_monthly}` : '',
-    strDescriptionKey: parseI18nString(car.description),
+    strWeeklyPriceValue: car.price_weekly ? String(car.price_weekly) : undefined,
+    strMonthlyPriceValue: car.price_monthly ? String(car.price_monthly) : undefined,
+    strDescriptionKey: parseI18nString(car.description) || undefined,
     arrCategorySlugs: strCategorySlug ? [strCategorySlug] : [],
     strBrandSlug: strBrandSlug,
     arrGalleryImages: arrGalleryImages,
     objSpecs: {
-      strDepositValue: car.specs?.deposit || '',
-      numMileageLimitKm: car.specs?.mileage_limit || 0,
-      strExtraMileageRate: car.specs?.extra_mileage_rate || '',
-      strColor: car.specs?.color || '',
+      strDepositValue: strDepositValue,
+      numMileageLimitKm:
+        car.specs?.mileage_limit != null && !isNaN(Number(car.specs.mileage_limit)) && Number(car.specs.mileage_limit) > 0
+          ? Number(car.specs.mileage_limit)
+          : undefined,
+      strExtraMileageRate: car.specs?.extra_mileage_rate || undefined,
+      strPaymentMethodsKey: car.specs?.payment_methods || undefined,
+      strColor: car.specs?.color || undefined,
       strTransmission: car.transmission
         ? car.transmission.charAt(0) + car.transmission.slice(1).toLowerCase()
-        : '',
-      strCarType: car.category ? parseI18nString(car.category.name) : '',
-      strEngine: car.specs?.engine || '',
-      numSeats: car.seating_capacity || 0,
-      numDoors: car.door_count || 0,
-      numLuggageCount: car.luggage_capacity || 0,
-      strAcceleration0To100: car.specs?.acceleration_0_100 || car.specs?.['0-60'] || '',
-      strDriveTrain: car.specs?.drivetrain || '',
+        : (car.specs?.transmission || undefined),
+      strCarType: car.category ? parseI18nString(car.category.name) : (car.specs?.car_type || undefined),
+      strEngine: car.specs?.engine || undefined,
+      numSeats: car.seating_capacity != null && Number(car.seating_capacity) > 0 ? Number(car.seating_capacity) : undefined,
+      numDoors: car.door_count != null && Number(car.door_count) > 0 ? Number(car.door_count) : undefined,
+      numLuggageCount: car.luggage_capacity != null && Number(car.luggage_capacity) > 0 ? Number(car.luggage_capacity) : undefined,
+      strAcceleration0To100: car.specs?.acceleration_0_100 || car.specs?.['0-60'] || undefined,
+      strDriveTrain: car.specs?.drivetrain || undefined,
       strFuelType: car.fuel_type
         ? car.fuel_type.charAt(0) + car.fuel_type.slice(1).toLowerCase()
-        : '',
+        : (car.specs?.fuel_type || undefined),
     },
   };
 }

@@ -144,4 +144,25 @@ export class CarDetail implements OnInit {
     const objCurrent = this.objCar();
     return this.siteSettingService.getPhoneUrl(objCurrent?.strWhatsappNumber);
   }
+
+  protected hasAnySpecs(car: CarDetailItem): boolean {
+    if (car.numDepositUsd != null || (car.objSpecs?.strDepositValue != null && car.objSpecs.strDepositValue !== '')) return true;
+    if (!car.objSpecs) return false;
+    const s = car.objSpecs;
+    return Boolean(
+      s.numMileageLimitKm ||
+      s.strExtraMileageRate ||
+      s.strPaymentMethodsKey ||
+      s.strColor ||
+      s.strTransmission ||
+      s.strCarType ||
+      s.strEngine ||
+      s.numSeats ||
+      s.numDoors ||
+      s.strAcceleration0To100 ||
+      s.strDriveTrain ||
+      s.strFuelType ||
+      s.numLuggageCount
+    );
+  }
 }

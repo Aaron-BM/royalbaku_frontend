@@ -181,8 +181,8 @@
 
       <!-- ==================== Language & Currency toggles + hamburger ==================== -->
       <div class="flex items-center gap-3">
-        <!-- Currency toggle -->
-        <div class="lang-toggle-container relative flex items-center">
+        <!-- Currency toggle (desktop/tablet) -->
+        <div class="lang-toggle-container relative hidden lg:flex items-center">
           <span
             class="lang-pill-indicator"
             [class.is-az]="svcCurrency.strCurrentCurrency() === 'AZN'"
@@ -208,8 +208,8 @@
           </button>
         </div>
 
-        <!-- Language toggle -->
-        <div class="lang-toggle-container relative flex items-center">
+        <!-- Language toggle (desktop/tablet) -->
+        <div class="lang-toggle-container relative hidden lg:flex items-center">
           <span
             class="lang-pill-indicator"
             [class.is-az]="svcLanguage.strCurrentLang() === 'az'"
@@ -258,8 +258,69 @@
     @if (blnIsMobileMenuOpen()) {
       <div
         id="nav-mobile-menu"
-        class="relative z-10 lg:hidden border-t border-white/10 px-5 sm:px-6 py-5 space-y-4 rounded-b-2xl bg-[var(--bg-base)]/95 backdrop-blur-2xl"
+        class="relative z-10 lg:hidden border-t border-white/10 px-5 sm:px-6 py-5 space-y-4 rounded-b-2xl bg-[var(--bg-base)]/95 backdrop-blur-2xl shadow-2xl"
       >
+        <!-- Mobile Currency & Language Selectors -->
+        <div class="flex items-center justify-between gap-3 pb-4 border-b border-white/10">
+          <div class="flex flex-col gap-1">
+            <span class="text-[10px] tracking-widest font-semibold uppercase text-gold">Currency</span>
+            <div class="lang-toggle-container relative flex items-center">
+              <span
+                class="lang-pill-indicator"
+                [class.is-az]="svcCurrency.strCurrentCurrency() === 'AZN'"
+                aria-hidden="true"
+              ></span>
+              <button
+                type="button"
+                (click)="fnSetCurrency('USD')"
+                [class.is-active]="svcCurrency.strCurrentCurrency() === 'USD'"
+                [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'USD'"
+                class="lang-btn px-3 py-1 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none"
+              >
+                USD
+              </button>
+              <button
+                type="button"
+                (click)="fnSetCurrency('AZN')"
+                [class.is-active]="svcCurrency.strCurrentCurrency() === 'AZN'"
+                [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'AZN'"
+                class="lang-btn px-3 py-1 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none"
+              >
+                AZN
+              </button>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-1">
+            <span class="text-[10px] tracking-widest font-semibold uppercase text-gold">Language</span>
+            <div class="lang-toggle-container relative flex items-center">
+              <span
+                class="lang-pill-indicator"
+                [class.is-az]="svcLanguage.strCurrentLang() === 'az'"
+                aria-hidden="true"
+              ></span>
+              <button
+                type="button"
+                (click)="fnSetLanguage('en')"
+                [class.is-active]="svcLanguage.strCurrentLang() === 'en'"
+                [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'en'"
+                class="lang-btn px-3 py-1 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none"
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                (click)="fnSetLanguage('az')"
+                [class.is-active]="svcLanguage.strCurrentLang() === 'az'"
+                [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'az'"
+                class="lang-btn px-3 py-1 rounded-full text-xs font-medium cursor-pointer tracking-wider outline-none"
+              >
+                AZ
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="space-y-1.5">
           <p class="text-[10px] tracking-widest font-semibold uppercase text-gold">
             {{ 'nav.navigation' | translate }}
