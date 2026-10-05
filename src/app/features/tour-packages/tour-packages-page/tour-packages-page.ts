@@ -8,10 +8,13 @@ import { TourPackageCard } from '../components/tour-package-card/tour-package-ca
 import { InquiryService } from '../../../core/services/inquiry.service';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 
+import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
+import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
+
 @Component({
   selector: 'app-tour-packages-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard],
+  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent],
   templateUrl: './tour-packages-page.html',
   styleUrl: './tour-packages-page.css',
 })

@@ -25,10 +25,13 @@ export interface SocialLink {
   urlHref: string;
 }
 
+import { IconWhatsappComponent } from '../../shared/components/icons/icon-whatsapp';
+import { IconPhoneComponent } from '../../shared/components/icons/icon-phone';
+
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, IconWhatsappComponent, IconPhoneComponent],
   templateUrl: './footer.html',
   styleUrl: './footer.css',
 })

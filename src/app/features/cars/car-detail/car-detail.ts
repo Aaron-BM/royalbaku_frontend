@@ -8,11 +8,13 @@ import { SiteSettingService } from '../../../core/services/site-setting.service'
 import { CarDetailItem } from '../../../core/models/car.model';
 import { ImagePreviewModal } from '../../../shared/components/image-preview-modal/image-preview-modal';
 import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
+import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
+import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
 
 @Component({
   selector: 'app-app-car-detail',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe],
+  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe, IconWhatsappComponent, IconPhoneComponent],
   templateUrl: './car-detail.html',
   styleUrl: './car-detail.css',
 })

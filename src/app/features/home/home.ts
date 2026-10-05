@@ -42,11 +42,12 @@ export interface HomeCategory {
 
 import { EnquiryBar } from './components/enquiry-bar/enquiry-bar';
 import { AppCurrencyPipe } from '../../shared/pipes/app-currency.pipe';
+import { IconWhatsappComponent } from '../../shared/components/icons/icon-whatsapp';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar, AppCurrencyPipe],
+  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar, AppCurrencyPipe, IconWhatsappComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

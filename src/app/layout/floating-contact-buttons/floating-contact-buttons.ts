@@ -1,10 +1,13 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { SiteSettingService } from '../../core/services/site-setting.service';
 
+import { IconWhatsappComponent } from '../../shared/components/icons/icon-whatsapp';
+import { IconPhoneComponent } from '../../shared/components/icons/icon-phone';
+
 @Component({
   selector: 'app-floating-contact-buttons',
   standalone: true,
-  imports: [],
+  imports: [IconWhatsappComponent, IconPhoneComponent],
   templateUrl: './floating-contact-buttons.html',
   styleUrl: './floating-contact-buttons.css',
 })

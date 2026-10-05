@@ -10,10 +10,12 @@ export interface CountryCodeOption {
   dialCode: string;
 }
 
+import { IconPhoneComponent } from '../../../../shared/components/icons/icon-phone';
+
 @Component({
   selector: 'app-enquiry-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe],
+  imports: [CommonModule, FormsModule, TranslatePipe, IconPhoneComponent],
   templateUrl: './enquiry-bar.html',
   styleUrl: './enquiry-bar.css',
 })

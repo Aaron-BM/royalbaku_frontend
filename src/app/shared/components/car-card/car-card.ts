@@ -5,11 +5,12 @@ import { CarItem } from '../../../core/models/car.model';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 
 import { AppCurrencyPipe } from '../../pipes/app-currency.pipe';
+import { IconWhatsappComponent } from '../icons/icon-whatsapp';
 
 @Component({
   selector: 'app-car-card',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, AppCurrencyPipe],
+  imports: [RouterLink, TranslatePipe, AppCurrencyPipe, IconWhatsappComponent],
   templateUrl: './car-card.html',
   styleUrl: './car-card.css',
 })

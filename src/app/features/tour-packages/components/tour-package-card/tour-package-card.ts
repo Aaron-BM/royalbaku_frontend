@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { TourPackage } from '../../../../core/models/tour-package.model';
 import { SiteSettingService } from '../../../../core/services/site-setting.service';
 import { ImagePreviewModal } from '../../../../shared/components/image-preview-modal/image-preview-modal';
+import { IconWhatsappComponent } from '../../../../shared/components/icons/icon-whatsapp';
+import { IconPhoneComponent } from '../../../../shared/components/icons/icon-phone';
 
 @Component({
   selector: 'app-tour-package-card',
   standalone: true,
-  imports: [CommonModule, ImagePreviewModal],
+  imports: [CommonModule, ImagePreviewModal, IconWhatsappComponent, IconPhoneComponent],
   templateUrl: './tour-package-card.html',
   styleUrl: './tour-package-card.css',
 })
