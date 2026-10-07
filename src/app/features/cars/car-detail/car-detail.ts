@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CarService } from '../../../core/services/car.service';
-import { InquiryService } from '../../../core/services/inquiry.service';
+import { InquiryService, CountryCode } from '../../../core/services/inquiry.service';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 import { CarDetailItem } from '../../../core/models/car.model';
 import { ImagePreviewModal } from '../../../shared/components/image-preview-modal/image-preview-modal';
@@ -11,10 +11,14 @@ import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
 
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
+import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
+
 @Component({
   selector: 'app-app-car-detail',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe, IconWhatsappComponent, IconPhoneComponent],
+  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe],
   templateUrl: './car-detail.html',
   styleUrl: './car-detail.css',
 })
@@ -23,6 +27,12 @@ export class CarDetail implements OnInit {
   private readonly carService = inject(CarService);
   private readonly inquiryService = inject(InquiryService);
   private readonly siteSettingService = inject(SiteSettingService);
+  private readonly svcSog = inject(SeoService);
+  protected readonly svcLanguage = inject(LanguageService);
+
+  // Dynamic Country Codes from backend
+  protected readonly arrCountryCodes = signal<CountryCode[]>([]);
+  protected strSelectedCountryCode = '+994';
 
   // Car details signal state
   protected readonly objCar = signal<CarDetailItem | null>(null);
@@ -43,6 +53,12 @@ export class CarDetail implements OnInit {
   protected strSelectedCarTitle = '';
 
   ngOnInit(): void {
+    this.inquiryService.getCountryCodes().subscribe((codes) => {
+      if (codes && codes.length > 0) {
+        this.arrCountryCodes.set(codes);
+      }
+    });
+
     this.route.paramMap.subscribe((params) => {
       const strSlug = params.get('slug') || '';
       if (strSlug) {
@@ -59,6 +75,31 @@ export class CarDetail implements OnInit {
         const arrImages = objResult.arrGalleryImages || [objResult.strImagePath];
         this.strActiveImage.set(arrImages[0]);
         this.numActiveImageIndex.set(0);
+
+        const isAz = this.svcLanguage.strCurrentLang() === 'az';
+        this.svcSog.fnSetSeo({
+          title: isAz
+            ? `${objResult.strTitle} İcarəsi Bakıda | Royal Baku Rent A Car`
+            : `${objResult.strTitle} Rental in Baku | Royal Baku Car Rental`,
+          description: isAz
+            ? `Bakıda ${objResult.strTitle} icarəsi. Depozitsiz icarə seçimləri, 24/7 hava limanı çatdırılması.`
+            : `Rent ${objResult.strTitle} in Baku with zero deposit options and 24/7 airport delivery.`,
+          image: objResult.strImagePath,
+          type: 'product',
+          jsonLd: {
+            '@context': 'https://schema.org',
+            '@type': 'Product',
+            name: objResult.strTitle,
+            image: objResult.strImagePath ? [objResult.strImagePath] : [],
+            description: `Rent ${objResult.strTitle} in Baku, Azerbaijan.`,
+            offers: {
+              '@type': 'Offer',
+              price: objResult.numDailyPrice,
+              priceCurrency: 'USD',
+              availability: 'https://schema.org/InStock',
+            },
+          },
+        });
       }
     });
   }
@@ -107,16 +148,21 @@ export class CarDetail implements OnInit {
 
     const currentCar = this.objCar();
     const carId = currentCar ? (isNaN(Number(currentCar.idCar)) ? null : Number(currentCar.idCar)) : null;
+    const cleanPhone = this.strCustomerPhone.trim();
+    const fullPhone = `${this.strSelectedCountryCode} ${cleanPhone}`;
 
     const strMessage = `Hello Royal Baku, I would like to book ${this.strSelectedCarTitle} from ${
       this.strStartDate || 'N/A'
-    } to ${this.strEndDate || 'N/A'}. Name: ${this.strCustomerName}, Phone: ${this.strCustomerPhone}`;
+    } to ${this.strEndDate || 'N/A'}. Name: ${this.strCustomerName}, Phone: ${fullPhone}`;
 
     // Send inquiry lead to Django DRF API
     this.inquiryService
       .submitInquiry({
         name: this.strCustomerName,
-        phone: this.strCustomerPhone,
+        phone: fullPhone,
+        country_code: this.strSelectedCountryCode,
+        phone_number: cleanPhone,
+        email: this.strCustomerEmail || undefined,
         is_whatsapp: true,
         car: carId,
         pickup_date: this.strStartDate || undefined,

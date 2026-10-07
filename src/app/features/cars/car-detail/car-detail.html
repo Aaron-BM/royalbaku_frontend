@@ -2,7 +2,7 @@
   <div class="max-w-6xl mx-auto space-y-8">
     <!-- Breadcrumbs -->
     <nav class="flex items-center gap-2 text-xs font-normal text-muted/80">
-      <a routerLink="/" class="hover:text-gold transition-colors font-normal">
+      <a [routerLink]="'/' | langUrl" class="hover:text-gold transition-colors font-normal">
         {{ 'carDetail.breadcrumbHome' | translate }}
       </a>
       <span>/</span>
@@ -443,11 +443,17 @@
               </select>
             </div>
             <div class="flex items-center gap-1.5">
-              <span
-                class="bg-[#1A1D27] border border-white/10 rounded-lg px-2 py-2 text-[11px] text-white shrink-0 font-normal"
+              <select
+                [(ngModel)]="strSelectedCountryCode"
+                name="selectedCountryCode"
+                class="bg-[#1A1D27] border border-white/10 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-gold transition-colors shrink-0 max-w-[105px] font-normal cursor-pointer truncate"
               >
-                🇦🇿 +994
-              </span>
+                @for (code of arrCountryCodes(); track code.code) {
+                  <option [value]="code.dial_code" class="bg-[#12141C] text-white">
+                    {{ code.flag ? code.flag + ' ' : '' }}{{ code.dial_code }}
+                  </option>
+                }
+              </select>
               <input
                 type="tel"
                 [(ngModel)]="strCustomerPhone"
