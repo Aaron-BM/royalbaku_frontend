@@ -68,9 +68,9 @@
                   class="bg-transparent text-white text-xs font-semibold focus:outline-none cursor-pointer pr-1"
                   aria-label="Country Code"
                 >
-                  @for (c of arrCountryCodes; track c.code) {
-                    <option [value]="c.dialCode" class="bg-[#14161F] text-white">
-                      {{ c.flag }} {{ c.dialCode }}
+                  @for (c of arrCountryCodes(); track c.code) {
+                    <option [value]="c.dial_code" class="bg-[#14161F] text-white">
+                      {{ c.flag ? c.flag + ' ' : '' }}{{ c.dial_code }}
                     </option>
                   }
                 </select>

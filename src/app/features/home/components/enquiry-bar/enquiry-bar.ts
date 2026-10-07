@@ -2,13 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
-import { InquiryService, InquiryPayload } from '../../../../core/services/inquiry.service';
-
-export interface CountryCodeOption {
-  code: string;
-  flag: string;
-  dialCode: string;
-}
+import { InquiryService, InquiryPayload, CountryCode } from '../../../../core/services/inquiry.service';
 
 import { IconPhoneComponent } from '../../../../shared/components/icons/icon-phone';
 
@@ -24,7 +18,7 @@ export class EnquiryBar implements OnInit {
 
   // Form Field Models
   protected strFullName = '';
-  protected strCountryCode = '+971';
+  protected strCountryCode = '+994';
   protected strMobileNo = '';
   protected strStartDate = '';
   protected strEndDate = '';
@@ -32,6 +26,9 @@ export class EnquiryBar implements OnInit {
   // Min Date Constraint Values
   protected strMinStartDate = '';
   protected strMinEndDate = '';
+
+  // Dynamic Country Codes from backend API
+  protected readonly arrCountryCodes = signal<CountryCode[]>([]);
 
   // State Signals
   protected readonly blnSubmitted = signal<boolean>(false);
@@ -42,18 +39,13 @@ export class EnquiryBar implements OnInit {
   protected readonly blnStartDateError = signal<boolean>(false);
   protected readonly blnEndDateError = signal<boolean>(false);
 
-  // Country Code Options
-  protected readonly arrCountryCodes: CountryCodeOption[] = [
-    { code: 'AE', flag: '🇦🇪', dialCode: '+971' },
-    { code: 'AZ', flag: '🇦🇿', dialCode: '+994' },
-    { code: 'SA', flag: '🇸🇦', dialCode: '+966' },
-    { code: 'QA', flag: '🇶🇦', dialCode: '+974' },
-    { code: 'KW', flag: '🇰🇼', dialCode: '+965' },
-    { code: 'GB', flag: '🇬🇧', dialCode: '+44' },
-    { code: 'US', flag: '🇺🇸', dialCode: '+1' },
-  ];
-
   ngOnInit(): void {
+    this.inquiryService.getCountryCodes().subscribe((codes) => {
+      if (codes && codes.length > 0) {
+        this.arrCountryCodes.set(codes);
+      }
+    });
+
     const today = new Date();
     const threeDaysLater = new Date();
     threeDaysLater.setDate(today.getDate() + 3);
@@ -145,10 +137,13 @@ export class EnquiryBar implements OnInit {
 
     this.blnSubmitting.set(true);
 
-    const fullPhone = `${this.strCountryCode} ${this.strMobileNo.trim()}`;
+    const cleanMobile = this.strMobileNo.trim();
+    const fullPhone = `${this.strCountryCode} ${cleanMobile}`;
     const objPayload: InquiryPayload = {
       name: this.strFullName.trim(),
       phone: fullPhone,
+      country_code: this.strCountryCode,
+      phone_number: cleanMobile,
       pickup_date: this.strStartDate,
       dropoff_date: this.strEndDate,
       message: `Enquiry submitted from Home Page bar`,
