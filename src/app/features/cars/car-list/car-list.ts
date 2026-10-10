@@ -7,6 +7,9 @@ import { CarCard } from '../../../shared/components/car-card/car-card';
 import { CarService } from '../../../core/services/car.service';
 import { CarCategoryMeta, CarDetailItem } from '../../../core/models/car.model';
 
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
+import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
 import { parseI18nString } from '../../../core/utils/car-adapter';
 
 export interface FilterOption {
@@ -18,7 +21,7 @@ export interface FilterOption {
 @Component({
   selector: 'app-car-list',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, CarListHero, CarCard],
+  imports: [RouterLink, TranslatePipe, CarListHero, CarCard, LangUrlPipe],
   templateUrl: './car-list.html',
   styleUrl: './car-list.css',
 })
@@ -26,6 +29,8 @@ export class CarList implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly carService = inject(CarService);
+  private readonly svcSog = inject(SeoService);
+  protected readonly svcLanguage = inject(LanguageService);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly objCategoryMeta = signal<CarCategoryMeta | null>(null);
@@ -79,6 +84,17 @@ export class CarList implements OnInit {
       const meta = this.carService.getCategoryMetadata(strCategoryParam);
       this.objCategoryMeta.set(meta);
 
+      const isAz = this.svcLanguage.strCurrentLang() === 'az';
+      const catTitle = strCategoryParam ? strCategoryParam.replace(/-/g, ' ').toUpperCase() : 'All Cars';
+      this.svcSog.fnSetSeo({
+        title: isAz
+          ? `${catTitle} İcarəsi Bakı | Royal Baku Rent A Car`
+          : `${catTitle} Rental Baku | Royal Baku Car Rental`,
+        description: isAz
+          ? `Bakıda ${catTitle} icarəsi. Depozitsiz ən yaxşı avtomobillər və 24/7 pulsuz çatdırılma.`
+          : `Rent ${catTitle} in Baku with zero deposit options and 24/7 fast delivery across Azerbaijan.`,
+      });
+
       // Fetch filtered dataset directly from backend API
       this.carService
         .getCarsByCategoryOrBrand(strCategoryParam)
@@ -98,19 +114,11 @@ export class CarList implements OnInit {
 
   protected selectType(strSlug: string): void {
     this.blnShowTypesDropdown.set(false);
-    if (strSlug) {
-      this.router.navigate(['/cars', strSlug]);
-    } else {
-      this.router.navigate(['/cars']);
-    }
+    this.router.navigate(this.svcLanguage.fnLangRoute(strSlug ? ['/cars', strSlug] : ['/cars']));
   }
 
   protected selectBrand(strSlug: string): void {
     this.blnShowBrandsDropdown.set(false);
-    if (strSlug) {
-      this.router.navigate(['/cars', strSlug]);
-    } else {
-      this.router.navigate(['/cars']);
-    }
+    this.router.navigate(this.svcLanguage.fnLangRoute(strSlug ? ['/cars', strSlug] : ['/cars']));
   }
 }

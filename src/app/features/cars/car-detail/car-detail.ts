@@ -158,6 +158,7 @@ export class CarDetail implements OnInit {
     // Send inquiry lead to Django DRF API
     this.inquiryService
       .submitInquiry({
+        type: 'car',
         name: this.strCustomerName,
         phone: fullPhone,
         country_code: this.strSelectedCountryCode,

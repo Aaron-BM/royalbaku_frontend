@@ -8,13 +8,18 @@ import { TourPackageCard } from '../components/tour-package-card/tour-package-ca
 import { InquiryService } from '../../../core/services/inquiry.service';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
 
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
+
+import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
+
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
 
 @Component({
   selector: 'app-tour-packages-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent],
+  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe],
   templateUrl: './tour-packages-page.html',
   styleUrl: './tour-packages-page.css',
 })
@@ -23,6 +28,8 @@ export class TourPackagesPage implements OnInit {
   private readonly inquiryService = inject(InquiryService);
   private readonly siteSettingService = inject(SiteSettingService);
   private readonly route = inject(ActivatedRoute);
+  private readonly svcSog = inject(SeoService);
+  private readonly svcLanguage = inject(LanguageService);
 
   protected readonly arrPackages = signal<TourPackage[]>([]);
   protected readonly strExpandedId = signal<string | null>(null);
@@ -46,6 +53,16 @@ export class TourPackagesPage implements OnInit {
   protected strSpecialRequest = '';
 
   ngOnInit(): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    this.svcSog.fnSetSeo({
+      title: isAz
+        ? 'Tur Paketləri və Şəxsi Sürücü Xidməti | Royal Baku Rent A Car'
+        : 'Private Tour Packages in Azerbaijan | Royal Baku Car Rental',
+      description: isAz
+        ? 'Bakı, Qəbələ, Quba və Şahdağ üzrə lüks avtomobil və şəxsi sürücü ilə fərdi tur paketləri.'
+        : 'Explore Azerbaijan with our VIP private tour packages and professional driver service across Baku, Gabala, Shahdag, and Shahdag.',
+    });
+
     // Fetch backend Site Settings for contacts
     this.siteSettingService.getSiteSettings().subscribe((settings) => {
       const rawPhone = settings?.phone_number;
@@ -164,27 +181,23 @@ export class TourPackagesPage implements OnInit {
     }
 
     const pkg = this.objSelectedPackage();
-    const strMsg = `Tour Package Booking: ${pkg?.title || 'City Tour Package'} (${pkg?.subtitle || ''}). Date: ${
-      this.strTravelDate || 'N/A'
-    }. Customer: ${this.strCustomerName}, Phone: ${this.strCustomerPhone}. Message: ${this.strSpecialRequest || 'None'}`;
+    const pkgTitle = pkg ? (typeof pkg.title === 'string' ? pkg.title : (pkg.title as any)?.en || pkg.subtitle || '') : '';
 
     this.inquiryService
       .submitInquiry({
+        type: 'tour',
         name: this.strCustomerName,
         phone: this.strCustomerPhone,
         is_whatsapp: true,
+        tour_package: pkg?.slug || pkg?.id || null,
+        tour_package_title: pkgTitle || undefined,
         pickup_date: this.strTravelDate || undefined,
-        message: strMsg,
+        message: this.strSpecialRequest || undefined,
       })
       .subscribe({
         next: () => {
           this.blnSubmitSuccess.set(true);
         },
       });
-
-    const strWaUrl = this.siteSettingService.getWhatsappUrl(pkg?.whatsapp, strMsg);
-    if (strWaUrl && typeof window !== 'undefined') {
-      window.open(strWaUrl, '_blank');
-    }
   }
 }

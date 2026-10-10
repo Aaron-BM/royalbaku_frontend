@@ -140,6 +140,7 @@ export class EnquiryBar implements OnInit {
     const cleanMobile = this.strMobileNo.trim();
     const fullPhone = `${this.strCountryCode} ${cleanMobile}`;
     const objPayload: InquiryPayload = {
+      type: 'car',
       name: this.strFullName.trim(),
       phone: fullPhone,
       country_code: this.strCountryCode,

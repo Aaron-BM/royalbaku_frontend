@@ -22,7 +22,7 @@
     <div
       class="flex items-center justify-center gap-2 text-xs tracking-[0.2em] font-medium text-white/60 mb-4"
     >
-      <a routerLink="/" class="hover:text-gold transition-colors duration-200">
+      <a [routerLink]="'/' | langUrl" class="hover:text-gold transition-colors duration-200">
         {{ 'hero.breadcrumbHome' | translate }}
       </a>
       <span class="text-gold/60">/</span>

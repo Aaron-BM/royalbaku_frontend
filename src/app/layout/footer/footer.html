@@ -7,7 +7,7 @@
       <!-- Column 1: Logo & Links -->
       <div class="space-y-6">
         <!-- Logo Header -->
-        <a routerLink="/" class="flex items-center gap-3 group">
+        <a [routerLink]="'/' | langUrl" class="flex items-center gap-3 group">
           <div class="flex items-center justify-center shrink-0">
             <img
               src="/assets/images/logo.png"
@@ -29,7 +29,7 @@
           @for (objLink of arrMainLinks(); track objLink.urlPath) {
             <li>
               <a
-                [routerLink]="objLink.urlPath"
+                [routerLink]="objLink.urlPath | langUrl"
                 class="hover:text-white transition-colors duration-200 block"
               >
                 {{ objLink.strLabelKey | translate }}
@@ -47,7 +47,7 @@
           @for (objLink of arrCarTypeLinks(); track objLink.urlPath) {
             <li>
               <a
-                [routerLink]="objLink.urlPath"
+                [routerLink]="objLink.urlPath | langUrl"
                 class="hover:text-white transition-colors duration-200 block"
               >
                 {{ objLink.strLabelKey | translate }}
@@ -134,32 +134,60 @@
       </div>
       <!-- Column 4: Google Maps Interactive Card -->
       <div
-        class="relative overflow-hidden rounded-xl border border-white/15 bg-[#12151B] p-2 shadow-xl group"
+        class="relative overflow-hidden rounded-xl border border-white/15 bg-[#12151B] p-2 shadow-xl group flex flex-col justify-between"
       >
-        <div class="relative w-full h-48 rounded-lg overflow-hidden bg-[#E5E3DF]">
+        <div class="relative w-full h-44 rounded-lg overflow-hidden bg-[#E5E3DF]">
           <!-- Map Image Preview matching Google Maps -->
-          <iframe
-            title="Office Location Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3611.512684828131!2d55.2289!3d25.1528!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjXCsDA5JzEwLjEiTiA1NcKwMTMnNDQuMCJF!5e0!3m2!1sen!2s!4v1620000000000!5m2!1sen!2s"
-            class="w-full h-full border-0 filter opacity-90 grayscale-[20%] contrast-125"
-            loading="lazy"
-          ></iframe>
+          @if (safeMapUrl()) {
+            <iframe
+              [title]="strAddressDisplay()"
+              [src]="safeMapUrl()"
+              class="w-full h-full border-0 filter opacity-90 grayscale-[20%] contrast-125"
+              loading="lazy"
+              referrerpolicy="strict-origin-when-cross-origin"
+            ></iframe>
+          }
           <!-- Top Overlay Map Button -->
           <a
-            href="https://maps.google.com"
+            [href]="mapDirectUrl()"
             target="_blank"
             rel="noopener noreferrer"
-            class="absolute top-2.5 left-2.5 bg-white/95 text-sky-600 text-[11px] font-bold px-3 py-1.5 rounded shadow flex items-center gap-1 hover:bg-white transition-colors"
+            class="map-open-btn absolute top-2.5 left-2.5 z-10 bg-white hover:bg-neutral-100 text-black text-[11px] font-bold px-3 py-1.5 rounded-md shadow-md hover:shadow-lg border border-black/15 flex items-center gap-1.5 transition-all duration-200 cursor-pointer"
           >
-            <span>{{ 'footer.openInMaps' | translate }}</span>
-            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <span class="text-black font-bold leading-none">{{ 'footer.openInMaps' | translate }}</span>
+            <svg class="w-3.5 h-3.5 text-black shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                stroke-width="2"
+                stroke-width="2.2"
                 d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
               />
             </svg>
+          </a>
+        </div>
+        <!-- Location Address Label -->
+        <div class="pt-2 px-1 text-[11px] text-muted/90 flex items-start gap-1.5">
+          <svg class="w-3.5 h-3.5 text-gold shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+            />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1.8"
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+            />
+          </svg>
+          <a
+            [href]="mapDirectUrl()"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="leading-tight hover:text-white transition-colors"
+          >
+            {{ strAddressDisplay() }}
           </a>
         </div>
       </div>
@@ -176,7 +204,7 @@
       <div class="flex items-center flex-wrap gap-x-6 gap-y-2.5 text-xs text-white/90">
         @for (strBrand of arrBrands(); track strBrand) {
           <a
-            [routerLink]="['/cars', strBrand.toLowerCase().replace(' ', '-')]"
+            [routerLink]="['/cars', strBrand.toLowerCase().replace(' ', '-')] | langUrl"
             class="hover:text-gold transition-colors cursor-pointer"
           >
             {{ strBrand }}

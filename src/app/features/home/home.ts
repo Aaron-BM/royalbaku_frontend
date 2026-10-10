@@ -6,6 +6,9 @@ import { CarCard } from '../../shared/components/car-card/car-card';
 import { CarItem } from '../../core/models/car.model';
 import { HomeService, LatestOfferItem, PriceCategoryGroup, RentalTipItem } from './services/home.service';
 import { CarService } from '../../core/services/car.service';
+import { SeoService } from '../../core/services/seo.service';
+import { LanguageService } from '../../core/services/language.service';
+import { LangUrlPipe } from '../../shared/pipes/lang-url.pipe';
 
 import { SiteSettingService } from '../../core/services/site-setting.service';
 import { TourPackageService } from '../../core/services/tour-package.service';
@@ -47,7 +50,7 @@ import { IconWhatsappComponent } from '../../shared/components/icons/icon-whatsa
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar, AppCurrencyPipe, IconWhatsappComponent],
+  imports: [RouterLink, TranslatePipe, CarCard, EnquiryBar, AppCurrencyPipe, IconWhatsappComponent, LangUrlPipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
@@ -56,6 +59,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   private readonly carService = inject(CarService);
   private readonly siteSettingService = inject(SiteSettingService);
   private readonly tourPackageService = inject(TourPackageService);
+  private readonly svcSog = inject(SeoService);
+  private readonly svcLanguage = inject(LanguageService);
   private readonly elementRef = inject(ElementRef);
 
   // Rotating Hero Title Phrases & State
@@ -191,6 +196,32 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   ]);
 
   ngOnInit(): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    this.svcSog.fnSetSeo({
+      title: isAz
+        ? 'Royal Baku Rent A Car | Bakıda Lüks və Ekonom Avtomobil İcarəsi'
+        : 'Royal Baku Rent A Car | Premium & Economy Car Rental in Baku',
+      description: isAz
+        ? 'Bakıda lüks, idman, SUV və ekonom avtomobillərin depozitsiz icarəsi. 24/7 çatdırılma və sərfəli gündəlik, həftəlik, aylıq qiymətlər.'
+        : 'Rent luxury, sports, SUV & economy cars in Baku with zero deposit options. 24/7 delivery across Baku & Azerbaijan at competitive rates.',
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@type': 'AutoRental',
+        name: 'Royal Baku Rent A Car',
+        image: 'https://royalbakucarrental.com/assets/images/logo.png',
+        '@id': 'https://royalbakucarrental.com/#organization',
+        url: 'https://royalbakucarrental.com',
+        telephone: '+971551073595',
+        priceRange: '$$$',
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: 'Central Baku',
+          addressLocality: 'Baku',
+          addressCountry: 'AZ',
+        },
+      },
+    });
+
     // Fetch rental price categories and cars dynamically from DRF backend API
     forkJoin({
       backendCategories: this.carService.getCategories(),

@@ -12,6 +12,7 @@ export interface CountryCode {
 }
 
 export interface InquiryPayload {
+  type?: 'car' | 'tour' | 'normal';
   name: string;
   phone: string;
   country_code?: string;
@@ -19,6 +20,8 @@ export interface InquiryPayload {
   email?: string;
   is_whatsapp?: boolean;
   car?: number | string | null;
+  tour_package?: number | string | null;
+  tour_package_title?: string;
   preferred_vehicle?: string;
   pickup_date?: string;
   dropoff_date?: string;
@@ -64,10 +67,10 @@ export class InquiryService {
   }
 
   /**
-   * Submits a customer inquiry or contact form request to the backend API `/api/contact/`.
+   * Submits a customer inquiry to the backend API `/api/inquiries/`.
    */
   submitInquiry(objPayload: InquiryPayload): Observable<InquiryResponse> {
-    return this.http.post<InquiryResponse>(`${this.strContactApiUrl}/`, objPayload);
+    return this.http.post<InquiryResponse>(`${this.strApiBaseUrl}/`, objPayload);
   }
 }
 

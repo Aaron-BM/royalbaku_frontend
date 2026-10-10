@@ -5,17 +5,23 @@ import { NgClass } from '@angular/common';
 import { CarService } from '../../../core/services/car.service';
 import { PriceTableItem, CarBrand } from '../../../core/models/car.model';
 
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
+import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
+
 import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, NgClass, AppCurrencyPipe],
+  imports: [RouterLink, TranslatePipe, NgClass, AppCurrencyPipe, LangUrlPipe],
   templateUrl: './prices.html',
   styleUrl: './prices.css',
 })
 export class Prices implements OnInit {
   private readonly carService = inject(CarService);
+  private readonly svcSog = inject(SeoService);
+  private readonly svcLanguage = inject(LanguageService);
 
   protected readonly arrBrands = signal<CarBrand[]>([]);
   protected readonly arrPrices = signal<PriceTableItem[]>([]);
@@ -44,6 +50,16 @@ export class Prices implements OnInit {
 
 
   ngOnInit(): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    this.svcSog.fnSetSeo({
+      title: isAz
+        ? 'Avtomobil İcarəsi Qiymətləri | Royal Baku Rent A Car'
+        : 'Car Rental Prices in Baku | Royal Baku Car Rental',
+      description: isAz
+        ? 'Bakıda lüks, SUV və ekonom avtomobillərin şفاف icarə qiymətləri siyahısı. Depozitsiz, gündəlik, həftəlik və aylıq qiymətlər.'
+        : 'Transparent car rental prices in Baku, Azerbaijan. Compare daily, weekly, and monthly rates for luxury, SUV, and economy cars with zero deposit options.',
+    });
+
     this.fnLoadBrands();
     this.fnLoadPrices();
   }

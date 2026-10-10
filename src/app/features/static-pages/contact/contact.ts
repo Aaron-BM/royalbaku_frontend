@@ -9,6 +9,9 @@ import { CarDetailItem } from '../../../core/models/car.model';
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
 
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
+
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -20,6 +23,8 @@ export class Contact implements OnInit {
   private readonly inquiryService = inject(InquiryService);
   private readonly siteSettingService = inject(SiteSettingService);
   private readonly carService = inject(CarService);
+  private readonly svcSog = inject(SeoService);
+  private readonly svcLanguage = inject(LanguageService);
 
   // Loading & View States
   protected readonly blnLoading = signal<boolean>(true);
@@ -59,6 +64,16 @@ export class Contact implements OnInit {
   });
 
   ngOnInit(): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    this.svcSog.fnSetSeo({
+      title: isAz
+        ? 'Əlaqə | Royal Baku Rent A Car'
+        : 'Contact Us | Royal Baku Car Rental',
+      description: isAz
+        ? 'Royal Baku Rent A Car ilə əlaqə saxlayın. Bakıda 24/7 avtomobil icarəsi sifarişi və sorğuları üçün telefon, WhatsApp və unvan.'
+        : 'Contact Royal Baku Car Rental for 24/7 car booking inquiries, support, and office location in Baku, Azerbaijan.',
+    });
+
     this.fnLoadPageData();
   }
 
@@ -192,6 +207,7 @@ export class Contact implements OnInit {
 
     this.inquiryService
       .submitInquiry({
+        type: 'normal',
         name: data.strName.trim(),
         phone: fullPhone,
         country_code: this.strSelectedCountryCode(),

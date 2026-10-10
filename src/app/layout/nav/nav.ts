@@ -20,6 +20,8 @@ import { CarService } from '../../core/services/car.service';
 import { CarBrand, CarCategory } from '../../core/models/car.model';
 import { parseI18nString } from '../../core/utils/car-adapter';
 
+import { LangUrlPipe } from '../../shared/pipes/lang-url.pipe';
+
 type MenuId = 'types' | 'brands';
 
 interface NavLink {
@@ -35,7 +37,7 @@ const NUM_BRAND_COLUMNS = 4;
 @Component({
   selector: 'app-nav',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, TranslatePipe],
+  imports: [RouterLink, RouterLinkActive, TranslatePipe, LangUrlPipe],
   templateUrl: './nav.html',
   styleUrl: './nav.css',
 })

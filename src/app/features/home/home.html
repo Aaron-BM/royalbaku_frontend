@@ -107,7 +107,7 @@
         <div class="marquee-track flex items-center shrink-0 gap-3 sm:gap-4.5 md:gap-5 pr-3 sm:pr-4.5 md:pr-5">
           @for (objBrand of arrBrands(); track $index) {
             <a
-              [routerLink]="['/cars', objBrand.strSlug]"
+              [routerLink]="['/cars', objBrand.strSlug] | langUrl"
               class="group/item flex flex-col items-center justify-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-white/[0.08] bg-[#0E1017]/90 hover:border-gold/40 hover:bg-[#141724] hover:-translate-y-1 shrink-0 transition-all duration-300 min-w-[92px] sm:min-w-[108px] md:min-w-[118px] h-16 sm:h-18 md:h-[72px] shadow-sm"
             >
               <!-- Brand Logo Container -->
@@ -139,7 +139,7 @@
         <div class="marquee-track flex items-center shrink-0 gap-3 sm:gap-4.5 md:gap-5 pr-3 sm:pr-4.5 md:pr-5" aria-hidden="true">
           @for (objBrand of arrBrands(); track 'dup-' + $index) {
             <a
-              [routerLink]="['/cars', objBrand.strSlug]"
+              [routerLink]="['/cars', objBrand.strSlug] | langUrl"
               class="group/item flex flex-col items-center justify-center gap-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl border border-white/[0.08] bg-[#0E1017]/90 hover:border-gold/40 hover:bg-[#141724] hover:-translate-y-1 shrink-0 transition-all duration-300 min-w-[92px] sm:min-w-[108px] md:min-w-[118px] h-16 sm:h-18 md:h-[72px] shadow-sm"
             >
               <div class="h-7 sm:h-8.5 w-full flex items-center justify-center">
@@ -172,7 +172,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
       @for (objCat of arrCategories(); track objCat.strId) {
         <a
-          [routerLink]="['/cars', objCat.strSlug]"
+          [routerLink]="['/cars', objCat.strSlug] | langUrl"
           class="group relative block rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-gold/60 aspect-[16/9] shadow-xl hover:shadow-[0_8px_30px_rgba(0,0,0,0.5)] transition-all duration-500 hover:-translate-y-1"
         >
           <!-- Background Category Image with smooth scale -->
@@ -264,7 +264,7 @@
     <!-- View All Cars Button -->
     <div class="text-center">
       <a
-        routerLink="/cars"
+        [routerLink]="'/cars' | langUrl"
         class="btn-shimmer bg-[#1C1F28] hover:bg-gold hover:text-black border border-white/15 hover:border-gold/50 text-white font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
       >
         {{ 'cars.viewAllCars' | translate }}
@@ -454,7 +454,7 @@
             <div class="px-6 pb-6 pt-0 border-t border-white/5 flex items-center justify-between mt-auto">
               <span class="text-[11px] text-white/50">Private Chauffeur Included</span>
               <a
-                [routerLink]="['/tour-packages', pkg.slug]"
+                [routerLink]="['/tour-packages', pkg.slug] | langUrl"
                 class="btn-shimmer bg-gold text-black font-extrabold text-xs px-5 py-2.5 rounded-full hover:bg-amber-400 transition-all flex items-center gap-1.5 shadow-md cursor-pointer"
               >
                 <span>View Details</span>
@@ -469,7 +469,7 @@
       @if (numTotalTourPackages() > 2) {
         <div class="mt-6">
           <a
-            routerLink="/tour-packages"
+            [routerLink]="'/tour-packages' | langUrl"
             class="inline-flex items-center gap-2 bg-[#1A1D28] hover:bg-[#252A3A] border border-gold/40 hover:border-gold text-gold font-extrabold text-xs uppercase tracking-wider px-8 py-3.5 rounded-full transition-all shadow-lg cursor-pointer"
           >
             <span>View All Tour Packages</span>
@@ -580,7 +580,7 @@
     </div>
     <!-- Start Booking Button -->
     <a
-      routerLink="/cars"
+      [routerLink]="'/cars' | langUrl"
       class="btn-shimmer bg-gold text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
     >
       {{ 'home.stepProcess.cta' | translate }}

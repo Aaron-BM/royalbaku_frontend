@@ -1,5 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { TranslatePipe } from '@ngx-translate/core';
+import { SeoService } from '../../../core/services/seo.service';
+import { LanguageService } from '../../../core/services/language.service';
 
 export interface FaqItem {
   id: string;
@@ -20,9 +22,23 @@ export interface FaqCategory {
   templateUrl: './faq.html',
   styleUrl: './faq.css',
 })
-export class Faq {
+export class Faq implements OnInit {
+  private readonly svcSog = inject(SeoService);
+  private readonly svcLanguage = inject(LanguageService);
   // Set of currently expanded FAQ item IDs
   protected readonly arrOpenItems = signal<Set<string>>(new Set(['res-1', 'price-1']));
+
+  ngOnInit(): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    this.svcSog.fnSetSeo({
+      title: isAz
+        ? 'Tez-Tez Verilən Suallar (FAQ) | Royal Baku Rent A Car'
+        : 'Frequently Asked Questions (FAQ) | Royal Baku Car Rental',
+      description: isAz
+        ? 'Bakıda avtomobil icarəsi haqqında suallarınıza cavab tapın: depozit, sürücülük vəsiqəsi, sığorta, yaş həddi və yürüş məhdudiyyətləri.'
+        : 'Find answers to common questions about renting a car in Baku: deposits, driver requirements, insurance, mileage limits, and payment options.',
+    });
+  }
 
   protected readonly arrCategories: FaqCategory[] = [
     {

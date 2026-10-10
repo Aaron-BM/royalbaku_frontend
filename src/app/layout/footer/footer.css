@@ -2,3 +2,23 @@
 :host {
   display: block;
 }
+
+.map-open-btn {
+  background-color: #ffffff;
+  color: #000000 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+}
+
+.map-open-btn:hover {
+  background-color: #f5f5f5;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.25), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+}
+
+.map-open-btn span {
+  color: #000000 !important;
+}
+
+.map-open-btn svg {
+  color: #000000 !important;
+  stroke: #000000 !important;
+}

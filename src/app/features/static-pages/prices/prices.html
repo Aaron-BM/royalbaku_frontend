@@ -231,7 +231,7 @@
                       }
                       <div class="flex flex-col">
                         <a
-                          [routerLink]="['/car', item.strSlug]"
+                          [routerLink]="['/car', item.strSlug] | langUrl"
                           class="font-bold text-white hover:text-gold transition-colors text-sm"
                         >
                           {{ item.strCarName }}
@@ -277,7 +277,7 @@
                   <!-- View/Book CTA -->
                   <td class="py-3.5 px-6 text-right">
                     <a
-                      [routerLink]="['/car', item.strSlug]"
+                      [routerLink]="['/car', item.strSlug] | langUrl"
                       class="inline-flex items-center gap-1 bg-gold/10 hover:bg-gold text-gold hover:text-black font-semibold text-xs px-3.5 py-1.5 rounded-lg border border-gold/30 hover:border-gold transition-all duration-200 shadow-sm"
                     >
                       <span>{{ 'prices.book' | translate }}</span>
@@ -337,7 +337,7 @@
 
                 <div class="flex-1 min-w-0">
                   <a
-                    [routerLink]="['/car', item.strSlug]"
+                    [routerLink]="['/car', item.strSlug] | langUrl"
                     class="font-bold text-white hover:text-gold transition-colors text-sm block truncate"
                   >
                     {{ item.strCarName }}
@@ -392,7 +392,7 @@
                 </div>
 
                 <a
-                  [routerLink]="['/car', item.strSlug]"
+                  [routerLink]="['/car', item.strSlug] | langUrl"
                   class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-black font-extrabold text-xs px-3.5 py-1.5 rounded-xl shadow-md transition-all duration-200 active:scale-95"
                 >
                   <span>{{ 'prices.book' | translate }}</span>
@@ -453,7 +453,7 @@
 
               <!-- Content -->
               <div class="space-y-3">
-                <a [routerLink]="['/car', item.strSlug]" class="block font-bold text-base text-white hover:text-gold transition-colors truncate">
+                <a [routerLink]="['/car', item.strSlug] | langUrl" class="block font-bold text-base text-white hover:text-gold transition-colors truncate">
                   {{ item.strCarName }}
                 </a>
 
@@ -484,7 +484,7 @@
               <!-- Action Link -->
               <div class="pt-4 mt-3 border-t border-white/10">
                 <a
-                  [routerLink]="['/car', item.strSlug]"
+                  [routerLink]="['/car', item.strSlug] | langUrl"
                   class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-black font-extrabold text-xs py-2.5 rounded-xl transition-all duration-200 shadow-md shadow-amber-500/10 active:scale-95"
                 >
                   <span>{{ 'prices.book' | translate }}</span>

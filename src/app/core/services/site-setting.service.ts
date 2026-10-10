@@ -12,6 +12,7 @@ export interface SiteSettingData {
   email: string;
   social_links: any;
   working_hours: any;
+  google_map_link?: string;
 }
 
 export const DEFAULT_WHATSAPP_MESSAGE =
@@ -25,6 +26,13 @@ export function normalizeWhatsappNumber(rawPhone?: string | null): string {
 export function normalizeTelNumber(rawPhone?: string | null): string {
   if (!rawPhone || !rawPhone.trim()) return '';
   return rawPhone.replace(/[^\d+]/g, '');
+}
+
+export function extractMapEmbedUrl(rawUrl?: string | null): string {
+  if (!rawUrl || !rawUrl.trim()) return '';
+  const trimmed = rawUrl.trim();
+  const match = trimmed.match(/src=["']([^"']+)["']/i);
+  return match ? match[1].trim() : trimmed;
 }
 
 export function buildWhatsappUrl(rawPhone?: string | null, customMessage?: string): string | null {
@@ -54,6 +62,8 @@ export class SiteSettingService {
     email: '',
     social_links: {},
     working_hours: {},
+    google_map_link:
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d189.97907433905314!2d49.839537630506676!3d40.37194764453228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307dc067eb3d15%3A0xef92b6374df2a458!2sRoyal%20Baku%20Car%20Rental!5e0!3m2!1sen!2saz!4v1791614541792!5m2!1sen!2saz',
   };
 
   /** Reactive signal holding active settings across the app */
@@ -99,5 +109,13 @@ export class SiteSettingService {
   getPhoneUrl(rawNumber?: string | null): string | null {
     const num = rawNumber || this.objSiteSettingsSignal().phone_number;
     return buildTelUrl(num);
+  }
+
+  /**
+   * Utility helper to get normalized Google Maps Embed URL from passed or cached settings
+   */
+  getGoogleMapLink(rawMapLink?: string | null): string {
+    const raw = rawMapLink || this.objSiteSettingsSignal().google_map_link;
+    return extractMapEmbedUrl(raw) || this.defaultSettings.google_map_link || '';
   }
 }

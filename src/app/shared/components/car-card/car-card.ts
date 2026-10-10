@@ -7,10 +7,12 @@ import { SiteSettingService } from '../../../core/services/site-setting.service'
 import { AppCurrencyPipe } from '../../pipes/app-currency.pipe';
 import { IconWhatsappComponent } from '../icons/icon-whatsapp';
 
+import { LangUrlPipe } from '../../pipes/lang-url.pipe';
+
 @Component({
   selector: 'app-car-card',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, AppCurrencyPipe, IconWhatsappComponent],
+  imports: [RouterLink, TranslatePipe, AppCurrencyPipe, IconWhatsappComponent, LangUrlPipe],
   templateUrl: './car-card.html',
   styleUrl: './car-card.css',
 })

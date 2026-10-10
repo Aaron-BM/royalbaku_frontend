@@ -4,13 +4,10 @@
     "brandSub": "Rent A Car",
     "carTypes": "Car Types",
     "carBrands": "Car Brands",
-    "monthlyRental": "Monthly Rentals",
     "prices": "Prices",
     "aboutUs": "About Us",
     "faqs": "FAQ's",
     "contacts": "Contacts",
-    "viewAllCars": "View All Fleet",
-    "viewAllBrands": "Explore All Brands",
     "tourPackages": "Tour Packages",
     "home": "Home",
     "navigation": "Navigation"
@@ -19,22 +16,7 @@
     "breadcrumbHome": "Home",
     "breadcrumbCategory": "All Cars",
     "title": "All Cars",
-    "description": "Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily, weekly, and monthly rental options.",
-    "searchPlaceholder": "Search by model, brand, or body type...",
-    "searchButton": "Search Cars",
-    "cta": "View Collection",
-    "features": {
-      "service247Title": "24/7 Service",
-      "service247Subtitle": "Best Support.",
-      "noDepositTitle": "No Deposit",
-      "noDepositSubtitle": "Confirm in minutes.",
-      "fastDeliveryTitle": "Fast Delivery",
-      "fastDeliverySubtitle": "Anywhere in Baku.",
-      "largestFleetTitle": "Largest Fleet",
-      "largestFleetSubtitle": "Clean & inspected.",
-      "lowestPricesTitle": "Lowest Prices",
-      "lowestPricesSubtitle": "No hidden costs."
-    }
+    "description": "Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily, weekly, and monthly rental options."
   },
   "home": {
     "welcomeSub": "PREMIUM CAR RENTAL IN BAKU",
@@ -46,47 +28,14 @@
       "drives": "Baku's Finest Drives",
       "limits": "Luxury Without Limits"
     },
-    "locationDubai": "Baku",
-    "searchCars": "Search Cars",
-    "viewCollection": "View Collection",
     "inquiry": {
-      "title": "SEARCH & RENT A LUXURY CAR",
-      "pickupLocation": "Pick-up Location",
-      "enterLocation": "Enter location or airport...",
-      "pickupDate": "Pick-up Date",
-      "returnDate": "Return Date",
-      "carType": "Car Type",
-      "allTypes": "All Car Types",
-      "search": "Search Cars",
-      "errLocation": "Please enter a pick-up location",
-      "errPickupDate": "Pick-up date cannot be in the past",
-      "errReturnDate": "Return date must be after pick-up date",
       "fullName": "Full Name",
       "enterFullName": "Enter Full Name",
       "mobileNo": "Mobile No",
       "enterMobileNo": "Enter Ph. no",
       "startDate": "Start Date",
       "endDate": "End Date",
-      "dateFormat": "YYYY-MM-DD",
       "send": "Send"
-    },
-    "features": {
-      "cars200Title": "200+ Cars",
-      "cars200Desc": "A large fleet of 200+ vehicles across economy, premium, and luxury to fit every need.",
-      "noDepositTitle": "Rent Without Deposit",
-      "noDepositDesc": "Book your car with zero security deposit—no upfront hold on your funds.",
-      "vatIncludedTitle": "VAT Included Price",
-      "vatIncludedDesc": "All rates already include VAT—the price you see is exactly the price you pay.",
-      "excellentConditionTitle": "Excellent Condition Cars",
-      "excellentConditionDesc": "Clean, well-maintained, and regularly serviced vehicles ready for a smooth drive.",
-      "support247Title": "24/7 Support Team",
-      "support247Desc": "Round-the-clock assistance for bookings, questions, and on-road help anytime.",
-      "reviewsGoogleTitle": "4.8 Google Reviews",
-      "reviewsGoogleDesc": "Rated 4.8 on Google by hundreds of happy customers who keep coming back.",
-      "paymentMethodsTitle": "Payment Methods",
-      "paymentMethodsDesc": "Pay your way—bank transfer, credit/debit cards, cash",
-      "flexiblePricesTitle": "Flexible Prices",
-      "flexiblePricesDesc": "Rates that depend on your rental period—daily, weekly, monthly, or long-term."
     },
     "rentLuxury": {
       "title": "Rent Luxury Car in Baku",
@@ -98,53 +47,10 @@
     },
     "latestOffers": {
       "title": "Latest Car Rental Offers In Baku",
-      "intro": "We are deeply proud of our wide selection of high-end vehicles, all carefully vetted offer to guarantee an unparalleled driving journey. Here are a few of our favorites:",
-      "item1Title": "Rent a Lamborghini:",
-      "item1Desc": "Get ready for an adrenaline experience behind a new Lamborghini. These vehicles are ideal for those seeking speed and power. Whether driving a Huracan or the powerful Aventador, you're bound to have a memorable journey.",
-      "item2Title": "Rent a Rolls Royce:",
-      "item2Desc": "Step into the world of ultimate elegance with a Rolls Royce. Perfect for making a bold impression at any gathering. These cars provide unmatched luxury and comfort. Models such as the Phantom and Ghost are crafted to leave a lasting impression.",
-      "item3Title": "Rent a Bentley:",
-      "item3Desc": "Rent a Bentley for your next trip or event. Ride the Bentley Continental and Bentley Flying Spur for comfortable and stylish travel. Fitted with powerful engines and spacious interiors, ideal for city drives, events, or weekend trips. Book today and enjoy a smooth, luxury ride.",
-      "item4Title": "Rent a Porsche:",
-      "item4Desc": "Rent a Porsche for an exciting driving experience. Choose the Porsche 911 GTS or Panamera for speed, style, and comfort. Each model offers powerful performance and a sporty design, perfect for city drives, events, or weekend trips.",
-      "item5Title": "Other Luxury Cars:",
-      "item5Desc": "Rent a Ferrari for an exciting driving experience. Choose the Ferrari F8 Tributo or 812 GTS for speed, style, and comfort. We also offer McLaren & Mercedes for all levels of performance and innovation. Our collection also features executive cars such as Mercedes, BMW, and Porsche. Whether you lean towards the agile Ferrari, the timeless Bentley, or the cutting-edge Lamborghini, we have the ideal vehicle for you. Our collection is regularly updated, ensuring you always have the newest models available."
-    },
-    "regionalService": {
-      "title": "Rent a Car in Regional Azerbaijan — We Also Serve You There",
-      "description": "Looking for reliable car rental across Baku & regional Azerbaijan? Royal Baku Car Rental extends its premium service beyond Baku—offering the same zero deposit, competitive rates, and seamless customer booking experience to customers across Azerbaijan. Whether you need a budget-friendly economy car or a luxury SUV, we have you covered with doorstep delivery and 24/7 support.",
-      "cta": "View Cars in All Regions"
-    },
-    "supercarsBanner": {
-      "title": "Baku's Leading Luxury Supercars Rental Company",
-      "description": "Royal Baku provides a premium car rental company offering unmatched selection of luxury vehicles, from Lamborghini, Ferrari, Porsche to Range Rover. We provide flexible rental options and exceptional customer service, making us the top choice for those seeking to rent luxury sports cars and family SUVs. We help thousand of customers access affordable prices compared to other rental companies. Rent a supercar with us today!",
-      "cta": "Book Now"
+      "intro": "We are deeply proud of our wide selection of high-end vehicles, all carefully vetted offer to guarantee an unparalleled driving journey. Here are a few of our favorites:"
     },
     "rentalPrices": {
-      "title": "Economy and Luxury Car Rental Prices in Baku",
-      "sportsTitle": "Sports Car Rental",
-      "sportsDesc": "Ride your dream supercar. Choose from Lamborghini, Ferrari, Porsche and more at best prices.",
-      "luxuryTitle": "Luxury Car Rental",
-      "luxuryDesc": "Elevate your tour in VIP style. Enjoy top-tier comfort and prestige at competitive daily rates.",
-      "economyTitle": "Economy Car Rental",
-      "economyDesc": "Rent an economy car in Baku. Reliable, fuel-efficient and budget-friendly choices for hassle-free city driving.",
-      "suvTitle": "SUV Car Rental",
-      "suvDesc": "Drive in SUV comfort. Spacious, powerful premium options for ultimate daily rides and road trip adventures."
-    },
-    "rentalTips": {
-      "title": "Tips for Renting Luxury Car in Baku",
-      "tip1Title": "Reserve Your Desired Ride Early:",
-      "tip1Desc": "Arrange your rental car in advance to guarantee availability, particularly during peak times and significant events in Baku.",
-      "tip2Title": "Pick the Right Car for Your Adventure:",
-      "tip2Desc": "Choose a car that fits the purpose of your journey, whether it's a high speed supercar for an exhilarating ride or a spacious luxury SUV for a relaxing family vacation.",
-      "tip3Title": "Look for Deals and Savings:",
-      "tip3Desc": "Keep an eye out for special offers, early booking savings, and seasonal rates from our rental team to ensure the best value for your rental.",
-      "tip4Title": "Understand Insurance Coverage:",
-      "tip4Desc": "Always check insurance terms and conditions to ensure comprehensive insurance, which will give you peace of mind during your rental.",
-      "tip5Title": "Examine the Vehicle Thoroughly:",
-      "tip5Desc": "Conduct a detailed inspection of the car when you receive it. Note any pre-existing damages to prevent any surprise fees later.",
-      "tip6Title": "Know Azerbaijan Traffic Laws:",
-      "tip6Desc": "Learn about local speed limits, parking regulations and driving rules to ensure a pleasant and trouble-free trip without any tickets or fines."
+      "title": "Economy and Luxury Car Rental Prices in Baku"
     },
     "stepProcess": {
       "title": "Step-by-Step Car Rental Process in Baku",
@@ -168,9 +74,6 @@
       "rating": "4.8"
     },
     "reviews": {
-      "title": "Google Reviews",
-      "ratingText": "4.8 ★★★★★ (120+ reviews)",
-      "writeReview": "Write a Review",
       "review1Name": "Khalid S.",
       "review1Tag": "Local Guide • 28 reviews",
       "review1Text": "Professional service and spotless cars! Everything was handled smoothly (no extra hidden fee) best rental company in Baku.",
@@ -185,11 +88,7 @@
       "review4Text": "Fantastic car rental service in Baku! Customer support was responsive and booking process was effortless."
     },
     "social": {
-      "title": "Follow Us on Social Media",
-      "instagram": "Instagram",
-      "facebook": "Facebook",
-      "youtube": "YouTube",
-      "tiktok": "TikTok"
+      "title": "Follow Us on Social Media"
     },
     "faq": {
       "title": "Frequently Asked Questions",
@@ -224,53 +123,7 @@
       "q13": "Is full or zero-excess insurance coverage available?",
       "a13": "Yes, full comprehensive collision damage waiver (CDW) with zero excess is available as an add-on.",
       "q14": "Do you offer 24/7 roadside assistance?",
-      "a14": "Yes, emergency roadside assistance is available 24/7 across all regions of Baku and Azerbaijan.",
-      "fuelGroup": "Fuel, Add-ons & Extra",
-      "q15": "What is your fuel policy?",
-      "a15": "We operate on a full-to-full fuel policy. Return the vehicle with the same fuel level as provided.",
-      "q16": "Do you provide child seats, GPS or extra driver?",
-      "a16": "Child safety seats, GPS navigation devices, and additional driver options are available upon request.",
-      "q17": "Do you offer a car with driver (chauffeur service)?",
-      "a17": "Yes, professional VIP chauffeur services are available daily, weekly, or for special events.",
-      "longtermGroup": "Long-Term & Business",
-      "q18": "Do you offer monthly or long-term rentals?",
-      "a18": "Yes, we offer discounted monthly and multi-month corporate and individual lease options.",
-      "q19": "Do you offer corporate or business rental accounts?",
-      "a19": "Dedicated corporate accounts with custom billing and fleet management services are available.",
-      "q20": "Can I return the car early, and what's the policy?",
-      "a20": "Early returns are accepted. Unused days will be recalculated according to the applicable daily rental tier."
-    }
-  },
-  "carCategory": {
-    "luxury": {
-      "badge": "Luxury Cars Rental",
-      "title": "Rent luxury Car In Baku",
-      "desc": "When looking to rent a luxury car for a special occasion in Baku, trust Royal Baku Rent A Car. Our extensive fleet and exceptional service ensure your experience is nothing short of extraordinary. Whether it's a wedding, corporate event, or simply a luxurious getaway, we cater to your needs with style and sophistication. Contact us today to rent luxury cars at affordable prices."
-    },
-    "sports": {
-      "badge": "Sports Cars Rental",
-      "title": "Rent Sports Cars In Baku",
-      "desc": "Royal Baku Rent a Car is the best car rental company in Baku with prices starting from competitive rates per day. Choose from our huge fleet of new sports cars, including the iconic Ferrari, powerful Lamborghini, elegant Bentley, Mercedes, Porsche, Rolls-Royce and BMW. Experience the best driving experience in Baku with our 24/7 service and unbeatable prices. Book now and enjoy the sports car you deserve."
-    },
-    "suv": {
-      "badge": "SUV Cars Rental",
-      "title": "Rent SUV Cars In Baku",
-      "desc": "Discover spacious, powerful, and luxury SUVs for family trips, executive travel, and city rides across Baku and Azerbaijan. Choose from Range Rover, Lamborghini Urus, Mercedes G63 AMG, and Cadillac Escalade with zero deposit options."
-    },
-    "exotic": {
-      "badge": "Exotic Supercars Rental",
-      "title": "Rent Exotic Supercars In Baku",
-      "desc": "Drive the rarest hypercars and exotic vehicles in Baku. Experience ultimate speed, engineering perfection, and attention-grabbing design with our exclusive exotic collection."
-    },
-    "convertible": {
-      "badge": "Convertible Cars Rental",
-      "title": "Rent Convertible Cars In Baku",
-      "desc": "Feel the wind and enjoy scenic coastal drives along Baku's Caspian Boulevard in our top-tier open-roof convertible sports cars, including Ferrari Roma Spyder and Porsche 911 Cabriolet."
-    },
-    "economy": {
-      "badge": "Economy Cars Rental",
-      "title": "Rent Economy Cars In Baku",
-      "desc": "Affordable, fuel-efficient, and reliable vehicles for smooth city commuting and budget-friendly travel across Baku and Azerbaijan with instant delivery."
+      "a14": "Yes, emergency roadside assistance is available 24/7 across all regions of Baku and Azerbaijan."
     }
   },
   "prices": {
@@ -284,10 +137,7 @@
     "btnGo": "GO",
     "btnReset": "Reset",
     "searchPlaceholder": "Search model or brand...",
-    "viewGrid": "Grid View",
-    "viewTable": "Table View",
     "colVehicle": "Vehicle",
-    "colCarName": "Car Name",
     "colPerDay": "Per Day",
     "colWeekly": "Weekly",
     "colMonthly": "Monthly",
@@ -314,52 +164,29 @@
     "economy": "Economy",
     "exotic": "Exotic",
     "convertible": "Convertible",
-    "sedan": "Business Sedans",
-    "weeklyRental": "Weekly Car Rental",
-    "monthlyRental": "Monthly Car Rental"
-  },
-  "brands": {
-    "rollsRoyce": "Rolls-Royce",
-    "lamborghini": "Lamborghini",
-    "ferrari": "Ferrari",
-    "porsche": "Porsche",
-    "mercedes": "Mercedes-Benz",
-    "bmw": "BMW",
-    "bentley": "Bentley",
-    "audi": "Audi"
+    "sedan": "Business Sedans"
   },
   "footer": {
     "ourCars": "Our cars",
     "aboutUs": "About Us",
-    "blog": "Blog",
     "contacts": "Contacts",
     "rentalPrices": "Rental Prices",
-    "privacyPolicy": "Our Privacy Policy",
-    "rentalPolicy": "Rental policy",
-    "refundablePolicy": "Refundable policy",
     "faqs": "FAQ's",
     "carTypes": "Car Types",
     "inquiriesSupport": "Inquiries & Support",
     "brandsTitle": "Brands",
-    "brands": "Brands",
-    "locations": "Locations",
     "copyright": "All Right Reserved",
-    "openInMaps": "Open in Maps",
-    "service247": "24/7 service",
-    "addressText": "39 Al Rasaas Rd- Al Quoz, Dubai"
+    "openInMaps": "Open in Maps"
   },
   "carDetail": {
     "breadcrumbHome": "Home",
     "specs": {
       "deposit": "Deposit",
-      "noDeposit": "No Deposit",
       "mileageLimit": "Mileage Limit",
       "extraMileage": "Extra Mileage",
       "payment": "Payment",
-      "paymentMethods": "Card, Cash",
       "color": "Color",
       "transmission": "Transmission",
-      "automatic": "Automatic",
       "carType": "Car Type",
       "engine": "Engine",
       "seats": "Seats",
@@ -367,7 +194,6 @@
       "acceleration": "0-100",
       "drive": "Drive",
       "fuel": "Fuel",
-      "petrol": "Petrol",
       "luggage": "Luggage"
     },
     "actions": {
@@ -410,77 +236,15 @@
     }
   },
   "about": {
-    "badge": "About Royal Baku Rent A Car",
-    "mainTitle": "Experience Luxury Car Rental in Baku with Confidence and Style",
-    "heroDesc1": "Royal Baku Rent A Car is a premium luxury car rental company in Baku, offering high-end vehicles for customer-oriented drive service, business travel, and a smooth driving experience. Whether you are visiting Baku for business, a special occasion, or simply want to elevate your daily drive, we feel that elevation.",
-    "heroDesc2": "Accompanying your access to luxury SUV and sedan options, Royal Baku caters to people who want a short-term or an extended rental. Every booking is executed in a way that minimizes effort and maximum satisfaction at all levels.",
-    "heroDesc3": "With quick booking support, modern luxury options, and transparent billing, Royal Baku Rent A Car has established a luxury car rental identity that matches Baku's modern lifestyle.",
-    "whyTitle": "Why Rent a Car in Baku with Us?",
-    "whyDesc": "The Top-Tier Rental Experience in Baku with Royal Baku.",
-    "googleReviews": "Google Reviews",
-    "feat1Title": "International Company",
-    "feat1Sub": "Multi-country operational fleet",
-    "feat2Title": "24/7 Support",
-    "feat2Sub": "Round the clock customer service",
-    "feat3Title": "100% Fleet Available",
-    "feat3Sub": "Inspected and pristine fleet",
-    "companyTag": "The Company",
-    "companyTitle": "Royal Baku Rent A Car",
-    "companyDesc": "Royal Baku Rent A Car is known for offering luxury and sports car rentals in Baku with a strong focus on presentation, convenience, and customer satisfaction. The company serves clients looking to enjoy high-tier daily drives, premium event arrivals, and business travel comfortably.",
-    "companyDesc2": "With support from Baku's main locations to the Caspian coast, the company makes premium car rental more accessible for daily, weekly, and monthly rental terms.",
-    "bullet1": "Access to over 100+ luxury models",
-    "bullet2": "Flexible daily, weekly, and monthly rental plans",
-    "bullet3": "24/7 concierge & roadside support",
-    "bullet4": "Transparent billing with zero deposit options",
-    "socialInsta": "Instagram",
-    "socialFb": "Facebook",
-    "socialYt": "YouTube",
     "tabMission": "Our Mission",
     "tabVision": "Our Vision",
-    "tabFleet": "Our Fleet",
-    "missionText": "The mission of our company is to make luxury car rental accessible and enjoyable not only in Baku but across all regions of Azerbaijan. We aim to become the best choice for all our luxury automotive customers by continuously evolving through innovative services, a premium fleet, and competitive pricing.",
-    "visionText": "Our vision is to define the standard of luxury automotive mobility across Central Asia and the Caucasus, providing bespoke VIP experiences and unmatched service excellence.",
-    "fleetText": "Our pristine fleet comprises over 100 top-tier vehicles ranging from hypercars and exotic convertibles to VIP executive SUVs and economy sedans, all impeccably maintained to manufacturer standards.",
-    "mediaSectionTitle": "Luxury Media",
-    "mediaTitle": "YouTube Videos & TikTok Highlights",
-    "mediaDesc": "Explore brand highlights, fleet previews, showroom showcases, and luxury car moments that reflect the Royal Baku drive experience.",
-    "video1Title": "Driving Excellence in Baku",
-    "video1Desc": "Experience our flagship Rolls-Royce Cullinan and Ferrari fleet.",
-    "video2Title": "Showroom & Delivery Experience",
-    "video2Desc": "A peek behind the scenes at our Baku headquarters.",
-    "video3Title": "Watch Royal Baku on TikTok",
-    "video3Desc": "Catch short-form reels, vehicle delivery clips, and brand highlights.",
-    "watchTikTok": "Open @royalbaku",
-    "ceoTag": "Founder & Ceo",
-    "ceoName": "Ibrahim Assad",
-    "ceoDesc1": "Ibrahim Assad is the Founder and CEO behind Royal Baku Rent A Car, leading the brand with a strong luxury vision and a public-facing identity that stands out in Baku's car rental space.",
-    "ceoDesc2": "His leadership reflects a modern, premium presentation, and consistent brand building. Through social platforms and business visibility, he continues to strengthen the company's image and market recognition.",
-    "ceoDesc3": "His media presence adds a personal layer to the brand, helping customers connect with the story behind the business and the lifestyle it represents.",
-    "ceoMediaSectionTitle": "Ceo Media",
-    "ceoMediaTitle": "Founder Videos & Social Highlights",
-    "ceoMediaDesc": "Explore leadership-side media that reflects the personal brand, public image, and business journey behind Royal Baku Rent A Car.",
-    "ceoVid1Title": "Founder-Led Rental Showcase",
-    "ceoVid1Desc": "Visionary guidance on delivering top-tier luxury experiences.",
-    "ceoVid2Title": "General Channel Content",
-    "ceoVid2Desc": "Behind-the-scenes insights into automobile fleet management.",
-    "ceoVid3Title": "Watch Ibrahim Assad on TikTok",
-    "ceoVid3Desc": "Follow for entrepreneur clips and automotive insights.",
-    "pressTag": "Press Articles",
-    "pressTitle": "Media Coverage and Recognition",
-    "pressDesc": "Royal Baku Rent A Car and its founder have received media attention for growth, investment, and prominence in Baku's luxury car rental industry.",
-    "article1Outlet": "Khaleej Times Feature",
-    "article1Headline": "Entrepreneur Ibrahim Assad's vision to lead the luxury car rental industry has garnered headlines",
-    "article1Desc": "A feature focused on the company's growth story and its premium approach to luxury car rental in Baku.",
-    "article2Outlet": "UAE & Regional Stories",
-    "article2Headline": "Incredible success story: How a passion for automobiles led to a luxury fleet",
-    "article2Desc": "Ibrahim Assad's journey from a young car enthusiast to a successful entrepreneur is a testament to vision, determination, and business execution."
+    "tabFleet": "Our Fleet"
   },
   "contact": {
     "badge": "Royal Baku Contact Us",
     "mainTitle": "Speak to the team behind Baku's finest fleet",
     "heroDesc": "Speak directly with our 24/7 client concierge team for instant bookings, fleet recommendations, VIP chauffeur requests, and custom rental packages in Baku and across Azerbaijan.",
     "btnWhatsapp": "WhatsApp Us",
-    "btnCall": "Call Us",
     "channelsTag": "Contact Channels",
     "channelsTitle": "Every channel, one standard of service",
     "channelsDesc": "Connect with our dedicated team through your preferred channel. Fast response times guaranteed.",
@@ -516,10 +280,7 @@
     "formTitle": "Request Your Booking",
     "namePlaceholder": "Your Name",
     "emailPlaceholder": "Email Address",
-    "carPlaceholder": "Car You Want to Rent",
     "phonePlaceholder": "Phone Number",
-    "startDatePlaceholder": "Pickup Date",
-    "endDatePlaceholder": "Return Date",
     "messagePlaceholder": "Additional Requirements / Notes",
     "btnSubmit": "Send Instant Request",
     "successMsg": "Thank you! Your booking request has been received. Our concierge will contact you within 15 minutes.",
@@ -601,5 +362,10 @@
   "tours": {
     "contactForPrice": "Contact for pricing",
     "from": "From"
+  },
+  "notfound": {
+    "title": "404 - Page Not Found",
+    "subtitle": "The page you are looking for does not exist or has been moved.",
+    "backHome": "Back to Home"
   }
 }

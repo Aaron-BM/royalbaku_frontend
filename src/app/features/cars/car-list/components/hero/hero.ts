@@ -5,10 +5,12 @@ import { LanguageService } from '../../../../../core/services/language.service';
 import { CarListFeature } from '../../../models/car-list.model';
 import { CarCategoryMeta } from '../../../../../core/models/car.model';
 
+import { LangUrlPipe } from '../../../../../shared/pipes/lang-url.pipe';
+
 @Component({
   selector: 'app-car-list-hero',
   standalone: true,
-  imports: [RouterLink, TranslatePipe],
+  imports: [RouterLink, TranslatePipe, LangUrlPipe],
   templateUrl: './hero.html',
   styleUrl: './hero.css',
 })
