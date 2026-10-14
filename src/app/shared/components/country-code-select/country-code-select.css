@@ -1,0 +1,33 @@
+/* Custom thin luxury scrollbar for country code list */
+.country-dropdown-list {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(207, 174, 61, 0.4) rgba(255, 255, 255, 0.04);
+  overscroll-behavior: contain;
+}
+
+.country-dropdown-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.country-dropdown-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 4px;
+}
+
+.country-dropdown-list::-webkit-scrollbar-thumb {
+  background: rgba(207, 174, 61, 0.35);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.country-dropdown-list::-webkit-scrollbar-thumb:hover {
+  background: var(--accent, #CFAE3D);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dropdown-animate,
+  .chevron-icon {
+    transition: none !important;
+    animation: none !important;
+  }
+}

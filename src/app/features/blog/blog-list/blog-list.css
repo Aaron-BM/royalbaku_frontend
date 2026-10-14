@@ -1,0 +1,40 @@
+/* Title Accent Bar */
+.title-accent-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+.title-accent-bar .line {
+  height: 1.5px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  opacity: 0.85;
+}
+.title-accent-bar .line.reverse {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.title-accent-bar .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 10px rgba(207, 174, 61, 0.7);
+}
+
+/* Glassmorphism Luxury Containers */
+.glass-panel {
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+  border-color: var(--border-medium);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+}
+
