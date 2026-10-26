@@ -52,6 +52,7 @@ export class Footer implements OnInit {
     { strLabelKey: 'footer.contacts', urlPath: '/contact' },
     { strLabelKey: 'footer.rentalPrices', urlPath: '/prices' },
     { strLabelKey: 'footer.faqs', urlPath: '/faq' },
+    { strLabelKey: 'footer.blog', urlPath: '/blog' },
   ]);
 
   protected readonly arrCarTypeLinks = signal<FooterLink[]>([]);
@@ -62,15 +63,15 @@ export class Footer implements OnInit {
   protected readonly strRawMapUrl = signal<string>(this.strDefaultMapUrl);
 
   protected readonly safeMapUrl = computed<SafeResourceUrl>(() =>
-    this.sanitizer.bypassSecurityTrustResourceUrl(this.strRawMapUrl())
+    this.sanitizer.bypassSecurityTrustResourceUrl(this.strRawMapUrl()),
   );
 
   protected readonly strAddressDisplay = signal<string>(
-    'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan'
+    'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan',
   );
 
   protected readonly mapDirectUrl = signal<string>(
-    'https://maps.google.com/?q=Khagani+Mall,+Office+No:+09,+3rd+Floor,+Nizami+St,+Baku,+Azerbaijan'
+    'https://maps.google.com/?q=Khagani+Mall,+Office+No:+09,+3rd+Floor,+Nizami+St,+Baku,+Azerbaijan',
   );
 
   protected readonly arrContactItems = signal<ContactInfoItem[]>([
@@ -78,7 +79,8 @@ export class Footer implements OnInit {
       idContact: 'address',
       strValue: 'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan',
       strIcon: 'location',
-      urlHref: 'https://maps.google.com/?q=Khagani+Mall,+Office+No:+09,+3rd+Floor,+Nizami+St,+Baku,+Azerbaijan',
+      urlHref:
+        'https://maps.google.com/?q=Khagani+Mall,+Office+No:+09,+3rd+Floor,+Nizami+St,+Baku,+Azerbaijan',
     },
   ]);
 
@@ -87,8 +89,18 @@ export class Footer implements OnInit {
   protected readonly arrSocialLinks = signal<SocialLink[]>([
     { idSocial: 'fb', strName: 'Facebook', strIcon: 'facebook', urlHref: 'https://facebook.com' },
     { idSocial: 'yt', strName: 'YouTube', strIcon: 'youtube', urlHref: 'https://youtube.com' },
-    { idSocial: 'ig', strName: 'Instagram', strIcon: 'instagram', urlHref: 'https://instagram.com/royalbaku_car' },
-    { idSocial: 'tt', strName: 'TikTok', strIcon: 'tiktok', urlHref: 'https://tiktok.com/@royalbaku' },
+    {
+      idSocial: 'ig',
+      strName: 'Instagram',
+      strIcon: 'instagram',
+      urlHref: 'https://instagram.com/royalbaku_car',
+    },
+    {
+      idSocial: 'tt',
+      strName: 'TikTok',
+      strIcon: 'tiktok',
+      urlHref: 'https://tiktok.com/@royalbaku',
+    },
   ]);
 
   ngOnInit(): void {
@@ -107,12 +119,14 @@ export class Footer implements OnInit {
 
         // Update address display and direct map URL
         const strLang = this.svcLanguage.strCurrentLang() || 'en';
-        const strAddr = typeof settings.address === 'object'
-          ? (settings.address[strLang] || settings.address['en'] || settings.address['az'] || '')
-          : String(settings.address || '');
-        const finalAddr = strAddr && strAddr.trim()
-          ? strAddr.trim()
-          : 'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan';
+        const strAddr =
+          typeof settings.address === 'object'
+            ? settings.address[strLang] || settings.address['en'] || settings.address['az'] || ''
+            : String(settings.address || '');
+        const finalAddr =
+          strAddr && strAddr.trim()
+            ? strAddr.trim()
+            : 'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan';
         this.strAddressDisplay.set(finalAddr);
         this.mapDirectUrl.set(`https://maps.google.com/?q=${encodeURIComponent(finalAddr)}`);
 
@@ -187,9 +201,10 @@ export class Footer implements OnInit {
       });
     }
 
-    const strAddr = typeof settings.address === 'object'
-      ? (settings.address[strLang] || settings.address['en'] || settings.address['az'] || '')
-      : String(settings.address || '');
+    const strAddr =
+      typeof settings.address === 'object'
+        ? settings.address[strLang] || settings.address['en'] || settings.address['az'] || ''
+        : String(settings.address || '');
     const finalAddr =
       strAddr && strAddr.trim()
         ? strAddr.trim()
@@ -203,9 +218,13 @@ export class Footer implements OnInit {
     });
 
     if (settings.working_hours) {
-      const strHours = typeof settings.working_hours === 'object'
-        ? (settings.working_hours[strLang] || settings.working_hours['en'] || settings.working_hours['az'] || '')
-        : String(settings.working_hours);
+      const strHours =
+        typeof settings.working_hours === 'object'
+          ? settings.working_hours[strLang] ||
+            settings.working_hours['en'] ||
+            settings.working_hours['az'] ||
+            ''
+          : String(settings.working_hours);
       if (strHours) {
         items.push({
           idContact: 'hours',

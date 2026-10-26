@@ -26,3 +26,13 @@
     transition: none !important;
   }
 }
+
+/* Horizontal scrollable badges & breadcrumbs track on mobile without default scrollbars */
+.badges-scroll-strip {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+.badges-scroll-strip::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}

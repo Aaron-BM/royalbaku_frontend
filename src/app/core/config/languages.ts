@@ -1,9 +1,9 @@
 export interface LanguageOption {
-  strCode: 'en' | 'az' | 'ar';
+  strCode: 'en' | 'az';
   strLabel: string;
   strDirection: 'ltr' | 'rtl';
   // Backward compatibility getters
-  get code(): 'en' | 'az' | 'ar';
+  get code(): 'en' | 'az';
   get label(): string;
   get direction(): 'ltr' | 'rtl';
 }
@@ -21,14 +21,6 @@ export const lstSupportedLanguages: LanguageOption[] = [
     strCode: 'az',
     strLabel: 'Azərbaycan',
     strDirection: 'ltr',
-    get code() { return this.strCode; },
-    get label() { return this.strLabel; },
-    get direction() { return this.strDirection; }
-  },
-  {
-    strCode: 'ar',
-    strLabel: 'العربية',
-    strDirection: 'rtl',
     get code() { return this.strCode; },
     get label() { return this.strLabel; },
     get direction() { return this.strDirection; }

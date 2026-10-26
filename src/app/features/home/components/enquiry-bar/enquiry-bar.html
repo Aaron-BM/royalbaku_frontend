@@ -62,18 +62,12 @@
             >
               <!-- Country Code Selector -->
               <div class="relative flex items-center shrink-0 border-r border-white/10 pr-2">
-                <select
+                <app-country-code-select
                   [(ngModel)]="strCountryCode"
                   name="strCountryCode"
-                  class="bg-transparent text-white text-xs font-semibold focus:outline-none cursor-pointer pr-1"
-                  aria-label="Country Code"
-                >
-                  @for (c of arrCountryCodes(); track c.code) {
-                    <option [value]="c.dial_code" class="bg-[#14161F] text-white">
-                      {{ c.flag ? c.flag + ' ' : '' }}{{ c.dial_code }}
-                    </option>
-                  }
-                </select>
+                  [arrCodes]="arrCountryCodes()"
+                  strButtonClass="bg-transparent text-white text-xs font-semibold focus:outline-none cursor-pointer flex items-center gap-1.5"
+                />
               </div>
               <input
                 id="mobile-no-input"

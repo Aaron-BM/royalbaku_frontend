@@ -1,4 +1,20 @@
 /* ==========================================================================
+   Sticky host container
+   ========================================================================== */
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  pointer-events: none;
+}
+
+:host > * {
+  pointer-events: auto;
+}
+
+/* ==========================================================================
    Nav: fonts
    ========================================================================== */
 :host header,
@@ -111,10 +127,25 @@
 .nav-link-item {
   position: relative;
   z-index: 2;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
   transition: color 150ms ease-out;
+}
+
+@media (min-width: 1280px) {
+  .nav-link-item {
+    font-size: 13.5px;
+    letter-spacing: normal;
+  }
+}
+
+@media (min-width: 1440px) {
+  .nav-link-item {
+    font-size: 14.5px;
+  }
 }
 
 .nav-link-item:hover,

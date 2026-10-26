@@ -1,0 +1,129 @@
+/* Title Accent Bar */
+.title-accent-bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+.title-accent-bar .line {
+  height: 1.5px;
+  width: 50px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  opacity: 0.85;
+}
+.title-accent-bar .line.reverse {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+.title-accent-bar .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 10px rgba(207, 174, 61, 0.7);
+}
+
+/* Glassmorphism Luxury Containers */
+.glass-panel {
+  background: rgba(18, 18, 18, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Dark Theme Rich Prose Styling */
+.blog-prose {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.85;
+}
+
+.blog-prose :is(h2) {
+  color: #ffffff;
+  font-family: var(--font-royal, 'Cinzel', serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.blog-prose :is(h3) {
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-prose :is(p) {
+  margin-bottom: 1.25rem;
+}
+
+.blog-prose :is(strong) {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.blog-prose :is(ul) {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.blog-prose :is(li) {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+.blog-prose :is(li)::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 8px rgba(207, 174, 61, 0.5);
+}
+
+.blog-prose :is(blockquote) {
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(207, 174, 61, 0.05);
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.blog-prose :is(blockquote p) {
+  margin-bottom: 0;
+}
+
+.blog-prose :is(img) {
+  border-radius: 1rem;
+  border: 1px solid var(--border-subtle);
+  margin: 1.75rem 0;
+  width: 100%;
+  height: auto;
+}
+
+.blog-prose :is(a) {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.blog-prose :is(a:hover) {
+  color: #f5d77f;
+}

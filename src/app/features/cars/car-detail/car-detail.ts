@@ -10,6 +10,7 @@ import { ImagePreviewModal } from '../../../shared/components/image-preview-moda
 import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
+import { CountryCodeSelect } from '../../../shared/components/country-code-select/country-code-select';
 
 import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
@@ -18,7 +19,7 @@ import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
 @Component({
   selector: 'app-app-car-detail',
   standalone: true,
-  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe],
+  imports: [RouterLink, TranslatePipe, FormsModule, ImagePreviewModal, AppCurrencyPipe, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe, CountryCodeSelect],
   templateUrl: './car-detail.html',
   styleUrl: './car-detail.css',
 })
@@ -109,7 +110,10 @@ export class CarDetail implements OnInit {
     this.numActiveImageIndex.set(numIndex);
   }
 
-  protected openPreviewModal(strUrl: string, strAlt: string = ''): void {
+  protected openPreviewModal(strUrl: string, strAlt: string = '', numIndex?: number): void {
+    if (numIndex !== undefined) {
+      this.numActiveImageIndex.set(numIndex);
+    }
     this.strPreviewImageUrl.set(strUrl);
     this.strPreviewAltText.set(strAlt);
     this.blnIsImageModalOpen.set(true);
@@ -192,6 +196,16 @@ export class CarDetail implements OnInit {
   protected get strPhoneHref(): string | null {
     const objCurrent = this.objCar();
     return this.siteSettingService.getPhoneUrl(objCurrent?.strWhatsappNumber);
+  }
+
+  protected getCarConciergeWhatsappHref(): string {
+    const objCurrent = this.objCar();
+    const title = objCurrent?.strTitle || 'a car';
+    const lang = this.svcLanguage.strCurrentLang();
+    const strMsg = lang === 'az'
+      ? `Salam, Royal Baku Car Rental. ${title} avtomobilinin bron edilməsi və mövcudluğu barədə məlumat almaq istəyirəm.`
+      : `Hello, Royal Baku Car Rental. I would like to check immediate availability and reserve the ${title}.`;
+    return this.siteSettingService.getWhatsappUrl(objCurrent?.strWhatsappNumber, strMsg) || 'https://wa.me/994512019191';
   }
 
   protected hasAnySpecs(car: CarDetailItem): boolean {

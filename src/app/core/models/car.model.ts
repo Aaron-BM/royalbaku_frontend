@@ -57,15 +57,21 @@ export interface CarDetailItem extends CarItem {
   strDescriptionKey?: string;
   arrCategorySlugs?: string[];
   strBrandSlug?: string;
+  strCategory?: string;
+  strBrand?: string;
 }
 
 export interface CarCategoryMeta {
   strSlug: string;
-  strCategoryKey: string;
-  strBadgeKey: string;
-  strTitleKey: string;
-  strDescKey: string;
-  strHeroBgImage: string;
+  strCategoryKey?: string;
+  strBadgeKey?: string;
+  strTitleKey?: string;
+  strDescKey?: string;
+  strHeroBgImage?: string;
+  strTitle?: string;
+  strDescription?: string;
+  strActiveName?: string;
+  blnIsBrand?: boolean;
 }
 
 export interface PriceTableItem {
@@ -79,11 +85,9 @@ export interface PriceTableItem {
   numDailyPrice: number;
   numWeeklyPrice?: number;
   numMonthlyPrice?: number;
-  numDepositUsd?: number;
   strCurrency: string;
   strWeeklyPriceValue: string;
   strMonthlyPriceValue: string;
-  strDepositValue: string;
 }
 
 

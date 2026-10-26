@@ -1,7 +1,17 @@
 {
+  "common": {
+    "selectCountryCode": "Select country code"
+  },
+  "imagePreviewModal": {
+    "dialogLabel": "Image preview",
+    "close": "Close image preview",
+    "prevImage": "Previous image",
+    "nextImage": "Next image"
+  },
   "nav": {
     "brandName": "Royal Baku",
     "brandSub": "Rent A Car",
+    "cars": "Cars",
     "carTypes": "Car Types",
     "carBrands": "Car Brands",
     "prices": "Prices",
@@ -9,6 +19,7 @@
     "faqs": "FAQ's",
     "contacts": "Contacts",
     "tourPackages": "Tour Packages",
+    "blog": "Blog",
     "home": "Home",
     "navigation": "Navigation"
   },
@@ -141,7 +152,6 @@
     "colPerDay": "Per Day",
     "colWeekly": "Weekly",
     "colMonthly": "Monthly",
-    "colDeposit": "Deposit",
     "book": "Book Now",
     "noCarsFound": "No vehicles found matching the selected filters.",
     "allBrands": "All Brands"
@@ -166,12 +176,31 @@
     "convertible": "Convertible",
     "sedan": "Business Sedans"
   },
+  "carList": {
+    "hero": {
+      "collectionTag": "FLEET COLLECTION",
+      "trustDelivery": "Luxury Rides, Unforgettable Journeys",
+      "trustDeposit": "Transparent & Competitive Pricing",
+      "trustInsurance": "Premium Fleet, Pristine Condition",
+      "trustRoadside": "Dedicated Customer Support"
+    },
+    "discovery": {
+      "tag": "Fleet Consultation & Discovery",
+      "title": "Looking for a Specific Model or Custom Rental Duration?",
+      "desc": "Whether you need an executive SUV for regional travel, a performance sports car for the city, or long-term monthly rental rates, our fleet team will provide personalized recommendations and exact availability.",
+      "btnWhatsapp": "Chat with Fleet Advisor",
+      "btnPrices": "View All Rental Prices",
+      "categoriesTitle": "Explore Other Categories",
+      "viewCategory": "View Category"
+    }
+  },
   "footer": {
     "ourCars": "Our cars",
     "aboutUs": "About Us",
     "contacts": "Contacts",
     "rentalPrices": "Rental Prices",
     "faqs": "FAQ's",
+    "blog": "Blog",
     "carTypes": "Car Types",
     "inquiriesSupport": "Inquiries & Support",
     "brandsTitle": "Brands",
@@ -180,6 +209,32 @@
   },
   "carDetail": {
     "breadcrumbHome": "Home",
+    "breadcrumbCars": "Cars",
+    "hero": {
+      "badgeBrand": "Official Marque",
+      "badgeZeroDeposit": "Zero Deposit Options Available",
+      "badgeFastDelivery": "Prompt Baku & GYD Airport Delivery",
+      "availableForDelivery": "Available for Immediate Delivery",
+      "startingFrom": "from",
+      "perDay": "/ day",
+      "instantReserve": "Instant Reserve",
+      "bookDirect": "Book Direct",
+      "whatsappReserve": "WhatsApp VIP",
+      "callConcierge": "Call Concierge"
+    },
+    "concierge": {
+      "tag": "Direct Vehicle Reservation Assistance",
+      "titlePrefix": "Need Immediate Confirmation for the",
+      "desc": "Our dedicated booking specialists are available 24/7 to verify immediate vehicle availability, schedule delivery to Heydar Aliyev Airport (GYD) or your hotel, and answer any rental policy questions.",
+      "bulletDeposit": "Zero security deposit options for eligible drivers (age 23+)",
+      "bulletInsurance": "Standard comprehensive motor insurance included",
+      "bulletDelivery": "Prompt delivery across Baku & GYD Airport (typically 30–60 min)",
+      "bulletRoadside": "24/7 nationwide roadside assistance & vehicle replacement support",
+      "cardWaTag": "Instant WhatsApp Booking",
+      "cardWaTitle": "Chat with Vehicle Concierge",
+      "cardPhoneTag": "Direct Reservation Hotline",
+      "cardPhoneTitle": "Call Concierge Team"
+    },
     "specs": {
       "deposit": "Deposit",
       "mileageLimit": "Mileage Limit",
@@ -362,6 +417,27 @@
   "tours": {
     "contactForPrice": "Contact for pricing",
     "from": "From"
+  },
+  "blog": {
+    "title": "Royal Baku Journal",
+    "subtitle": "Discover luxury car reviews, Baku travel guides, VIP lifestyle tips, and driving insights from our expert team.",
+    "readMore": "Read Article",
+    "minRead": "min read",
+    "empty": "No Articles Found",
+    "emptyDesc": "No articles found matching the selected category. Check back soon for fresh stories.",
+    "emptyNoPosts": "No articles have been published yet. Check back soon for fresh stories.",
+    "error": "Failed to Load Articles",
+    "retry": "Try Again",
+    "allCategories": "All Stories",
+    "resetFilter": "Show All Articles",
+    "backToBlog": "Back to Journal",
+    "returnToBlog": "Return to Journal",
+    "relatedPosts": "Related Articles",
+    "discoverMore": "Discover More Stories",
+    "postNotFound": "Article Not Found",
+    "postNotFoundDesc": "The article you are looking for does not exist or may have been removed.",
+    "featuredStory": "Featured Story",
+    "latestStories": "Latest Stories"
   },
   "notfound": {
     "title": "404 - Page Not Found",

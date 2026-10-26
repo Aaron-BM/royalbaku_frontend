@@ -1,0 +1,13 @@
+/* Tour Packages Main Page CSS */
+
+.tours-hero-bg {
+  background-image: radial-gradient(circle at 50% 0%, rgba(207, 174, 61, 0.15) 0%, transparent 60%),
+    linear-gradient(180deg, #07080c 0%, #0c0d14 100%);
+}
+
+.title-accent-gold {
+  background: linear-gradient(135deg, #ffffff 30%, #f5d77f 70%, #cfae3d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

@@ -8,6 +8,7 @@ import { CarDetailItem } from '../../../core/models/car.model';
 
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
+import { CountryCodeSelect } from '../../../shared/components/country-code-select/country-code-select';
 
 import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
@@ -15,7 +16,7 @@ import { LanguageService } from '../../../core/services/language.service';
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [FormsModule, TranslatePipe, IconWhatsappComponent, IconPhoneComponent],
+  imports: [FormsModule, TranslatePipe, IconWhatsappComponent, IconPhoneComponent, CountryCodeSelect],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
 })

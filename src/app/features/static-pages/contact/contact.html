@@ -392,22 +392,12 @@
               <div>
                 <label class="block text-[11px] font-extrabold text-white mb-1">Phone Number</label>
                 <div class="flex items-center gap-2">
-                  <select
+                  <app-country-code-select
                     [(ngModel)]="strSelectedCountryCode"
                     name="strSelectedCountryCode"
-                    class="bg-[#0D0E12] border border-white/20 rounded-xl px-2.5 py-2.5 text-xs text-white focus:border-gold outline-none transition-colors shrink-0 max-w-[100px] sm:max-w-[110px] truncate"
-                  >
-                    @for (code of arrCountryCodes(); track code.code) {
-                      <option [value]="code.dial_code" class="bg-[#12141C] text-white">
-                        {{ code.dial_code }}
-                      </option>
-                    } @empty {
-                      <option value="+994" class="bg-[#12141C] text-white">+994</option>
-                      <option value="+971" class="bg-[#12141C] text-white">+971</option>
-                      <option value="+91" class="bg-[#12141C] text-white">+91</option>
-                      <option value="+966" class="bg-[#12141C] text-white">+966</option>
-                    }
-                  </select>
+                    [arrCodes]="arrCountryCodes()"
+                    class="shrink-0 max-w-[100px] sm:max-w-[110px]"
+                  />
                   <input
                     type="tel"
                     [(ngModel)]="objFormData().strPhone"

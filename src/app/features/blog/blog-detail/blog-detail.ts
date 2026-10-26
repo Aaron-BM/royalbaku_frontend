@@ -3,14 +3,13 @@ import {
   DestroyRef,
   OnInit,
   PLATFORM_ID,
-  computed,
+  effect,
   inject,
   signal,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BlogService } from '../../../core/services/blog.service';
 import { BlogPost } from '../../../shared/models/blog-post.model';
@@ -31,7 +30,6 @@ export class BlogDetail implements OnInit {
   private readonly svcBlog = inject(BlogService);
   private readonly svcSeo = inject(SeoService);
   protected readonly svcLanguage = inject(LanguageService);
-  private readonly sanitizer = inject(DomSanitizer);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly destroyRef = inject(DestroyRef);
 
@@ -39,18 +37,24 @@ export class BlogDetail implements OnInit {
   protected readonly arrLatestPosts = signal<BlogPost[]>([]);
   protected readonly blnIsLoading = signal<boolean>(true);
   protected readonly blnHasError = signal<boolean>(false);
+  private readonly strActiveSlug = signal<string>('');
 
-  /** Sanitized post body HTML */
-  protected readonly safeContent = computed<SafeHtml>(() => {
-    const post = this.objPost();
-    if (!post?.strContent) return '';
-    return this.sanitizer.bypassSecurityTrustHtml(post.strContent);
-  });
+  constructor() {
+    // React to language changes: reload post for active language and localized slug
+    effect(() => {
+      this.svcLanguage.strCurrentLang();
+      const slug = this.strActiveSlug();
+      if (slug) {
+        this.fnLoadPost(slug);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const strSlug = params.get('slug') || '';
       if (strSlug) {
+        this.strActiveSlug.set(strSlug);
         this.fnLoadPost(strSlug);
       }
     });
@@ -98,11 +102,15 @@ export class BlogDetail implements OnInit {
   }
 
   private fnSetArticleSeo(post: BlogPost): void {
+    const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    const activeSlug = isAz ? post.strSlugAz : post.strSlugEn;
+
     this.svcSeo.fnSetSeo({
       title: post.strMetaTitle || post.strTitle,
       description: post.strMetaDescription || post.strExcerpt,
       image: post.strCoverImage,
       type: 'article',
+      url: isAz ? `/az/blog/${activeSlug}` : `/blog/${activeSlug}`,
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'BlogPosting',
@@ -124,7 +132,7 @@ export class BlogDetail implements OnInit {
         },
         mainEntityOfPage: {
           '@type': 'WebPage',
-          '@id': `${this.svcSeo.strDomain}/blog/${post.strSlug}`,
+          '@id': `${this.svcSeo.strDomain}/blog/${post.strSlugEn}`,
         },
       },
     });
@@ -143,4 +151,3 @@ export class BlogDetail implements OnInit {
     }
   }
 }
-

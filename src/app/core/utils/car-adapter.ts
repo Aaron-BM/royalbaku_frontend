@@ -6,6 +6,7 @@ export interface DRFBrand {
   name: any;
   slug: string;
   logo: string | null;
+  description?: any;
   is_active?: boolean;
 }
 
@@ -81,6 +82,7 @@ export interface DRFMinimalLookupItem {
   name: any;
   slug: string;
   image?: string | null;
+  description?: any;
   brand?: number;
   car_category?: number;
 }
@@ -96,13 +98,14 @@ export interface CatalogLookupResponse {
 /**
  * Safely parses multilingual JSON/String fields from DRF API
  */
-export function parseI18nString(val: any): string {
+export function parseI18nString(val: any, lang?: string): string {
   if (!val) return '';
   if (typeof val === 'string') {
     const strTrimmed = val.trim();
     if (strTrimmed.startsWith('{') && strTrimmed.endsWith('}')) {
       try {
         const parsed = JSON.parse(strTrimmed.replace(/'/g, '"'));
+        if (lang && parsed[lang]) return parsed[lang];
         return parsed['en'] || parsed['az'] || parsed['ar'] || Object.values(parsed)[0] || val;
       } catch {
         return val;
@@ -111,6 +114,7 @@ export function parseI18nString(val: any): string {
     return val;
   }
   if (typeof val === 'object') {
+    if (lang && val[lang]) return val[lang];
     return val['en'] || val['az'] || val['ar'] || Object.values(val)[0] || '';
   }
   return String(val);
@@ -265,6 +269,8 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     strDescriptionKey: parseI18nString(car.description) || undefined,
     arrCategorySlugs: strCategorySlug ? [strCategorySlug] : [],
     strBrandSlug: strBrandSlug,
+    strBrand: car.brand?.name ? parseI18nString(car.brand.name) : undefined,
+    strCategory: car.category?.name ? parseI18nString(car.category.name) : undefined,
     arrGalleryImages: arrGalleryImages,
     objSpecs: {
       strDepositValue: strDepositValue,
@@ -306,8 +312,6 @@ export function mapDRFCarToPriceTableItem(car: DRFCar): PriceTableItem {
     car.price_weekly != null ? (typeof car.price_weekly === 'number' ? car.price_weekly : parseFloat(car.price_weekly) || undefined) : undefined;
   const numMonthlyPrice =
     car.price_monthly != null ? (typeof car.price_monthly === 'number' ? car.price_monthly : parseFloat(car.price_monthly) || undefined) : undefined;
-  const numDepositUsd =
-    car.specs?.deposit != null ? parseFloat(car.specs.deposit) || undefined : undefined;
 
   const arrRawImages: string[] = [];
   const strPrimary = extractImageUrl(car.primary_image);
@@ -358,11 +362,9 @@ export function mapDRFCarToPriceTableItem(car: DRFCar): PriceTableItem {
     numDailyPrice: numDailyPrice,
     numWeeklyPrice: numWeeklyPrice,
     numMonthlyPrice: numMonthlyPrice,
-    numDepositUsd: numDepositUsd,
     strCurrency: 'USD',
     strWeeklyPriceValue: car.price_weekly ? String(car.price_weekly) : '',
     strMonthlyPriceValue: car.price_monthly ? String(car.price_monthly) : '',
-    strDepositValue: car.specs?.deposit ? String(car.specs.deposit) : '0',
   };
 }
 

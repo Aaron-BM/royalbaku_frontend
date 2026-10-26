@@ -54,14 +54,39 @@ export class Nav implements OnInit, AfterViewInit {
   protected readonly arrNavLinks: NavLink[] = [
     { strPath: '/tour-packages/discover-azerbaijan', strKey: 'nav.tourPackages' },
     { strPath: '/prices', strKey: 'nav.prices' },
+    { strPath: '/blog', strKey: 'nav.blog' },
     { strPath: '/about', strKey: 'nav.aboutUs' },
     { strPath: '/faq', strKey: 'nav.faqs' },
     { strPath: '/contact', strKey: 'nav.contacts' },
   ];
 
   // ---------- Catalog data ----------
-  protected readonly arrCarTypes = signal<CarCategory[]>([]);
-  protected readonly arrCarBrands = signal<CarBrand[]>([]);
+  private readonly objCatalogLookup = signal<any>({});
+
+  protected readonly arrCarTypes = computed<CarCategory[]>(() => {
+    const lookup = this.objCatalogLookup();
+    const currentLang = this.svcLanguage.strCurrentLang();
+    if (!lookup.categories?.length) return [];
+    return [
+      { idCategory: 'cat-0', strNameKey: 'hero.breadcrumbCategory', strSlug: '' },
+      ...lookup.categories.map((objItem: any) => ({
+        idCategory: String(objItem.id),
+        strNameKey: parseI18nString(objItem.name, currentLang),
+        strSlug: objItem.slug,
+      })),
+    ];
+  });
+
+  protected readonly arrCarBrands = computed<CarBrand[]>(() => {
+    const lookup = this.objCatalogLookup();
+    const currentLang = this.svcLanguage.strCurrentLang();
+    return (lookup.brands ?? []).map((objItem: any) => ({
+      idBrand: String(objItem.id),
+      strName: parseI18nString(objItem.name, currentLang),
+      strSlug: objItem.slug,
+      strIconSvg: objItem.image || undefined,
+    }));
+  });
 
   /** Brands split evenly into columns for the desktop mega menu */
   protected readonly arrBrandColumns = computed<CarBrand[][]>(() => {
@@ -88,7 +113,21 @@ export class Nav implements OnInit, AfterViewInit {
   protected readonly numIndicatorScaleX = signal(0);
   protected readonly blnIndicatorVisible = signal(false);
 
+  // ---------- Scroll & Sticky state ----------
+  protected readonly blnIsScrolled = signal(false);
+
+  @HostListener('window:scroll')
+  protected fnOnWindowScroll(): void {
+    if (typeof window !== 'undefined') {
+      this.blnIsScrolled.set(window.scrollY > 15);
+    }
+  }
+
   ngOnInit(): void {
+    if (typeof window !== 'undefined') {
+      this.blnIsScrolled.set(window.scrollY > 15);
+    }
+
     this.router.events
       .pipe(
         filter((objEvent) => objEvent instanceof NavigationEnd),
@@ -114,25 +153,7 @@ export class Nav implements OnInit, AfterViewInit {
       .getCatalogLookup(['category', 'brand'])
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((objLookup) => {
-        if (objLookup.categories?.length) {
-          this.arrCarTypes.set([
-            { idCategory: 'cat-0', strNameKey: 'hero.breadcrumbCategory', strSlug: '' },
-            ...objLookup.categories.map((objItem) => ({
-              idCategory: String(objItem.id),
-              strNameKey: parseI18nString(objItem.name),
-              strSlug: objItem.slug,
-            })),
-          ]);
-        }
-
-        this.arrCarBrands.set(
-          (objLookup.brands ?? []).map((objItem) => ({
-            idBrand: String(objItem.id),
-            strName: parseI18nString(objItem.name),
-            strSlug: objItem.slug,
-            strIconSvg: objItem.image || undefined,
-          })),
-        );
+        this.objCatalogLookup.set(objLookup);
       });
   }
 
@@ -256,7 +277,7 @@ export class Nav implements OnInit, AfterViewInit {
 
     const elTarget = elContainer.classList.contains('nav-link-item')
       ? elContainer
-      : (elContainer.querySelector('.nav-link-item') as HTMLElement | null) ?? elContainer;
+      : ((elContainer.querySelector('.nav-link-item') as HTMLElement | null) ?? elContainer);
 
     this.fnPositionIndicator(elTarget);
   }
@@ -266,7 +287,12 @@ export class Nav implements OnInit, AfterViewInit {
   }
 
   private fnPositionIndicator(elTarget: HTMLElement): void {
-    if (typeof window === 'undefined' || !elTarget || typeof elTarget.getBoundingClientRect !== 'function') return;
+    if (
+      typeof window === 'undefined' ||
+      !elTarget ||
+      typeof elTarget.getBoundingClientRect !== 'function'
+    )
+      return;
     const elList = this.navListRef?.nativeElement;
     if (!elList) return;
 
@@ -279,7 +305,8 @@ export class Nav implements OnInit, AfterViewInit {
   }
 
   private fnUpdateActiveIndicator(): void {
-    const elActive = this.navListRef?.nativeElement.querySelector<HTMLElement>('.nav-link-item.active');
+    const elActive =
+      this.navListRef?.nativeElement.querySelector<HTMLElement>('.nav-link-item.active');
     if (elActive) {
       this.fnPositionIndicator(elActive);
     } else {

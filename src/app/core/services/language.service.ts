@@ -97,17 +97,19 @@ export class LanguageService {
 
   /**
    * Converts any router path into a language-aware route array.
-   * e.g., '/cars' -> ['/az', 'cars'] when active language is 'az'.
+   * e.g., '/cars' -> ['/az', 'cars'] or ['/cars'].
    */
   fnLangRoute(pathInput: string | any[] | null | undefined): any[] {
     if (!pathInput) {
-      return this.strCurrentLang() === 'az' ? ['/az'] : ['/'];
+      if (this.strCurrentLang() === 'az') return ['/az'];
+      return ['/'];
     }
 
     let segments: string[] = [];
     if (typeof pathInput === 'string') {
       if (pathInput === '/' || pathInput === '') {
-        return this.strCurrentLang() === 'az' ? ['/az'] : ['/'];
+        if (this.strCurrentLang() === 'az') return ['/az'];
+        return ['/'];
       }
       segments = pathInput.split('/').filter(Boolean);
     } else if (Array.isArray(pathInput)) {

@@ -3,7 +3,7 @@
   <app-car-list-hero [objCategoryMeta]="objCategoryMeta()"></app-car-list-hero>
 
   <!-- Main Container -->
-  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pt-8">
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 pt-8 pb-8">
     <!-- Filter Buttons Bar (Matching reference demo dropdown pills) -->
     <div class="flex items-center gap-3 mb-10 relative z-20">
       <!-- Car Brands Filter Dropdown -->
@@ -124,5 +124,89 @@
         </a>
       </div>
     }
+
+    <!-- Fleet Consultation & Cross-Category Discovery Section -->
+    <section class="mt-16 pt-12 border-t border-white/10">
+      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-2xl">
+        <!-- Subtle gold ambient glow -->
+        <div class="absolute -top-24 -right-24 w-72 h-72 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          <!-- Left: Fleet Consultation & Advisory -->
+          <div class="lg:col-span-7 space-y-4 text-left ltr:text-left rtl:text-right">
+            <div class="inline-flex items-center gap-2 text-[11px] sm:text-xs tracking-[0.2em] font-extrabold text-gold bg-gold/10 border border-gold/30 px-3.5 py-1 rounded-full uppercase">
+              <span>✦</span> <span>{{ 'carList.discovery.tag' | translate }}</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+              {{ 'carList.discovery.title' | translate }}
+            </h2>
+            <p class="text-sm text-white/70 leading-relaxed max-w-xl">
+              {{ 'carList.discovery.desc' | translate }}
+            </p>
+            <div class="pt-2 flex flex-wrap items-center gap-3 sm:gap-4">
+              <a
+                [href]="getFleetWhatsappHref()"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-gold text-black font-bold text-xs uppercase tracking-wider hover:bg-[#d8b368] transition-all duration-300 shadow-lg shadow-gold/20"
+              >
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                  <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.585 1.961.917 2.796.917 3.182 0 5.768-2.587 5.768-5.767s-2.586-5.766-5.768-5.766zm3.385 8.151c-.146.411-.749.773-1.042.822-.294.049-.668.073-1.077-.058-.291-.093-.668-.225-1.156-.436-2.067-.895-3.415-2.986-3.518-3.123-.104-.138-.838-1.116-.838-2.128 0-1.012.529-1.512.718-1.721.189-.208.414-.261.552-.261.138 0 .276.002.396.008.127.006.297-.048.465.354.172.413.587 1.431.639 1.536.052.105.086.228.017.367-.069.138-.104.225-.207.346-.104.121-.218.271-.311.364-.104.103-.213.215-.091.424.122.209.542.894 1.161 1.446.797.711 1.469.932 1.678 1.036.209.103.332.086.455-.052.123-.138.528-.616.669-.828.141-.212.282-.177.475-.104.193.073 1.226.578 1.437.683.211.105.351.157.403.245.052.088.052.511-.094.922z"/>
+                </svg>
+                <span>{{ 'carList.discovery.btnWhatsapp' | translate }}</span>
+              </a>
+              <a
+                [routerLink]="'/prices' | langUrl"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider hover:bg-white/10 hover:border-gold/50 transition-all duration-300"
+              >
+                <span>{{ 'carList.discovery.btnPrices' | translate }}</span>
+                <span class="text-gold rtl:rotate-180">→</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Cross-Category Discovery Matrix -->
+          <div class="lg:col-span-5 bg-white/[0.02] border border-white/10 rounded-2xl p-6 text-left ltr:text-left rtl:text-right">
+            <h3 class="text-xs uppercase tracking-widest text-gold font-bold mb-4 flex items-center gap-2">
+              <span>♦</span> <span>{{ 'carList.discovery.categoriesTitle' | translate }}</span>
+            </h3>
+            <div class="flex flex-wrap gap-2">
+              @for (cat of arrLookupCategories(); track cat.id) {
+                <a
+                  [routerLink]="['/cars', cat.slug] | langUrl"
+                  class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium border transition-all duration-200"
+                  [class.bg-gold]="strCurrentCategorySlug().toLowerCase() === cat.slug.toLowerCase()"
+                  [class.text-black]="strCurrentCategorySlug().toLowerCase() === cat.slug.toLowerCase()"
+                  [class.border-gold]="strCurrentCategorySlug().toLowerCase() === cat.slug.toLowerCase()"
+                  [class.font-bold]="strCurrentCategorySlug().toLowerCase() === cat.slug.toLowerCase()"
+                  [class.bg-white/5]="strCurrentCategorySlug().toLowerCase() !== cat.slug.toLowerCase()"
+                  [class.text-white]="strCurrentCategorySlug().toLowerCase() !== cat.slug.toLowerCase()"
+                  [class.border-white/10]="strCurrentCategorySlug().toLowerCase() !== cat.slug.toLowerCase()"
+                  [class.hover:border-gold/50]="strCurrentCategorySlug().toLowerCase() !== cat.slug.toLowerCase()"
+                  [class.hover:text-gold]="strCurrentCategorySlug().toLowerCase() !== cat.slug.toLowerCase()"
+                >
+                  <span>{{ getCategoryName(cat) }}</span>
+                </a>
+              }
+              <a
+                [routerLink]="'/cars' | langUrl"
+                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-semibold border transition-all duration-200"
+                [class.bg-gold]="!strCurrentCategorySlug()"
+                [class.text-black]="!strCurrentCategorySlug()"
+                [class.border-gold]="!strCurrentCategorySlug()"
+                [class.bg-white/5]="strCurrentCategorySlug()"
+                [class.text-white/80]="strCurrentCategorySlug()"
+                [class.border-white/10]="strCurrentCategorySlug()"
+                [class.hover:border-gold/50]="strCurrentCategorySlug()"
+                [class.hover:text-gold]="strCurrentCategorySlug()"
+              >
+                <span>{{ 'cars.viewAllCars' | translate }}</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </div>

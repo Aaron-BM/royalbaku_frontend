@@ -1,0 +1,109 @@
+/* Title Accent Bar with glowing center dot */
+.title-accent-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 14px;
+  margin-bottom: 22px;
+}
+
+.title-accent-bar .line {
+  height: 1.5px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  opacity: 0.85;
+}
+
+.title-accent-bar .line.reverse {
+  background: linear-gradient(90deg, var(--accent), transparent);
+}
+
+.title-accent-bar .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  box-shadow: 0 0 12px rgba(207, 174, 61, 0.9);
+}
+
+/* Atmospheric Ambient Breathing Glow */
+.ambient-glow {
+  position: absolute;
+  animation: ambientBreathe 9s ease-in-out infinite alternate;
+}
+
+@keyframes ambientBreathe {
+  0% {
+    opacity: 0.45;
+    transform: translate(-50%, 0) scale(1);
+  }
+  100% {
+    opacity: 0.85;
+    transform: translate(-50%, -15px) scale(1.12);
+  }
+}
+
+/* Category Filter Pills */
+.active-category-pill {
+  background: linear-gradient(135deg, #cfae3d 0%, #e8cf65 50%, #cfae3d 100%);
+  color: #000;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(207, 174, 61, 0.35);
+  transform: translateY(-1px);
+}
+
+.inactive-category-pill {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.inactive-category-pill:hover {
+  color: var(--accent);
+  border-color: rgba(207, 174, 61, 0.4);
+  background: rgba(207, 174, 61, 0.06);
+  transform: translateY(-1px);
+}
+
+/* Featured Hero Card Animation */
+.featured-hero-card {
+  animation: heroEntrance 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes heroEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Luxury Empty and Error Boxes */
+.luxury-empty-box {
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

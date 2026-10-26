@@ -5,11 +5,12 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { InquiryService, InquiryPayload, CountryCode } from '../../../../core/services/inquiry.service';
 
 import { IconPhoneComponent } from '../../../../shared/components/icons/icon-phone';
+import { CountryCodeSelect } from '../../../../shared/components/country-code-select/country-code-select';
 
 @Component({
   selector: 'app-enquiry-bar',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslatePipe, IconPhoneComponent],
+  imports: [CommonModule, FormsModule, TranslatePipe, IconPhoneComponent, CountryCodeSelect],
   templateUrl: './enquiry-bar.html',
   styleUrl: './enquiry-bar.css',
 })

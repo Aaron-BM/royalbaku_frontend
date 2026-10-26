@@ -1,16 +1,29 @@
-@if (blnIsOpen && strImageUrl) {
+@if (blnIsOpen && (hasMultipleImages || currentImageUrl)) {
   <div
+    #modalBackdrop
     class="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-6 md:p-10 select-none overflow-hidden"
     data-backdrop="true"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="'imagePreviewModal.dialogLabel' | translate"
     (click)="onBackdropClick($event)"
+    (touchstart)="onTouchStart($event)"
+    (touchend)="onTouchEnd($event)"
   >
-    <!-- Top Bar Controls -->
+    <!-- Top Left: Image Counter (Only when multiple images) -->
+    @if (hasMultipleImages) {
+      <div class="absolute top-4 left-4 sm:top-6 sm:left-6 z-50 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-sm text-xs sm:text-sm text-white/90 font-medium tracking-wider shadow-lg">
+        {{ numActiveIndex + 1 }} / {{ arrImages!.length }}
+      </div>
+    }
+
+    <!-- Top Right Controls: Close Button (×) -->
     <div class="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-3">
-      <!-- Close Button (×) -->
       <button
+        #closeBtn
         type="button"
         (click)="onClose()"
-        aria-label="Close image preview"
+        [attr.aria-label]="'imagePreviewModal.close' | translate"
         class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white flex items-center justify-center transition-all duration-200 hover:scale-110 shadow-2xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-gold/50"
       >
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -24,20 +37,80 @@
       </button>
     </div>
 
-    <!-- Main Image Preview Container -->
+    <!-- Left Prev Arrow Button (Only when multiple images) -->
+    @if (hasMultipleImages) {
+      <button
+        type="button"
+        (click)="onPrev(); $event.stopPropagation()"
+        [attr.aria-label]="'imagePreviewModal.prevImage' | translate"
+        class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white hover:text-gold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl z-30 focus:outline-none focus:ring-2 focus:ring-gold/50"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+      </button>
+    }
+
+    <!-- Right Next Arrow Button (Only when multiple images) -->
+    @if (hasMultipleImages) {
+      <button
+        type="button"
+        (click)="onNext(); $event.stopPropagation()"
+        [attr.aria-label]="'imagePreviewModal.nextImage' | translate"
+        class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white hover:text-gold flex items-center justify-center transition-all duration-200 cursor-pointer shadow-2xl z-30 focus:outline-none focus:ring-2 focus:ring-gold/50"
+      >
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2.5"
+            d="M9 5l7 7-7 7"
+          />
+        </svg>
+      </button>
+    }
+
+    <!-- Main Image Preview Container (Side-by-side sliding track when multiple images) -->
     <div
-      class="modal-content relative max-w-full max-h-full flex flex-col items-center justify-center"
-      (click)="$event.stopPropagation()"
+      class="modal-content relative w-full h-full max-w-full max-h-full flex flex-col items-center justify-center overflow-hidden"
     >
-      <img
-        [src]="strImageUrl"
-        [alt]="strAltText || 'Full screen preview'"
-        class="modal-image max-w-[92vw] max-h-[85vh] sm:max-w-[90vw] sm:max-h-[88vh] object-contain rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/10 transition-all duration-300"
-      />
+      @if (hasMultipleImages) {
+        <div class="modal-slider-viewport w-full h-[85vh] sm:h-[88vh] overflow-hidden flex items-center justify-center">
+          <div
+            class="modal-slider-track flex h-full will-change-transform"
+            [style.transform]="'translateX(-' + (numActiveIndex * 100) + '%)'"
+          >
+            @for (img of arrImages; track $index) {
+              <div class="modal-slider-slide w-full h-full flex-shrink-0 flex items-center justify-center p-2 sm:p-4">
+                <img
+                  [src]="img"
+                  [alt]="getSlideAltText($index)"
+                  class="modal-image max-w-[92vw] max-h-[82vh] sm:max-w-[88vw] sm:max-h-[85vh] object-contain rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/10"
+                  [attr.loading]="$index === numActiveIndex ? 'eager' : 'lazy'"
+                />
+              </div>
+            }
+          </div>
+        </div>
+      } @else {
+        <!-- Single Image Display (e.g. tour packages) -->
+        <div class="flex flex-col items-center justify-center">
+          <img
+            [src]="currentImageUrl"
+            [alt]="currentAltText"
+            class="modal-image max-w-[92vw] max-h-[85vh] sm:max-w-[90vw] sm:max-h-[88vh] object-contain rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/10"
+          />
+        </div>
+      }
 
       <!-- Optional Caption Tag -->
       @if (strAltText) {
-        <div class="mt-4 px-4 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-sm text-xs sm:text-sm text-white/90 font-medium tracking-wide text-center max-w-lg truncate shadow-lg">
+        <div class="mt-3 px-4 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-sm text-xs sm:text-sm text-white/90 font-medium tracking-wide text-center max-w-lg truncate shadow-lg z-20">
           {{ strAltText }}
         </div>
       }

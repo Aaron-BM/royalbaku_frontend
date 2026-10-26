@@ -25,9 +25,6 @@ export class CarService {
   private readonly strCategoriesApiUrl = `${environment.apiBaseUrl}/categories`;
   private readonly strBrandsApiUrl = `${environment.apiBaseUrl}/brands`;
 
-  // Category Registry Metadata for Dynamic Car-Type Pages
-  private readonly arrCategoryMetaRegistry: CarCategoryMeta[] = [];
-
   /**
    * Helper to normalize dynamic category route slugs
    */
@@ -38,20 +35,6 @@ export class CarService {
       .replace(/^rent-/, '')
       .replace(/-cars$/, '')
       .trim();
-  }
-
-  /**
-   * Fetches metadata for a given category route slug
-   */
-  getCategoryMetadata(strSlug?: string | null): CarCategoryMeta | null {
-    const strNormalized = this.normalizeCategorySlug(strSlug);
-    if (!strNormalized) return null;
-
-    return (
-      this.arrCategoryMetaRegistry.find(
-        (meta) => meta.strSlug === strNormalized || strSlug?.includes(meta.strSlug)
-      ) || null
-    );
   }
 
   /**

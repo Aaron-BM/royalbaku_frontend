@@ -1,8 +1,7 @@
-import { Component, Input, inject, signal } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LanguageService } from '../../../../../core/services/language.service';
-import { CarListFeature } from '../../../models/car-list.model';
 import { CarCategoryMeta } from '../../../../../core/models/car.model';
 
 import { LangUrlPipe } from '../../../../../shared/pipes/lang-url.pipe';
@@ -18,6 +17,4 @@ export class CarListHero {
   protected readonly svcLanguage = inject(LanguageService);
 
   @Input() objCategoryMeta: CarCategoryMeta | null = null;
-
-  protected readonly arrFeatures = signal<CarListFeature[]>([]);
 }

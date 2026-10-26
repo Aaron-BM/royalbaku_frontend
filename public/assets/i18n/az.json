@@ -1,40 +1,33 @@
 {
+  "common": {
+    "selectCountryCode": "Ölkə kodunu seçin"
+  },
+  "imagePreviewModal": {
+    "dialogLabel": "Şəkil önizləməsi",
+    "close": "Şəkil önizləməsini bağla",
+    "prevImage": "Əvvəlki şəkil",
+    "nextImage": "Növbəti şəkil"
+  },
   "nav": {
     "brandName": "Royal Baku",
     "brandSub": "Rent A Car",
+    "cars": "Avtomobillər",
     "carTypes": "Avtomobil növləri",
     "carBrands": "Avtomobil markaları",
-    "monthlyRental": "Aylıq avtomobil icarəsi",
     "prices": "İcarə qiymətləri",
     "aboutUs": "Haqqımızda",
     "faqs": "Tez-tez verilən suallar",
     "contacts": "Əlaqə",
-    "viewAllCars": "Bütün avtomobillərə baxın",
-    "viewAllBrands": "Markaları kəşf edin",
     "tourPackages": "Tur Paketləri",
-    "home": "Home",
-    "navigation": "Navigation"
+    "blog": "Bloq",
+    "home": "Ana səhifə",
+    "navigation": "Naviqasiya"
   },
   "hero": {
-    "breadcrumbHome": "Home",
-    "breadcrumbCategory": "All Cars",
+    "breadcrumbHome": "Ana səhifə",
+    "breadcrumbCategory": "Bütün avtomobillər",
     "title": "Bütün avtomobillər",
-    "description": "Ekonom və SUV modellərindən tutmuş lüks və idman avtomobillərinə qədər geniş avtomobil çeşidimizi kəşf edin. Büdcənizə və səyahət ehtiyaclarınıza uyğun ideal avtomobili çevik gündəlik, həftəlik və aylıq icarə seçimləri ilə seçin.",
-    "searchPlaceholder": "Model, marka və ya kateqoriya axtarın...",
-    "searchButton": "Avtomobil axtar",
-    "cta": "Kolleksiyaya baxın",
-    "features": {
-      "service247Title": "24/7 Xidmət",
-      "service247Subtitle": "Günün hər saatı ən yaxşı dəstək.",
-      "noDepositTitle": "Depozitsiz",
-      "noDepositSubtitle": "Dəqiqələr ərzində təsdiq.",
-      "fastDeliveryTitle": "Sürətli çatdırılma",
-      "fastDeliverySubtitle": "Bakının istənilən yerinə.",
-      "largestFleetTitle": "Ən böyük avtopark",
-      "largestFleetSubtitle": "Təmiz və yoxlanılmış.",
-      "lowestPricesTitle": "Ən aşağı qiymətlər",
-      "lowestPricesSubtitle": "Gizli xərclər olmadan."
-    }
+    "description": "Ekonom və SUV modellərindən tutmuş lüks və idman avtomobillərinə qədər geniş avtomobil çeşidimizi kəşf edin. Büdcənizə və səyahət ehtiyaclarınıza uyğun ideal avtomobili çevik gündəlik, həftəlik və aylıq icarə seçimləri ilə seçin."
   },
   "home": {
     "welcomeSub": "PREMIUM CAR RENTAL IN BAKU",
@@ -46,47 +39,14 @@
       "drives": "Bakının ən möhtəşəm sürüşlərini",
       "limits": "Sərhədsiz lüksü"
     },
-    "locationDubai": "Bakı",
-    "searchCars": "Avtomobil axtar",
-    "viewCollection": "Kolleksiyaya baxın",
     "inquiry": {
-      "title": "LÜKS AVTOMOBİL AXTARIN VƏ İCARƏYƏ GÖTÜRÜN",
-      "pickupLocation": "Təhvil alma məkanı",
-      "enterLocation": "Məkan və ya hava limanını daxil edin...",
-      "pickupDate": "Təhvil alma tarixi",
-      "returnDate": "Təhvil vermə tarixi",
-      "carType": "Avtomobil növü",
-      "allTypes": "Bütün avtomobillər",
-      "search": "Avtomobil axtar",
-      "errLocation": "Zəhmət olmasa təhvil alma məkanını daxil edin",
-      "errPickupDate": "Təhvil alma tarixi keçmişdə ola bilməz",
-      "errReturnDate": "Təhvil vermə tarixi təhvil almadan əvvəl ola bilməz",
       "fullName": "Ad və soyad",
       "enterFullName": "Ad və soyadınızı daxil edin",
       "mobileNo": "Telefon nömrəsi",
       "enterMobileNo": "Telefon nömrənizi daxil edin",
       "startDate": "Başlama tarixi",
       "endDate": "Bitmə tarixi",
-      "dateFormat": "İl-Ay-Gün",
       "send": "Göndər"
-    },
-    "features": {
-      "cars200Title": "200+ Avtomobil",
-      "cars200Desc": "Bütün ehtiyaclarınızı qarşılamaq üçün 200-dən çox ekonom və lüks avtomobildən ibarət böyük avtopark.",
-      "noDepositTitle": "Depozitsiz icarə",
-      "noDepositDesc": "Avtomobilinizi depozitsiz bron edin—əvvəlcədən heç bir məbləğ dondurulmur.",
-      "vatIncludedTitle": "ƏDV daxil qiymət",
-      "vatIncludedDesc": "Bütün qiymətlərə ƏDV daxildir—gördüyünüz qiymət ödədiyiniz qiymətdir.",
-      "excellentConditionTitle": "Əla vəziyyətdə olan avtomobillər",
-      "excellentConditionDesc": "Sürətli və təhlükəsiz sürüşünüz üçün təmiz, müntəzəm qulluq olunan avtomobillər.",
-      "support247Title": "24/7 Dəstək komandası",
-      "support247Desc": "Bronlar, sorğular və yolda kömək üçün günün hər saatı dəstək.",
-      "reviewsGoogleTitle": "Google-da 4.8 reytinq",
-      "reviewsGoogleDesc": "Yüzlərlə razı müştərimizdən Google-da 4.8 reytinq qazanmışıq.",
-      "paymentMethodsTitle": "Çoxsaylı ödəniş üsulları",
-      "paymentMethodsDesc": "Sizə uyğun üsulla ödəyin—bank köçürməsi, kartlar, nağd",
-      "flexiblePricesTitle": "Çevik qiymətlər",
-      "flexiblePricesDesc": "İcarə müddətindən asılı olan qiymətlər—gündəlik, həftəlik, aylıq və ya uzunmüddətli."
     },
     "rentLuxury": {
       "title": "Bakıda lüks avtomobil icarəsi",
@@ -98,53 +58,10 @@
     },
     "latestOffers": {
       "title": "Bakıda ən son avtomobil icarəsi təklifləri",
-      "intro": "Unudulmaz sürüş təcrübəsini təmin etmək üçün diqqətlə seçilmiş lüks avtomobillərdən ibarət geniş kolleksiyamızla qürur duyuruq. İntəxab etdiyimiz ən yaxşı avtomobillərdən bəziləri:",
-      "item1Title": "Lamborghini icarəsi:",
-      "item1Desc": "Yeni Lamborghini sükanı arxasında həyəcan və sürətlə dolu bir təcrübəyə hazırlaşın. Hər iki model — Huracan və ya Aventador — güc və yüksək performans axtaranlar üçün mükəmməldir.",
-      "item2Title": "Rolls Royce icarəsi:",
-      "item2Desc": "Rolls Royce ilə mütləq dəbdəbə aləminə daxil olun. İstənilən tədbirdə unutmaz təəssürat yaratmaq üçün idealdır. Phantom və Ghost kimi modellər misilsiz rahatlıq və lüks təqdim edir.",
-      "item3Title": "Bentley icarəsi:",
-      "item3Desc": "Növbəti səyahətiniz üçün Bentley icarəyə götürün. Güclü mühərrik və geniş interyerə malik Bentley Continental və Flying Spur ilə rahat və zərif səyahətdən zövq alın.",
-      "item4Title": "Porsche icarəsi:",
-      "item4Desc": "Həyəcanlı sürüş təcrübəsi üçün Porsche icarəyə götürün. Səfərlər və tədbirlər üçün sürət, zəriflik və rahatlıq təmin edən Porsche 911 GTS və ya Panamera modelini seçin.",
-      "item5Title": "Digər lüks avtomobillər:",
-      "item5Desc": "F8 Tributo və ya 812 GTS ilə həyəcanlı sürüş üçün Ferrari icarəyə götürün. Bütün arzularınızı qarşılamaq üçün həmçinin McLaren, Mercedes, BMW və Porsche təklif edirik."
-    },
-    "regionalService": {
-      "title": "Azərbaycanın rayon və bölgələrində avtomobil icarəyə götürün",
-      "description": "Bakıda və bütün bölgələrdə etibarlı avtomobil icarəsi axtarırsınız? Royal Baku depozitsiz, rəqabətli qiymətlərlə, ünvana çatdırılma və 24/7 dəstəklə əla xidmət təqdim edir.",
-      "cta": "Bütün bölgələrdəki avtomobillərə baxın"
-    },
-    "supercarsBanner": {
-      "title": "Bakıda aparıcı lüks və idman avtomobilləri icarəsi şirkəti",
-      "description": "Royal Baku Lamborghini, Ferrari, Porsche-dən Range Rover-ə qədər misilsiz lüks avtomobil avtoparkı, çevik bron seçimləri və son dərəcə rəqabətli qiymətlər təklif edir.",
-      "cta": "İndi bron edin"
+      "intro": "Unudulmaz sürüş təcrübəsini təmin etmək üçün diqqətlə seçilmiş lüks avtomobillərdən ibarət geniş kolleksiyamızla qürur duyuruq. İntəxab etdiyimiz ən yaxşı avtomobillərdən bəziləri:"
     },
     "rentalPrices": {
-      "title": "Bakıda ekonom və lüks avtomobil icarəsi qiymətləri",
-      "sportsTitle": "İdman avtomobillərinin icarəsi",
-      "sportsDesc": "Lamborghini, Ferrari və Porsche idman avtomobillərini ən yaxşı qiymətlərlə idarə edin.",
-      "luxuryTitle": "Lüks avtomobillərin icarəsi",
-      "luxuryDesc": "Səyahətinizi VIP üslubunda, ən yüksək rahatlıq və lükslə zənginləşdirin.",
-      "economyTitle": "Ekonom avtomobillərin icarəsi",
-      "economyDesc": "Şəhəriçi rahat və qənaətcil gəzinti üçün ekonom avtomobil icarəyə götürün.",
-      "suvTitle": "SUV (Off-road) avtomobillərinin icarəsi",
-      "suvDesc": "Gündəlik və ailəvi səyahətlərinizdə rahatlıq və geniş məkandan zövq alın."
-    },
-    "rentalTips": {
-      "title": "Bakıda lüks avtomobil icarəyə götürmək üçün məsləhətlər",
-      "tip1Title": "Sevdiyiniz avtomobili əvvəlcədən bron edin:",
-      "tip1Desc": "Xüsusilə pik mövsümlərdə və böyük tədbirlər zamanı mövcudluğu təmin etmək üçün avtomobilinizi öncədən bron edin.",
-      "tip2Title": "Səyahətinizə uyğun avtomobil seçin:",
-      "tip2Desc": "Həyəcanlı idman avtomobili və ya geniş ailə maşını olmasından asılı olmayaraq, səfərinizin xarakterinə uyğun seçim edin.",
-      "tip3Title": "Təkliflər və endirimləri axtarın:",
-      "tip3Desc": "Ən yaxşı qiymət üstünlüyü əldə etmək üçün xüsusi təklifləri və erkən bron endirimlərini izləyin.",
-      "tip4Title": "Sığorta təminatını anlayın:",
-      "tip4Desc": "İcarə müddətində rahatlığınızı təmin etmək üçün həmişə sığorta şərtləri ilə tanış olun.",
-      "tip5Title": "Təhvil alarkən avtomobili diqqətlə yoxlayın:",
-      "tip5Desc": "Avtomobili təhvil alarkən tam yoxlanış keçirin və mövcud qeydləri dəqiqləşdirin.",
-      "tip6Title": "Azərbaycanın yol hərəkəti qaydaları ilə tanış olun:",
-      "tip6Desc": "Cəriməsiz və xoş səyahət üçün sürət hədləri və sürüş qaydaları ilə tanış olun."
+      "title": "Bakıda ekonom və lüks avtomobil icarəsi qiymətləri"
     },
     "stepProcess": {
       "title": "Bakıda avtomobil icarəsinin addımları",
@@ -168,9 +85,6 @@
       "rating": "4.8"
     },
     "reviews": {
-      "title": "Google rəyləri",
-      "ratingText": "4.8 ★★★★★ (+120 rəy)",
-      "writeReview": "Rəy yazın",
       "review1Name": "Xalid S.",
       "review1Tag": "Yerli bələdçi • 28 rəy",
       "review1Text": "Peşəkar xidmət və çox təmiz avtomobillər! Hər şey rəvan və heç bir gizli xərc olmadan həyata keçirildi, Bakıda ən yaxşı icarə şirkəti.",
@@ -185,11 +99,7 @@
       "review4Text": "Bakıda möhtəşəm avtomobil icarəsi xidməti! Məmnuniyyətlə qeyd edim ki, bron prosesində müştəri dəstəyi çox sürətli və rəvandır."
     },
     "social": {
-      "title": "Bizi sosial şəbəkələrdə izləyin",
-      "instagram": "Instagram",
-      "facebook": "Facebook",
-      "youtube": "YouTube",
-      "tiktok": "TikTok"
+      "title": "Bizi sosial şəbəkələrdə izləyin"
     },
     "faq": {
       "title": "Tez-tez verilən suallar",
@@ -224,53 +134,7 @@
       "q13": "Tam sığorta təminatı mövcuddurmu?",
       "a13": "Bəli, zədələrdən tam sığorta təminatı (CDW) əlavə seçim kimi mövcuddur.",
       "q14": "24/7 yolda kömək xidməti təqdim edirsinizmi?",
-      "a14": "Bəli, Bakının və Azərbaycanın bütün bölgələrində 24/7 təcili yolda kömək xidməti mövcuddur.",
-      "fuelGroup": "Fuel, Add-ons & Extra",
-      "q15": "What is your fuel policy?",
-      "a15": "We operate on a full-to-full fuel policy. Return the vehicle with the same fuel level as provided.",
-      "q16": "Do you provide child seats, GPS or extra driver?",
-      "a16": "Child safety seats, GPS navigation devices, and additional driver options are available upon request.",
-      "q17": "Do you offer a car with driver (chauffeur service)?",
-      "a17": "Yes, professional VIP chauffeur services are available daily, weekly, or for special events.",
-      "longtermGroup": "Long-Term & Business",
-      "q18": "Do you offer monthly or long-term rentals?",
-      "a18": "Yes, we offer discounted monthly and multi-month corporate and individual lease options.",
-      "q19": "Do you offer corporate or business rental accounts?",
-      "a19": "Dedicated corporate accounts with custom billing and fleet management services are available.",
-      "q20": "Can I return the car early, and what's the policy?",
-      "a20": "Early returns are accepted. Unused days will be recalculated according to the applicable daily rental tier."
-    }
-  },
-  "carCategory": {
-    "luxury": {
-      "badge": "Lüks avtomobil icarəsi",
-      "title": "Bakıda lüks avtomobil icarəsi",
-      "desc": "Bakıda xüsusi bir tədbir üçün lüks avtomobil icarəyə götürmək istəyirsinizsə, Royal Baku Rent A Car-a etibar edin. Geniş avtoparkımız və müstəsna xidmətimiz təcrübənizin unudulmaz olacağını zəmanət edir. Toy, korporativ tədbir və ya dəbdəbəli istirahət olmasından asılı olmayaraq, ehtiyaclarınızı üslub və zərifliklə qarşılayırıq. Bizimlə əlaqə saxlayın."
-    },
-    "sports": {
-      "badge": "İdman avtomobillərinin icarəsi",
-      "title": "Bakıda idman avtomobillərinin icarəsi",
-      "desc": "Royal Baku Rent A Car Bakıda son dərəcə rəqabətli qiymətlərlə ən yaxşı idman avtomobili icarəsi şirkətidir. Ferrari, Lamborghini, Bentley, Mercedes, Porsche, Rolls-Royce və BMW daxil olmaqla yeni idman avtomobillərindən ibarət böyük avtoparkımızdan seçim edin. Bakıda 24/7 xidmətimizlə ən yaxşı sürüş təcrübəsini yaşayın."
-    },
-    "suv": {
-      "badge": "SUV avtomobillərinin icarəsi",
-      "title": "Bakıda SUV avtomobillərinin icarəsi",
-      "desc": "Ailə səyahətləri, rəhbər şəxslərin səfərləri və Azərbaycan üzrə səfərlər üçün Range Rover, Lamborghini Urus, Mercedes G63 AMG və Cadillac Escalade daxil olmaqla depozitsiz seçimlərlə geniş, güclü və lüks SUV avtomobillərini kəşf edin."
-    },
-    "exotic": {
-      "badge": "Ekzotik və superkar icarəsi",
-      "title": "Bakıda superkar icarəsi",
-      "desc": "Bakıda ən nadir superkarları idarə edin. Eksklüziv ekzotik kolleksiyamızla yüksək sürət, mükəmməl mühəndislik və diqqətçəkən dizayndan həzz alın."
-    },
-    "convertible": {
-      "badge": "Kabriolet avtomobillərin icarəsi",
-      "title": "Bakıda kabriolet icarəsi",
-      "desc": "Ferrari Roma Spider və Porsche 911 Cabriolet daxil olmaqla üstüaçıq idman avtomobillərimizlə Bakı dənizkənarı bulvarında təmiz havadan və sahil mənzərələrindən zövq alın."
-    },
-    "economy": {
-      "badge": "Ekonom avtomobil icarəsi",
-      "title": "Bakıda ekonom avtomobil icarəsi",
-      "desc": "Bakı şəhəri daxilində və Azərbaycan üzrə rahat, yanacağa qənaətcil və etibarlı səyahət üçün sərfəli qiymət və sürətli çatdırılma ilə ekonom avtomobillər."
+      "a14": "Bəli, Bakının və Azərbaycanın bütün bölgələrində 24/7 təcili yolda kömək xidməti mövcuddur."
     }
   },
   "prices": {
@@ -284,14 +148,10 @@
     "btnGo": "Axtar",
     "btnReset": "Sıfırla",
     "searchPlaceholder": "Model və ya marka axtarın...",
-    "viewGrid": "Kart görünüşü",
-    "viewTable": "Cədvəl görünüşü",
     "colVehicle": "Avtomobil",
-    "colCarName": "Avtomobil adı",
     "colPerDay": "Günlük",
     "colWeekly": "Həftəlik",
     "colMonthly": "Aylıq",
-    "colDeposit": "Depozit",
     "book": "İndi bron et",
     "noCarsFound": "Seçilmiş filtrlərə uyğun avtomobil tapılmadı.",
     "allBrands": "Bütün markalar"
@@ -314,52 +174,74 @@
     "economy": "Ekonom",
     "exotic": "Ekzotik",
     "convertible": "Kabriolet",
-    "sedan": "Biznes Sedan",
-    "weeklyRental": "Həftəlik avtomobil icarəsi",
-    "monthlyRental": "Aylıq avtomobil icarəsi"
+    "sedan": "Biznes Sedan"
   },
-  "brands": {
-    "rollsRoyce": "Rolls-Royce",
-    "lamborghini": "Lamborghini",
-    "ferrari": "Ferrari",
-    "porsche": "Porsche",
-    "mercedes": "Mercedes-Benz",
-    "bmw": "BMW",
-    "bentley": "Bentley",
-    "audi": "Audi"
+  "carList": {
+    "hero": {
+      "collectionTag": "FLEET COLLECTION",
+      "trustDelivery": "Luxury Rides, Unforgettable Journeys",
+      "trustDeposit": "Transparent & Competitive Pricing",
+      "trustInsurance": "Premium Fleet, Pristine Condition",
+      "trustRoadside": "Dedicated Customer Support"
+    },
+    "discovery": {
+      "tag": "Fleet Consultation & Discovery",
+      "title": "Looking for a Specific Model or Custom Rental Duration?",
+      "desc": "Whether you need an executive SUV for regional travel, a performance sports car for the city, or long-term monthly rental rates, our fleet team will provide personalized recommendations and exact availability.",
+      "btnWhatsapp": "Chat with Fleet Advisor",
+      "btnPrices": "View All Rental Prices",
+      "categoriesTitle": "Explore Other Categories",
+      "viewCategory": "View Category"
+    }
   },
   "footer": {
     "ourCars": "Avtomobillərimiz",
     "aboutUs": "Haqqımızda",
-    "blog": "Bloq",
     "contacts": "Əlaqə",
     "rentalPrices": "İcarə qiymətləri",
-    "privacyPolicy": "Məxfilik siyasətimiz",
-    "rentalPolicy": "İcarə siyasəti",
-    "refundablePolicy": "Qaytarma siyasəti",
     "faqs": "Tez-tez verilən suallar",
+    "blog": "Bloq",
     "carTypes": "Avtomobil növləri",
     "inquiriesSupport": "Sorğular və dəstək",
     "brandsTitle": "Markalar",
-    "brands": "Markalar",
-    "locations": "Məkanlar",
     "copyright": "All Right Reserved",
-    "openInMaps": "Open in Maps",
-    "service247": "24/7 Xidmət",
-    "addressText": "39 Al Rasaas Rd- Al Quoz, Dubai"
+    "openInMaps": "Open in Maps"
   },
   "carDetail": {
     "breadcrumbHome": "Ana səhifə",
+    "breadcrumbCars": "Avtomobillər",
+    "hero": {
+      "badgeBrand": "Official Marque",
+      "badgeZeroDeposit": "Zero Deposit Options Available",
+      "badgeFastDelivery": "Prompt Baku & GYD Airport Delivery",
+      "availableForDelivery": "Available for Immediate Delivery",
+      "startingFrom": "başlanğıc",
+      "perDay": "/ gün",
+      "instantReserve": "Instant Reserve",
+      "bookDirect": "Book Direct",
+      "whatsappReserve": "WhatsApp VIP",
+      "callConcierge": "Call Concierge"
+    },
+    "concierge": {
+      "tag": "Direct Vehicle Reservation Assistance",
+      "titlePrefix": "Need Immediate Confirmation for the",
+      "desc": "Our dedicated booking specialists are available 24/7 to verify immediate vehicle availability, schedule delivery to Heydar Aliyev Airport (GYD) or your hotel, and answer any rental policy questions.",
+      "bulletDeposit": "Zero security deposit options for eligible drivers (age 23+)",
+      "bulletInsurance": "Standard comprehensive motor insurance included",
+      "bulletDelivery": "Prompt delivery across Baku & GYD Airport (typically 30–60 min)",
+      "bulletRoadside": "24/7 nationwide roadside assistance & vehicle replacement support",
+      "cardWaTag": "Instant WhatsApp Booking",
+      "cardWaTitle": "Chat with Vehicle Concierge",
+      "cardPhoneTag": "Direct Reservation Hotline",
+      "cardPhoneTitle": "Call Concierge Team"
+    },
     "specs": {
       "deposit": "Depozit",
-      "noDeposit": "Depozitsiz",
       "mileageLimit": "Yürüş həddi",
       "extraMileage": "Əlavə yürüş",
       "payment": "Ödəniş",
-      "paymentMethods": "Kart, nağd",
       "color": "Rəng",
       "transmission": "Ötürücü qutu",
-      "automatic": "Avtomat",
       "carType": "Avtomobil növü",
       "engine": "Mühərrik",
       "seats": "Oturacaqlar",
@@ -367,7 +249,6 @@
       "acceleration": "0-100",
       "drive": "Ötürücü",
       "fuel": "Yanacaq",
-      "petrol": "Benzin",
       "luggage": "Baqaj"
     },
     "actions": {
@@ -410,80 +291,18 @@
     }
   },
   "about": {
-    "badge": "Royal Baku Rent A Car haqqında",
-    "mainTitle": "Bakıda inam və zərifliklə lüks avtomobil icarəsi təcrübəsi",
-    "heroDesc1": "Royal Baku Rent A Car Bakıda lüks avtomobil icarəsi şirkətidir; müştəriyönümlü sürüş xidməti, biznes səfərləri və rahat sürüş təcrübəsi üçün yüksək səviyyəli avtomobillər təqdim edir. İstər biznes, istər xüsusi tədbir, istərsə də gündəlik sürüşünüzü zənginləşdirmək üçün Bakıdasınızsa, bu yüksəkliyi hiss edirik.",
-    "heroDesc2": "Lüks SUV və sedan seçimlərimizlə yanaşı, Royal Baku qısamüddətli və ya uzunmüddətli icarə istəyən şəxslərə xidmət göstərir. Hər bir bron minimum səy və maksimum məmnuniyyətlə həyata keçirilir.",
-    "heroDesc3": "Sürətli bron dəstəyi, müasir lüks seçimlər və şəffaf hesab-faktura ilə Royal Baku Rent A Car Bakının müasir həyat tərzinə uyğun lüks avtomobil icarəsi imici formalaşdırmışdır.",
-    "whyTitle": "Niyə Bakıda avtomobili məhz bizimlə icarəyə götürməlisiniz?",
-    "whyDesc": "Royal Baku ilə Bakıda ən yüksək səviyyəli icarə təcrübəsi.",
-    "googleReviews": "Google rəyləri",
-    "feat1Title": "Beynəlxalq şirkət",
-    "feat1Sub": "Çoxölkəli əməliyyat avtoparkı",
-    "feat2Title": "24/7 Dəstək",
-    "feat2Sub": "Günün hər saatı müştəri xidməti",
-    "feat3Title": "100% Avtopark mövcuddur",
-    "feat3Sub": "Yoxlanılmış və təmiz avtopark",
-    "companyTag": "Şirkət",
-    "companyTitle": "Royal Baku Rent A Car",
-    "companyDesc": "Royal Baku Rent A Car təqdimata, rahatlığa və müştəri məmnuniyyətinə böyük diqqət yetirməklə Bakıda lüks və idman avtomobillərinin icarəsini təqdim etməsi ilə tanınır. Şirkət yüksək səviyyəli gündəlik sürüşlərdən, premium tədbir gəlişlərindən və biznes səyahətlərindən rahatlıqla zövq almaq istəyən müştərilərə xidmət göstərir.",
-    "companyDesc2": "Bakının əsas məkanlarından Xəzər sahilinə qədər dəstək göstərən şirkət gündəlik, həftəlik və aylıq icarə şərtləri üçün premium avtomobil icarəsini daha əlçatan edir.",
-    "bullet1": "100-dən çox lüks modelə çıxış",
-    "bullet2": "Çevik gündəlik, həftəlik və aylıq icarə planları",
-    "bullet3": "24/7 konsyerj və yolda kömək dəstəyi",
-    "bullet4": "Depozitsiz seçimlərlə şəffaf hesab-faktura",
-    "socialInsta": "Instagram",
-    "socialFb": "Facebook",
-    "socialYt": "YouTube",
     "tabMission": "Missiyamız",
     "tabVision": "Vizyonumuz",
-    "tabFleet": "Avtoparkımız",
-    "missionText": "Şirkətimizin missiyası yalnız Bakıda deyil, bütün Azərbaycan bölgələrində lüks avtomobil icarəsini əlçatan və zövqlü etməkdir. İnnovativ xidmətlər, premium avtopark və rəqabətli qiymətlərlə daim inkişaf edərək bütün lüks avtomobil müştərilərimiz üçün ən yaxşı seçim olmağı hədəfləyirik.",
-    "visionText": "Vizyonumuz Mərkəzi Asiya və Qafqazda lüks avtomobil mobilliyi standartlarını müəyyənləşdirmək, xüsusi VIP təcrübələr və misilsiz xidmət mükəmməlliyi təmin etməkdir.",
-    "fleetText": "Təmiz avtoparkımız superkarlar və ekzotik kabrioletlərdən tutmuş VIP biznes SUV-ləri və ekonom sedanlara qədər istehsalçı standartlarına uyğun qüsursuz şəkildə qulluq edilən 100-dən çox yüksək səviyyəli avtomobildən ibarətdir.",
-    "mediaSectionTitle": "Lüks media",
-    "mediaTitle": "YouTube videoları və TikTok əsas məqamları",
-    "mediaDesc": "Royal Baku sürüş təcrübəsini əks etdirən brend məqamlarını, avtopark önizləmələrini, şou-rum nümayişlərini və lüks avtomobil anlarını kəşf edin.",
-    "video1Title": "Bakıda sürüş mükəmməlliyi",
-    "video1Desc": "Flagman Rolls-Royce Cullinan və Ferrari avtoparkımızı təcrübədən keçirin.",
-    "video2Title": "Şou-rum və təhvil vermə təcrübəsi",
-    "video2Desc": "Bakı baş qərargahımızda pərdəarxası baxış.",
-    "video3Title": "Royal Baku-nu TikTok-da izləyin",
-    "video3Desc": "Qısa formatlı videoları, avtomobil çatdırılma kliplərini və brend məqamlarını izləyin.",
-    "watchTikTok": "@royalbaku izləyin",
-    "ceoTag": "Təsisçi və Baş İcraçı Direktor",
-    "ceoName": "İbrahim Əsəd",
-    "ceoDesc1": "İbrahim Əsəd Royal Baku Rent A Car-ın arxasında duran Təsisçi və Baş İcraçı Direkordur, brendi güclü lüks vizyonu və Bakının avtomobil icarəsi məkanında seçilən ictimai şəxsiyyəti ilə idarə edir.",
-    "ceoDesc2": "Onun rəhbərliyi müasir, premium təqdimatı və ardıcıl brend quruculuğunu əks etdirir. Sosial platformalar və biznes görünürlüyü vasitəsilə o, şirkətin imicini və bazar tanınmasını gücləndirməyə davam edir.",
-    "ceoDesc3": "Onun media iştirakı brendə şəxsi qatqı əlavə edərək müştərilərə biznesin arxasındakı hekayə və onun təmsil etdiyi həyat tərzi ilə əlaqə qurmağa kömək edir.",
-    "ceoMediaSectionTitle": "Baş İcraçı Direktorun mediası",
-    "ceoMediaTitle": "Təsisçinin videoları və sosial media məqamları",
-    "ceoMediaDesc": "Royal Baku Rent A Car-ın arxasındakı şəxsi brendi, ictimai imici və biznes səyahətini əks etdirən rəhbərlik yönümlü medianı kəşf edin.",
-    "ceoVid1Title": "Təsisçinin rəhbərliyi ilə icarə nümayişi",
-    "ceoVid1Desc": "Ən yüksək səviyyəli lüks təcrübələrin təqdim edilməsi üzrө vizyoner rəhbərlik.",
-    "ceoVid2Title": "Ümumi kanal məzmunu",
-    "ceoVid2Desc": "Avtomobil avtoparkının idarə edilməsinə pərdəarxası baxış.",
-    "ceoVid3Title": "İbrahim Əsədi TikTok-da izləyin",
-    "ceoVid3Desc": "Sahibkar klipləri və avtomobil baxışları üçün izləyin.",
-    "pressTag": "Mətbuat məqalələri",
-    "pressTitle": "Media işıqlandırılması və tanınma",
-    "pressDesc": "Royal Baku Rent A Car və onun təsisçisi Bakının lüks avtomobil icarəsi sənayesindəki böyüməyə, investisiyaya və nüfuza görə media diqqəti qazanmışdır.",
-    "article1Outlet": "Khaleej Times xüsusi məqaləsi",
-    "article1Headline": "Sahibkar İbrahim Əsədin lüks avtomobil icarəsi sənayesinə rəhbərlik vizyonu başlıqlara çevrilib",
-    "article1Desc": "Şirkətin böyümə hekayəsinə və Bakıda lüks avtomobil icarəsinə premium yanaşmasına yönəlmiş məqalə.",
-    "article2Outlet": "BƏƏ və Regional Hekayələr",
-    "article2Headline": "İnanılmaz uğur hekayəsi: Avtomobillərə olan ehtiras necə lüks avtoparka çevrildi",
-    "article2Desc": "İbrahim Əsədin gənc avtomobil həvəskarından uğurlu sahibkara qədər olan yolu vizyonun, qətiyyətin və biznes icrasının sübutudur."
+    "tabFleet": "Avtoparkımız"
   },
   "contact": {
     "badge": "Royal Baku ilə əlaqə",
     "mainTitle": "Bakının ən yaxşı avtoparkının arxasında duran komanda ilə danışın",
     "heroDesc": "Dərhal bron, avtopark tövsiyələri, VIP sürücü sorğuları və Bakıda və Azərbaycanda fərdi icarə paketləri üçün 24/7 müştəri konsyerj komandamızla birbaşa əlaqə saxlayın.",
     "btnWhatsapp": "WhatsApp",
-    "btnCall": "Zəng edin",
     "channelsTag": "Əlaqə kanalları",
     "channelsTitle": "Hər kanal, vahid xidmət standartı",
-    "channelsDesc": "Üstünlük verdiyiniz kanal vasitəsilə xüsusi komandamızla əlaqə saxlayın. Sürətli cavab vaxtlarına zəmanət verilir.",
+    "channelsDesc": "Üstünlük verdiyiniz kanal vasitəsilə xüsusi komandamız ilə əlaqə saxlayın. Sürətli cavab vaxtlarına zəmanət verilir.",
     "cardPhoneTitle": "Bizə zəng edin",
     "cardPhoneSub": "24/7 Konsyerj dəstəyi",
     "cardPhoneValue": "+971 55 107 3595 / +994 50 123 4567",
@@ -516,10 +335,7 @@
     "formTitle": "Bron sorğunuzu göndərin",
     "namePlaceholder": "Adınız",
     "emailPlaceholder": "E-poçt ünvanı",
-    "carPlaceholder": "İcarəyə götürmək istədiyiniz avtomobil",
     "phonePlaceholder": "Telefon nömrəsi",
-    "startDatePlaceholder": "Təhvil alma tarixi",
-    "endDatePlaceholder": "Təhvil vermə tarixi",
     "messagePlaceholder": "Əlavə tələblər / qeydlər",
     "btnSubmit": "Təcili sorğu göndər",
     "successMsg": "Təşəkkür edirik! Bron sorğunuz qəbul olundu. Konsyerjimiz 15 dəqiqə ərzində sizinlə əlaqə saxlayacaq.",
@@ -596,25 +412,32 @@
     "ins3Q": "Qəza və ya nasazlıq baş verərsə nə etməliyəm?",
     "ins3A": "Dərhal 24/7 dəstək xəttimizlə əlaqə saxlayın və rəsmi hesabat üçün yerli yol polisinə məlumat verin.",
     "ins4Q": "24/7 yolda kömək xidməti təklif edirsinizmi?",
-    "ins4A": "Bəli, Bakının və Azərbaycanın bütün bölgələrində 24/7 təcili yolda kömək xidməti təmin edilir.",
-    "fuelGroup": "Fuel, Add-ons & Extra",
-    "q15": "What is your fuel policy?",
-    "a15": "We operate on a full-to-full fuel policy. Return the vehicle with the same fuel level as provided.",
-    "q16": "Do you provide child seats, GPS or extra driver?",
-    "a16": "Child safety seats, GPS navigation devices, and additional driver options are available upon request.",
-    "q17": "Do you offer a car with driver (chauffeur service)?",
-    "a17": "Yes, professional VIP chauffeur services are available daily, weekly, or for special events.",
-    "longtermGroup": "Long-Term & Business",
-    "q18": "Do you offer monthly or long-term rentals?",
-    "a18": "Yes, we offer discounted monthly and multi-month corporate and individual lease options.",
-    "q19": "Do you offer corporate or business rental accounts?",
-    "a19": "Dedicated corporate accounts with custom billing and fleet management services are available.",
-    "q20": "Can I return the car early, and what's the policy?",
-    "a20": "Early returns are accepted. Unused days will be recalculated according to the applicable daily rental tier."
+    "ins4A": "Bəli, Bakının və Azərbaycanın bütün bölgələrində 24/7 təcili yolda kömək xidməti təmin edilir."
   },
   "tours": {
     "contactForPrice": "Qiymət üçün əlaqə saxlayın",
     "from": "Qiyməti:"
+  },
+  "blog": {
+    "title": "Royal Baku Jurnalı",
+    "subtitle": "Ekspert komandamızdan lüks avtomobil rəylərini, Bakı səyahət bələdçilərini, VIP həyat tərzi ipuçlarını və sürüş fikirlərini kəşf edin.",
+    "readMore": "Məqaləni oxu",
+    "minRead": "dəq oxuma",
+    "empty": "Məqalə tapılmadı",
+    "emptyDesc": "Seçilmiş kateqoriyaya uyğun məqalə tapılmadı. Yeni hekayələr üçün tezliklə yenidən baxın.",
+    "emptyNoPosts": "Hələ heç bir məqalə dərc olunmayıb. Yeni hekayələr üçün tezliklə yenidən baxın.",
+    "error": "Məqalələri yükləmək mümkün olmadı",
+    "retry": "Yenidən cəhd edin",
+    "allCategories": "Bütün hekayələr",
+    "resetFilter": "Bütün məqalələri göstər",
+    "backToBlog": "Jurnala qayıt",
+    "returnToBlog": "Jurnala qayıt",
+    "relatedPosts": "Oxşar məqalələr",
+    "discoverMore": "Daha çox hekayə kəşf edin",
+    "postNotFound": "Məqalə tapılmadı",
+    "postNotFoundDesc": "Axtardığınız məqalə mövcud deyil və ya silinmiş ola bilər.",
+    "featuredStory": "Seçilmiş hekayə",
+    "latestStories": "Ən son hekayələr"
   },
   "notfound": {
     "title": "404 - Səhifə Tapılmadı",

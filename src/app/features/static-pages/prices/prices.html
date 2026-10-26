@@ -199,9 +199,6 @@
                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-center">
                   {{ 'prices.colMonthly' | translate }}
                 </th>
-                <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-center">
-                  {{ 'prices.colDeposit' | translate }}
-                </th>
                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-right">
                   Action
                 </th>
@@ -267,13 +264,6 @@
                     {{ item.numMonthlyPrice ? (item.numMonthlyPrice | appCurrency) : (item.strMonthlyPriceValue || 'N/A') }}
                   </td>
 
-                  <!-- Deposit -->
-                  <td class="py-3.5 px-6 text-center">
-                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-neutral-300">
-                      {{ item.numDepositUsd ? (item.numDepositUsd | appCurrency) : (item.strDepositValue || '0') }}
-                    </span>
-                  </td>
-
                   <!-- View/Book CTA -->
                   <td class="py-3.5 px-6 text-right">
                     <a
@@ -289,7 +279,7 @@
                 </tr>
               } @empty {
                 <tr>
-                  <td colspan="6" class="py-16 text-center text-neutral-400">
+                  <td colspan="5" class="py-16 text-center text-neutral-400">
                     <div class="flex flex-col items-center justify-center gap-3">
                       <div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-neutral-500">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -382,18 +372,11 @@
                 </div>
               </div>
 
-              <!-- Card Footer: Deposit & CTA Button -->
-              <div class="flex items-center justify-between pt-2.5">
-                <div class="flex items-center gap-1.5">
-                  <span class="text-[11px] text-neutral-400 font-medium">{{ 'prices.colDeposit' | translate }}:</span>
-                  <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-white/5 border border-white/10 text-neutral-300">
-                    {{ item.numDepositUsd ? (item.numDepositUsd | appCurrency) : (item.strDepositValue || '0') }}
-                  </span>
-                </div>
-
+              <!-- Card Footer: CTA Button -->
+              <div class="pt-3">
                 <a
                   [routerLink]="['/car', item.strSlug] | langUrl"
-                  class="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-black font-extrabold text-xs px-3.5 py-1.5 rounded-xl shadow-md transition-all duration-200 active:scale-95"
+                  class="w-full inline-flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-400 to-yellow-600 hover:from-amber-300 hover:to-yellow-500 text-black font-extrabold text-xs py-2 rounded-xl shadow-md transition-all duration-200 active:scale-95"
                 >
                   <span>{{ 'prices.book' | translate }}</span>
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -471,13 +454,6 @@
                     <div class="text-[10px] text-neutral-400 font-semibold">{{ 'prices.colMonthly' | translate }}</div>
                     <div class="text-neutral-300 font-medium mt-0.5">{{ item.numMonthlyPrice ? (item.numMonthlyPrice | appCurrency) : (item.strMonthlyPriceValue || 'N/A') }}</div>
                   </div>
-                </div>
-
-                <div class="flex items-center justify-between text-xs text-neutral-400 pt-1">
-                  <span>{{ 'prices.colDeposit' | translate }}:</span>
-                  <span class="text-neutral-200 font-medium bg-white/5 border border-white/10 px-2 py-0.5 rounded-md">
-                    {{ item.numDepositUsd ? (item.numDepositUsd | appCurrency) : (item.strDepositValue || '0') }}
-                  </span>
                 </div>
               </div>
 

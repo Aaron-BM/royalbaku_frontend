@@ -1,12 +1,5 @@
-import {
-  Component,
-  DestroyRef,
-  OnInit,
-  computed,
-  effect,
-  inject,
-  signal,
-} from '@angular/core';
+import { Component, DestroyRef, OnInit, computed, effect, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TranslatePipe } from '@ngx-translate/core';
 import { BlogService } from '../../../core/services/blog.service';
@@ -14,6 +7,7 @@ import { BlogPost } from '../../../shared/models/blog-post.model';
 import { BlogCard } from '../../../shared/components/blog-card/blog-card';
 import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
+import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
 
 /** Categories derived from post list for the filter pills */
 const ALL_CATEGORY_KEY = 'all';
@@ -21,7 +15,7 @@ const ALL_CATEGORY_KEY = 'all';
 @Component({
   selector: 'app-blog-list',
   standalone: true,
-  imports: [TranslatePipe, BlogCard],
+  imports: [RouterLink, TranslatePipe, BlogCard, LangUrlPipe],
   templateUrl: './blog-list.html',
   styleUrl: './blog-list.css',
 })
@@ -51,10 +45,37 @@ export class BlogList implements OnInit {
     return arr.filter((p) => p.strCategory === strCat);
   });
 
+  /** Primary featured story (first post in the filtered list) */
+  protected readonly objFeaturedPost = computed<BlogPost | null>(() => {
+    const arr = this.arrFilteredPosts();
+    return arr.length > 0 ? arr[0] : null;
+  });
+
+  /** Subsequent editorial stories */
+  protected readonly arrRemainingPosts = computed<BlogPost[]>(() => {
+    const arr = this.arrFilteredPosts();
+    return arr.length > 1 ? arr.slice(1) : [];
+  });
+
+  protected fnFormatDate(strIso: string): string {
+    if (!strIso) return '';
+    try {
+      const strLang = this.svcLanguage.strCurrentLang();
+      return new Date(strIso).toLocaleDateString(strLang === 'az' ? 'az-AZ' : 'en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      });
+    } catch {
+      return strIso;
+    }
+  }
+
   constructor() {
-    // Reactive SEO
+    // Reactive SEO & automatic re-fetch on language switch
     effect(() => {
-      const blnAz = this.svcLanguage.strCurrentLang() === 'az';
+      const strLang = this.svcLanguage.strCurrentLang();
+      const blnAz = strLang === 'az';
       this.svcSeo.fnSetSeo({
         title: blnAz
           ? 'Bloq | Royal Baku Rent A Car'
@@ -63,12 +84,11 @@ export class BlogList implements OnInit {
           ? 'Royal Baku bloqunda avtomobil icarəsi məsləhətləri, Azərbaycan seyahət bələdçiləri və Bakı avtopark xəbərlərini kəşf edin.'
           : 'Read our latest articles on luxury car rentals in Baku, Azerbaijan travel tips, event guides, and more from the Royal Baku team.',
       });
+      this.fnFetchPosts();
     });
   }
 
-  ngOnInit(): void {
-    this.fnFetchPosts();
-  }
+  ngOnInit(): void {}
 
   protected fnFetchPosts(): void {
     this.blnIsLoading.set(true);
@@ -83,6 +103,7 @@ export class BlogList implements OnInit {
           this.blnIsLoading.set(false);
         },
         error: () => {
+          this.arrAllPosts.set([]);
           this.blnHasError.set(true);
           this.blnIsLoading.set(false);
         },

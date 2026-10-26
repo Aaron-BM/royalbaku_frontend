@@ -1,0 +1,167 @@
+<section class="relative bg-[var(--bg-base)] pt-10 pb-12 px-4 sm:px-6 lg:px-10 overflow-hidden border-b border-white/10">
+  <!-- Dynamic Category Background Backdrop Image & Dark Gradient Overlay -->
+  @if (objCategoryMeta?.strHeroBgImage) {
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity pointer-events-none transition-all duration-500 scale-105"
+      [style.background-image]="'url(' + objCategoryMeta?.strHeroBgImage + ')'"
+    ></div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-[var(--bg-base)]/90 via-[var(--bg-base)]/80 to-[var(--bg-base)] pointer-events-none"
+    ></div>
+  }
+  <div class="max-w-6xl mx-auto text-center relative z-10">
+    <!-- Category Badge Tag (e.g. ♦ Luxury Cars Rental / ♦ Sports Cars Rental) -->
+    @if (objCategoryMeta?.strBadgeKey) {
+      <div
+        class="inline-flex items-center gap-2 text-[11px] sm:text-xs tracking-[0.2em] font-extrabold text-gold bg-gold/10 border border-gold/30 px-4 py-1.5 rounded-full mb-4 shadow-md backdrop-blur-sm"
+      >
+        <span class="text-gold">♦</span> <span>{{ objCategoryMeta?.strBadgeKey | translate }}</span>
+      </div>
+    }
+    <!-- Eyebrow / Breadcrumb Navigation -->
+    <div
+      class="flex items-center justify-center gap-2 text-xs tracking-[0.2em] font-medium text-white/60 mb-4"
+    >
+      <a [routerLink]="'/' | langUrl" class="hover:text-gold transition-colors duration-200">
+        {{ 'hero.breadcrumbHome' | translate }}
+      </a>
+      <span class="text-gold/60">/</span>
+      @if (objCategoryMeta?.strActiveName) {
+        <a [routerLink]="'/cars' | langUrl" class="hover:text-gold transition-colors duration-200">
+          {{ 'hero.breadcrumbCategory' | translate }}
+        </a>
+        <span class="text-gold/60">/</span>
+        <span class="text-white font-semibold">
+          {{ objCategoryMeta?.strActiveName }}
+        </span>
+      } @else {
+        <span class="text-white font-semibold">
+          {{ 'hero.breadcrumbCategory' | translate }}
+        </span>
+      }
+    </div>
+    <!-- Hero Main Heading -->
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5">
+      {{ objCategoryMeta?.strTitle || ('hero.title' | translate) }}
+    </h1>
+    <!-- Hero Description Paragraph -->
+    @if (objCategoryMeta ? objCategoryMeta.strDescription : ('hero.description' | translate)) {
+      <p
+        class="max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-white/80 leading-relaxed font-normal mb-10"
+      >
+        {{ objCategoryMeta ? objCategoryMeta.strDescription : ('hero.description' | translate) }}
+      </p>
+    }
+
+    <!-- 5 Key Value Proposition Badges -->
+    <div
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-4 text-left ltr:text-left rtl:text-right"
+    >
+      @for (objFeat of arrFeatures(); track objFeat.idFeature) {
+        <div
+          class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] hover:border-[var(--border-medium)] rounded-xl p-4 transition-all duration-300 flex items-center gap-3.5 group shadow-sm"
+        >
+          <!-- Icon Container -->
+          <div
+            class="w-10 h-10 rounded-xl bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-gold flex items-center justify-center shrink-0"
+          >
+            @switch (objFeat.strIcon) {
+              @case ('headset') {
+                <svg
+                  class="w-5 h-5 text-gold"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                  />
+                </svg>
+              }
+              @case ('calendar') {
+                <svg
+                  class="w-5 h-5 text-gold"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
+              }
+              @case ('location') {
+                <svg
+                  class="w-5 h-5 text-gold"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              }
+              @case ('shield') {
+                <svg
+                  class="w-5 h-5 text-gold"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              }
+              @case ('tag') {
+                <svg
+                  class="w-5 h-5 text-gold"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.8"
+                    d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                  />
+                </svg>
+              }
+            }
+          </div>
+          <!-- Feature Text -->
+          <div class="min-w-0 flex-1">
+            <h3
+              class="text-xs font-bold text-white tracking-wide truncate group-hover:text-gold transition-colors"
+            >
+              {{ objFeat.strTitleKey | translate }}
+            </h3>
+            <p class="text-[11px] text-white/60 truncate mt-0.5">
+              {{ objFeat.strSubtitleKey | translate }}
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>
