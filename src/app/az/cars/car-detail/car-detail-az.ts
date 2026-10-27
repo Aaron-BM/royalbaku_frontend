@@ -15,6 +15,8 @@ import { CountryCodeSelect } from '../../../shared/components/country-code-selec
 import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
+import { STANDARD_CAR_DEPOSIT_USD } from '../../../core/constants/pricing.constants';
+import { parseI18nString } from '../../../core/utils/car-adapter';
 
 @Component({
   selector: 'app-car-detail-az',
@@ -30,6 +32,18 @@ export class CarDetailAz implements OnInit {
   private readonly siteSettingService = inject(SiteSettingService);
   private readonly svcSog = inject(SeoService);
   protected readonly svcLanguage = inject(LanguageService);
+  protected readonly numStandardDeposit = STANDARD_CAR_DEPOSIT_USD;
+
+  protected get strCarDescription(): string {
+    const car = this.objCar();
+    if (!car) return '';
+    const lang = this.svcLanguage.strCurrentLang();
+    if (car.rawDescription) {
+      const localized = parseI18nString(car.rawDescription, lang);
+      if (localized) return localized;
+    }
+    return car.strDescription || car.strDescriptionKey || '';
+  }
 
   // Dynamic Country Codes from backend
   protected readonly arrCountryCodes = signal<CountryCode[]>([]);
@@ -83,8 +97,8 @@ export class CarDetailAz implements OnInit {
             ? `${objResult.strTitle} İcarəsi Bakıda | Royal Baku Rent A Car`
             : `${objResult.strTitle} Rental in Baku | Royal Baku Car Rental`,
           description: isAz
-            ? `Bakıda ${objResult.strTitle} icarəsi. Depozitsiz icarə seçimləri, 24/7 hava limanı çatdırılması.`
-            : `Rent ${objResult.strTitle} in Baku with zero deposit options and 24/7 airport delivery.`,
+            ? `Bakıda ${objResult.strTitle} icarəsi. 100$ geri qaytarılan depozit, 24/7 hava limanı çatdırılması.`
+            : `Rent ${objResult.strTitle} in Baku with transparent terms, $100 refundable deposit, and 24/7 airport delivery.`,
           image: objResult.strImagePath,
           type: 'product',
           jsonLd: {

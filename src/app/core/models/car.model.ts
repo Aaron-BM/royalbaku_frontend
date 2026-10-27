@@ -55,6 +55,8 @@ export interface CarDetailItem extends CarItem {
   strWeeklyPriceValue?: string;
   strMonthlyPriceValue?: string;
   strDescriptionKey?: string;
+  strDescription?: string;
+  rawDescription?: any;
   arrCategorySlugs?: string[];
   strBrandSlug?: string;
   strCategory?: string;

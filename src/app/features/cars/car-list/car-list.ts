@@ -164,8 +164,8 @@ export class CarList implements OnInit {
         const descText =
           meta.strDescription ||
           (isAz
-            ? `Bakıda ${titleName} icarəsi. Depozitsiz ən yaxşı avtomobillər və 24/7 pulsuz çatdırılma.`
-            : `Rent ${titleName} in Baku with zero deposit options and 24/7 fast delivery across Azerbaijan.`);
+            ? `Bakıda ${titleName} icarəsi. Sabit 100$ geri qaytarılan depozit və 24/7 sürətli çatdırılma.`
+            : `Rent ${titleName} in Baku with transparent terms, $100 refundable deposit, and 24/7 fast delivery across Azerbaijan.`);
 
         this.svcSog.fnSetSeo({
           title: isAz

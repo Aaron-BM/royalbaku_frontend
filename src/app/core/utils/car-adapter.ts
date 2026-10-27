@@ -1,5 +1,6 @@
 import { CarDetailItem, PriceTableItem, CarCategory, CarBrand } from '../models/car.model';
 import { environment } from '../../../environments/environment';
+import { STANDARD_CAR_DEPOSIT_USD } from '../constants/pricing.constants';
 
 export interface DRFBrand {
   id: number;
@@ -216,13 +217,13 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
       ? Number(car.price_monthly)
       : undefined;
 
-  let numDepositUsd: number | undefined = undefined;
-  let strDepositValue: string | undefined = undefined;
+  let numDepositUsd: number = STANDARD_CAR_DEPOSIT_USD;
+  let strDepositValue: string = `$${STANDARD_CAR_DEPOSIT_USD}`;
   if (car.specs?.deposit != null && String(car.specs.deposit).trim() !== '') {
-    strDepositValue = String(car.specs.deposit);
     const parsedDep = parseFloat(car.specs.deposit);
-    if (!isNaN(parsedDep)) {
+    if (!isNaN(parsedDep) && parsedDep > 0) {
       numDepositUsd = parsedDep;
+      strDepositValue = String(car.specs.deposit);
     }
   }
 
@@ -266,13 +267,16 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     strCurrency: '$',
     strWeeklyPriceValue: car.price_weekly ? String(car.price_weekly) : undefined,
     strMonthlyPriceValue: car.price_monthly ? String(car.price_monthly) : undefined,
+    strDescription: parseI18nString(car.description) || undefined,
     strDescriptionKey: parseI18nString(car.description) || undefined,
+    rawDescription: car.description,
     arrCategorySlugs: strCategorySlug ? [strCategorySlug] : [],
     strBrandSlug: strBrandSlug,
     strBrand: car.brand?.name ? parseI18nString(car.brand.name) : undefined,
     strCategory: car.category?.name ? parseI18nString(car.category.name) : undefined,
     arrGalleryImages: arrGalleryImages,
     objSpecs: {
+      strDepositKey: 'carDetail.specs.deposit',
       strDepositValue: strDepositValue,
       numMileageLimitKm:
         car.specs?.mileage_limit != null && !isNaN(Number(car.specs.mileage_limit)) && Number(car.specs.mileage_limit) > 0

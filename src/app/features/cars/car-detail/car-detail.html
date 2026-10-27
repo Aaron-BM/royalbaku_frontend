@@ -36,7 +36,7 @@
               </span>
             }
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-gold/10 text-gold border border-gold/30 flex items-center gap-1 shrink-0">
-              <span class="text-gold">✦</span> {{ 'carDetail.hero.badgeZeroDeposit' | translate }}
+              <span class="text-gold">✦</span> {{ 'carDetail.hero.badgeDeposit' | translate: { amount: ((car.numDepositUsd ?? numStandardDeposit) | appCurrency) } }}
             </span>
           </div>
         </div>
@@ -69,15 +69,6 @@
                 </span>
               }
             </div>
-          </div>
-          <div class="flex items-center gap-3 shrink-0">
-            <a
-              href="#book-form-card"
-              class="px-5 py-2.5 rounded-full bg-gold hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-gold/20 flex items-center gap-1.5"
-            >
-              <span>{{ 'carDetail.hero.bookDirect' | translate }}</span>
-              <span class="text-black">↓</span>
-            </a>
           </div>
         </div>
       </header>
@@ -238,7 +229,7 @@
                   <div>
                     <span class="text-muted/80 font-normal">{{ 'carDetail.specs.deposit' | translate }}: </span>
                     <span class="text-gold font-normal">
-                      {{ car.numDepositUsd != null ? (car.numDepositUsd | appCurrency) : car.objSpecs?.strDepositValue }}
+                      {{ (car.numDepositUsd ?? numStandardDeposit) | appCurrency }}
                     </span>
                   </div>
                 }
@@ -391,113 +382,74 @@
       </div>
     }
 
-    <!-- Bottom Grid: 4 Information Cards (Documents, Terms, Delivery, Booking Form) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-6">
-      <!-- Card 1: Documents Required -->
-      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-xl flex flex-col">
-        <h3
-          class="text-sm font-bold text-white text-center border-b border-[var(--border-subtle)] pb-3 mb-4 tracking-wide"
-        >
-          {{ 'carDetail.docs.title' | translate }}
-        </h3>
-        <div class="space-y-4 text-xs text-muted/90 flex-1">
-          <div>
-            <h4 class="font-bold text-white mb-2">
-              {{ 'carDetail.docs.touristsTitle' | translate }}
-            </h4>
-            <ul class="list-disc list-inside space-y-1 text-[11px] text-muted/80 font-normal">
-              <li>{{ 'carDetail.docs.tourist1' | translate }}</li>
-              <li>{{ 'carDetail.docs.tourist2' | translate }}</li>
-              <li>{{ 'carDetail.docs.tourist3' | translate }}</li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="font-bold text-white mb-2">
-              {{ 'carDetail.docs.residentsTitle' | translate }}
-            </h4>
-            <ul class="list-disc list-inside space-y-1 text-[11px] text-muted/80 font-normal">
-              <li>{{ 'carDetail.docs.resident1' | translate }}</li>
-              <li>{{ 'carDetail.docs.resident2' | translate }}</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 2: Rental Terms -->
-      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-xl flex flex-col">
-        <h3
-          class="text-sm font-bold text-white text-center border-b border-[var(--border-subtle)] pb-3 mb-4 tracking-wide"
-        >
-          {{ 'carDetail.terms.title' | translate }}
-        </h3>
-        <div class="space-y-3 text-xs text-muted/90 flex-1">
-          <ul class="space-y-2 text-[11px] text-muted/80 font-normal">
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.terms.age' | translate }}</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.terms.fuel' | translate }}</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.terms.toll' | translate }}</span>
-            </li>
-          </ul>
-          <div class="pt-3 border-t border-[var(--border-subtle)] text-center">
-            <h4 class="font-bold text-white mb-1.5">
-              {{ 'carDetail.terms.noDepositTitle' | translate }}
-            </h4>
-            <p class="text-[11px] text-muted/70 leading-relaxed font-normal">
-              {{ 'carDetail.terms.noDepositDesc' | translate }}
+    <!-- Bottom Grid: Left (Description & Documents) + Right (Booking Form) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
+      <!-- Left Column (7 cols): Vehicle Overview & Documents Required -->
+      <div class="lg:col-span-7 space-y-6">
+        <!-- Card 1: Description / Overview -->
+        @if (strCarDescription) {
+          <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-3">
+            <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
+              <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
+                {{ 'carDetail.overview.title' | translate }}
+              </h3>
+            </div>
+            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+              {{ strCarDescription }}
             </p>
           </div>
-        </div>
-      </div>
+        }
 
-      <!-- Card 3: Delivery -->
-      <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-xl flex flex-col">
-        <h3
-          class="text-sm font-bold text-white text-center border-b border-[var(--border-subtle)] pb-3 mb-4 tracking-wide"
-        >
-          {{ 'carDetail.delivery.title' | translate }}
-        </h3>
-        <div class="space-y-3 text-xs text-muted/80 flex-1">
-          <ul class="space-y-3 text-[11px] leading-relaxed font-normal">
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.delivery.withinCity' | translate }}</span>
+        <!-- Card 2: Documents Required -->
+        <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-4">
+          <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
+            <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
+              {{ 'carDetail.docs.title' | translate }}
+            </h3>
+          </div>
+          <ul class="space-y-3 text-xs sm:text-sm text-white/90">
+            <li class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+              <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist1' | translate }}</span>
             </li>
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.delivery.airport' | translate }}</span>
-            </li>
-            <li class="flex items-start gap-1.5">
-              <span class="text-gold">•</span>
-              <span>{{ 'carDetail.delivery.regional' | translate }}</span>
+            <li class="flex items-center gap-3">
+              <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+              <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist2' | translate }}</span>
             </li>
           </ul>
         </div>
       </div>
 
-      <!-- Card 4: BOOK NOW (Inquiry Form) -->
+      <!-- Right Column (5 cols): BOOK NOW (Inquiry Form) -->
       <div
         id="book-form-card"
-        class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-5 shadow-xl flex flex-col justify-between"
+        class="lg:col-span-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl"
       >
         <div>
-          <h3 class="text-sm font-bold text-white text-center tracking-widest mb-4">
-            {{ 'carDetail.bookForm.title' | translate }}
-          </h3>
-          <form (ngSubmit)="onBookingSubmit()" class="space-y-3 font-normal">
+          <div class="flex items-center justify-center gap-2 border-b border-[var(--border-subtle)] pb-3 mb-4">
+            <span class="text-gold">✦</span>
+            <h3 class="text-sm sm:text-base font-bold text-white tracking-widest uppercase">
+              {{ 'carDetail.bookForm.title' | translate }}
+            </h3>
+          </div>
+          <form (ngSubmit)="onBookingSubmit()" class="space-y-3.5 font-normal">
             <div>
               <input
                 type="text"
                 [(ngModel)]="strCustomerName"
                 name="customerName"
                 [placeholder]="'carDetail.bookForm.namePlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
                 required
               />
             </div>
@@ -507,14 +459,14 @@
                 [(ngModel)]="strCustomerEmail"
                 name="customerEmail"
                 [placeholder]="'carDetail.bookForm.emailPlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
               />
             </div>
             <div>
               <select
                 [(ngModel)]="strSelectedCarTitle"
                 name="selectedCarTitle"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-gold transition-colors appearance-none font-normal"
+                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-gold transition-colors appearance-none font-normal"
               >
                 <option [value]="objCar()?.strTitle">
                   {{ objCar()?.strTitle || 'Luxury Car' }}
@@ -527,14 +479,14 @@
                 name="selectedCountryCode"
                 [arrCodes]="arrCountryCodes()"
                 class="shrink-0 max-w-[105px]"
-                strButtonClass="w-full flex items-center justify-between gap-1.5 bg-[#1A1D27] border border-white/10 rounded-lg px-2.5 py-2 text-xs text-white focus:border-gold outline-none transition-colors cursor-pointer truncate"
+                strButtonClass="w-full flex items-center justify-between gap-1.5 bg-[#1A1D27] border border-white/10 rounded-lg px-2.5 py-2.5 text-xs text-white focus:border-gold outline-none transition-colors cursor-pointer truncate"
               />
               <input
                 type="tel"
                 [(ngModel)]="strCustomerPhone"
                 name="customerPhone"
                 [placeholder]="'carDetail.bookForm.phonePlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
                 required
               />
             </div>
@@ -557,7 +509,7 @@
             <div class="pt-2">
               <button
                 type="submit"
-                class="w-full bg-gold hover:bg-amber-400 text-black font-normal text-xs py-2.5 rounded-full transition-all shadow-lg cursor-pointer tracking-wider"
+                class="w-full bg-gold hover:bg-amber-400 text-black font-semibold text-xs py-3 rounded-full transition-all shadow-lg cursor-pointer tracking-wider"
               >
                 {{ 'carDetail.bookForm.submit' | translate }}
               </button>

@@ -158,7 +158,9 @@
   },
   "cars": {
     "offer": "Xüsusi təklif",
-    "depositFeeInclusive": "Qiymətlərə depozit haqqı daxildir",
+    "depositFeeInclusive": "Geri qaytarılan depozit: 100$",
+    "depositNotice": "Geri qaytarılan depozit: {{amount}}",
+    "refundableDeposit": "Geri qaytarılan depozit",
     "daily": "Gündəlik",
     "weekly": "Həftəlik",
     "monthly": "Aylıq",
@@ -210,15 +212,18 @@
   "carDetail": {
     "breadcrumbHome": "Ana səhifə",
     "breadcrumbCars": "Avtomobillər",
+    "overview": {
+      "title": "Avtomobil Haqqında"
+    },
     "hero": {
       "badgeBrand": "Official Marque",
-      "badgeZeroDeposit": "Zero Deposit Options Available",
+      "badgeDeposit": "Geri qaytarılan depozit: {{amount}}",
+      "badgeZeroDeposit": "Geri qaytarılan depozit: 100$",
       "badgeFastDelivery": "Prompt Baku & GYD Airport Delivery",
       "availableForDelivery": "Available for Immediate Delivery",
       "startingFrom": "başlanğıc",
       "perDay": "/ gün",
       "instantReserve": "Instant Reserve",
-      "bookDirect": "Book Direct",
       "whatsappReserve": "WhatsApp VIP",
       "callConcierge": "Call Concierge"
     },
@@ -226,7 +231,7 @@
       "tag": "Direct Vehicle Reservation Assistance",
       "titlePrefix": "Need Immediate Confirmation for the",
       "desc": "Our dedicated booking specialists are available 24/7 to verify immediate vehicle availability, schedule delivery to Heydar Aliyev Airport (GYD) or your hotel, and answer any rental policy questions.",
-      "bulletDeposit": "Zero security deposit options for eligible drivers (age 23+)",
+      "bulletDeposit": "Bütün avtomobillər üçün standart 100$ geri qaytarılan təhlükəsizlik depoziti",
       "bulletInsurance": "Standard comprehensive motor insurance included",
       "bulletDelivery": "Prompt delivery across Baku & GYD Airport (typically 30–60 min)",
       "bulletRoadside": "24/7 nationwide roadside assistance & vehicle replacement support",
@@ -271,8 +276,8 @@
       "age": "Yaş: 18 yaşdan yuxarı",
       "fuel": "Yanacaq: Avtomobil çatdırıldığı vaxtkı yanacaq səviyyəsində qaytarılmalıdır",
       "toll": "Salik: Salik haqqı 5 AED olacaqdır",
-      "noDepositTitle": "Depozitsiz",
-      "noDepositDesc": "18-23 yaş aralığında olan müştərilərdən geri qaytarılan depozit tələb olunur. Depozit avtomobil qaytarıldıqdan sonra 10 iş günü ərzində geri qaytarılacaq"
+      "noDepositTitle": "Geri qaytarılan depozit: 100$",
+      "noDepositDesc": "Hər bir avtomobil üçün 100$ məbləğində geri qaytarılan depozit tələb olunur. Depozit avtomobil qaytarıldıqdan sonra 10 iş günü ərzində tam geri qaytarılacaq."
     },
     "delivery": {
       "title": "Çatdırılma",
@@ -324,8 +329,8 @@
     "deliveryTag": "Qapıyadək çatdırılma",
     "deliveryTitle": "Avtomobiliniz birbaşa qapınıza çatdırılır",
     "deliveryDesc": "Lüksü birbaşa ünvanınıza gətiririk — Heydər Əliyev Hava Limanında, otelinizdə və ya Bakıdakı şəxsi mənzilinizdə.",
-    "bullet1Title": "Depozit tələb olunmur",
-    "bullet1Desc": "Seçilmiş lüks və idman modellərində",
+    "bullet1Title": "Geri qaytarılan depozit",
+    "bullet1Desc": "Bütün modellər üçün standart 100$ geri qaytarılan depozit",
     "bullet2Title": "Sürətli çatdırılma",
     "bullet2Desc": "Hava limanı daxil olmaqla Bakının istənilən yerinə",
     "bullet3Title": "VIP konsyerj qiymətləri",
@@ -357,7 +362,7 @@
     "res4Q": "Pik mövsümdə və ya tədbirlər zamanı nə qədər əvvəl bron etməliyəm?",
     "res4A": "Formula 1 Bakı Qran Prisi, formula yarışları və ya yay tətili mövsümlərində superkarların mövcudluğu üçün 3-7 gün əvvəl bron etməyi tövsiyə edirik.",
     "res5Q": "Bron etmək üçün depozit ödəməliyəmmi?",
-    "res5A": "Etibarlı sənədləri olan 23 yaşdan yuxarı sürücülər üçün əksər lüks və idman avtomobillərində depozit tələb olunmur.",
+    "res5A": "Bütün avtomobil icarələri üçün 100$ məbləğində standart geri qaytarılan depozit tələb olunur və avtomobil təhvil verildikdən sonra 10 iş günü ərzində tam geri qaytarılır.",
     "res6Q": "Təsdiqlөdikdən sonra bron tarixlərimi dəyişə bilərəmmi?",
     "res6A": "Bəli, bron tarixləri planlaşdırılan təhvil almadan 24 saat əvvələ qədər pulsuz olaraq dəyişdirilə bilər.",
     "catPricing": "Qiymətlər, ödəniş və ƏDV",
@@ -372,7 +377,7 @@
     "price5Q": "Hissə-hissə ödəniş edə bilərəm və ya İndi Al, Sonra Ödə xidmətindən istifadə edə bilərəmmi?",
     "price5A": "Bəli, uzunmüddətli icarələr üçün dəstəklənən kredit kartı təminatçıları vasitəsilə hissə-hissə ödəniş planları mövcuddur.",
     "price7Q": "İcarələrdə təhlükəsizlik depoziti varmı?",
-    "price7A": "Seçilmiş modellərdə sıfır təhlükəsizlik depoziti seçimləri mövcuddur. Tətbiq olunduğu hallarda depozitlər 10 iş günü ərzində qaytarılır.",
+    "price7A": "Hər bir avtomobil icarəsi üçün 100$ məbləğində standart geri qaytarılan təhlükəsizlik depoziti tətbiq olunur və avtomobil qaytarıldıqdan sonra 10 iş günü ərzində tam geri qaytarılır.",
     "catCancellation": "Ləğvetmə və dəyişikliklər",
     "cancel1Q": "Ləğvetmə siyasətiniz necədir?",
     "cancel1A": "Planlaşdırılan avtomobil çatdırılma vaxtından 24 saat əvvələ qədər 100% geri ödənişlə pulsuz ləğvetmə mümkündür.",

@@ -154,24 +154,14 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
   // Dynamic Social Links (Backend API driven)
   protected readonly arrSocialLinks = signal<HomeSocialItem[]>([]);
 
-  // FAQ Column 1 & Column 2 Groups
+  // FAQ Column 1 & Column 2 Groups (6 Top Essential Questions)
   protected readonly arrFaqColumn1 = signal<{ strTitleKey: string; arrQuestions: { strId: string; strQuestionKey: string; strAnswerKey: string }[] }[]>([
-    {
-      strTitleKey: 'home.faq.mileageGroup',
-      arrQuestions: [
-        { strId: 'q1', strQuestionKey: 'home.faq.q1', strAnswerKey: 'home.faq.a1' },
-        { strId: 'q2', strQuestionKey: 'home.faq.q2', strAnswerKey: 'home.faq.a2' },
-        { strId: 'q3', strQuestionKey: 'home.faq.q3', strAnswerKey: 'home.faq.a3' },
-        { strId: 'q4', strQuestionKey: 'home.faq.q4', strAnswerKey: 'home.faq.a4' },
-      ],
-    },
     {
       strTitleKey: 'home.faq.bookingGroup',
       arrQuestions: [
         { strId: 'q5', strQuestionKey: 'home.faq.q5', strAnswerKey: 'home.faq.a5' },
-        { strId: 'q6', strQuestionKey: 'home.faq.q6', strAnswerKey: 'home.faq.a6' },
-        { strId: 'q7', strQuestionKey: 'home.faq.q7', strAnswerKey: 'home.faq.a7' },
-        { strId: 'q8', strQuestionKey: 'home.faq.q8', strAnswerKey: 'home.faq.a8' },
+        { strId: 'q9', strQuestionKey: 'home.faq.q9', strAnswerKey: 'home.faq.a9' },
+        { strId: 'q1', strQuestionKey: 'home.faq.q1', strAnswerKey: 'home.faq.a1' },
       ],
     },
   ]);
@@ -180,17 +170,9 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     {
       strTitleKey: 'home.faq.drivingGroup',
       arrQuestions: [
-        { strId: 'q9', strQuestionKey: 'home.faq.q9', strAnswerKey: 'home.faq.a9' },
         { strId: 'q10', strQuestionKey: 'home.faq.q10', strAnswerKey: 'home.faq.a10' },
-        { strId: 'q11', strQuestionKey: 'home.faq.q11', strAnswerKey: 'home.faq.a11' },
-      ],
-    },
-    {
-      strTitleKey: 'home.faq.insuranceGroup',
-      arrQuestions: [
-        { strId: 'q12', strQuestionKey: 'home.faq.q12', strAnswerKey: 'home.faq.a12' },
         { strId: 'q13', strQuestionKey: 'home.faq.q13', strAnswerKey: 'home.faq.a13' },
-        { strId: 'q14', strQuestionKey: 'home.faq.q14', strAnswerKey: 'home.faq.a14' },
+        { strId: 'q7', strQuestionKey: 'home.faq.q7', strAnswerKey: 'home.faq.a7' },
       ],
     },
   ]);
@@ -202,8 +184,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
         ? 'Royal Baku Rent A Car | Bakıda Lüks və Ekonom Avtomobil İcarəsi'
         : 'Royal Baku Rent A Car | Premium & Economy Car Rental in Baku',
       description: isAz
-        ? 'Bakıda lüks, idman, SUV və ekonom avtomobillərin depozitsiz icarəsi. 24/7 çatdırılma və sərfəli gündəlik, həftəlik, aylıq qiymətlər.'
-        : 'Rent luxury, sports, SUV & economy cars in Baku with zero deposit options. 24/7 delivery across Baku & Azerbaijan at competitive rates.',
+        ? 'Bakıda lüks, idman, SUV və ekonom avtomobillərin 100$ geri qaytarılan depozit ilə icarəsi. 24/7 çatdırılma və sərfəli gündəlik, həftəlik, aylıq qiymətlər.'
+        : 'Rent luxury, sports, SUV & economy cars in Baku with transparent terms and $100 refundable deposit. 24/7 delivery across Baku & Azerbaijan at competitive rates.',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'AutoRental',

@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
 import { CarItem } from '../../../core/models/car.model';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
+import { STANDARD_CAR_DEPOSIT_USD } from '../../../core/constants/pricing.constants';
 
 import { AppCurrencyPipe } from '../../pipes/app-currency.pipe';
 import { IconWhatsappComponent } from '../icons/icon-whatsapp';
@@ -19,6 +20,7 @@ import { LangUrlPipe } from '../../pipes/lang-url.pipe';
 export class CarCard {
   @Input({ required: true }) objCar!: CarItem;
 
+  protected readonly numStandardDeposit = STANDARD_CAR_DEPOSIT_USD;
   protected readonly siteSettingService = inject(SiteSettingService);
 
   protected get strWhatsappHref(): string | null {

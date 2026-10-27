@@ -12,6 +12,7 @@ import { CountryCodeSelect } from '../../../shared/components/country-code-selec
 
 import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
+import { STANDARD_CAR_DEPOSIT_USD } from '../../../core/constants/pricing.constants';
 
 @Component({
   selector: 'app-contact-az',
@@ -26,6 +27,7 @@ export class ContactAz implements OnInit {
   private readonly carService = inject(CarService);
   private readonly svcSog = inject(SeoService);
   private readonly svcLanguage = inject(LanguageService);
+  protected readonly numStandardDeposit = STANDARD_CAR_DEPOSIT_USD;
 
   // Loading & View States
   protected readonly blnLoading = signal<boolean>(true);
