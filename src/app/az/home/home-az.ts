@@ -95,38 +95,8 @@ export class HomeAz implements OnInit, AfterViewInit, OnDestroy {
   // Brand Marquee Signal (Backend API driven - zero hardcoded data)
   protected readonly arrBrands = signal<HomeBrand[]>([]);
 
-  protected readonly arrCategories = signal<HomeCategory[]>([
-    {
-      strId: 'cat-1',
-      strNameKey: 'categories.suv',
-      strSlug: 'suv',
-      strImagePath: '/assets/images/home/cat-suv.png',
-    },
-    {
-      strId: 'cat-3',
-      strNameKey: 'categories.luxury',
-      strSlug: 'luxury',
-      strImagePath: '/assets/images/home/cat-luxury.png',
-    },
-    {
-      strId: 'cat-4',
-      strNameKey: 'categories.sports',
-      strSlug: 'sports',
-      strImagePath: '/assets/images/home/cat-sports.png',
-    },
-    {
-      strId: 'cat-5',
-      strNameKey: 'categories.convertible',
-      strSlug: 'convertible',
-      strImagePath: '/assets/images/home/cat-convertible.png',
-    },
-    {
-      strId: 'cat-6',
-      strNameKey: 'categories.economy',
-      strSlug: 'economy',
-      strImagePath: '/assets/images/home/cat-economy.png',
-    },
-  ]);
+  // Car Categories Signal (Backend API driven)
+  protected readonly arrCategories = signal<HomeCategory[]>([]);
 
   // Active FAQ toggled ID signal
   protected readonly strOpenFaqId = signal<string | null>(null);
@@ -268,7 +238,7 @@ export class HomeAz implements OnInit, AfterViewInit, OnDestroy {
           strId: cat.idCategory,
           strNameKey: `categories.${cat.strSlug}`,
           strSlug: cat.strSlug,
-          strImagePath: cat.strImagePath || `/assets/images/home/cat-${cat.strSlug}.png`,
+          strImagePath: cat.strImagePath || '',
         }));
         this.arrCategories.set(mappedCategories);
       }

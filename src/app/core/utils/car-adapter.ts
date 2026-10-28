@@ -143,7 +143,7 @@ export function mapDRFCategoryToItem(cat: DRFCategory): CarCategory {
     idCategory: String(cat.id),
     strNameKey: parseI18nString(cat.name),
     strSlug: cat.slug,
-    strImagePath: strParsedImg || `/assets/images/home/cat-${cat.slug}.png`,
+    strImagePath: strParsedImg || '',
   };
 }
 
