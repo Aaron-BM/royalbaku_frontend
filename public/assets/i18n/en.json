@@ -210,6 +210,17 @@
     "openInMaps": "Open in Maps"
   },
   "carDetail": {
+    "loading": "Loading vehicle details...",
+    "notFound": {
+      "title": "Vehicle Not Found",
+      "desc": "The vehicle you are looking for is no longer available or the link is incorrect.",
+      "backToCars": "Browse All Cars"
+    },
+    "error": {
+      "title": "Unable to Load Vehicle",
+      "desc": "We encountered a temporary connection issue. Please try again.",
+      "tryAgain": "Try Again"
+    },
     "breadcrumbHome": "Home",
     "breadcrumbCars": "Cars",
     "overview": {
@@ -345,7 +356,7 @@
     "btnSubmit": "Send Instant Request",
     "successMsg": "Thank you! Your booking request has been received. Our concierge will contact you within 15 minutes.",
     "trustTag": "Why Customers Trust Us",
-    "trustTitle": "Trusted by 12,000+ Loyal Customers in Baku",
+    "trustTitle": "Loved by Customers Across Baku",
     "mapTitle": "Visit Our Main Showroom",
     "btnOpenMaps": "Open in Google Maps"
   },

@@ -424,9 +424,9 @@
                 <div class="border-t border-white/10 pt-4 mb-2">
                   <div class="flex items-center justify-between mb-3">
                     <span class="text-[11px] font-bold text-white/60 uppercase tracking-wider">Highlights & Stops:</span>
-                    @if (pkg.priceUsd != null) {
+                    @if (pkg.priceUsd != null || pkg.price) {
                       <span class="text-sm font-extrabold text-gold">
-                        {{ 'tours.from' | translate }} {{ pkg.priceUsd | appCurrency }}
+                        {{ 'tours.from' | translate }} {{ (pkg.priceUsd ?? pkg.price) | appCurrency }}
                       </span>
                     } @else {
                       <span class="text-xs font-bold text-gold/90 bg-gold/10 border border-gold/30 px-2.5 py-1 rounded-md">
@@ -482,111 +482,113 @@
     </section>
   }
   <!-- ==================== 8. STEP-BY-STEP RENTAL PROCESS ==================== -->
-  <section class="max-w-5xl mx-auto px-4 sm:px-6 py-16 border-t border-white/5 text-center section-divider reveal-on-scroll">
-    <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
-      {{ 'home.stepProcess.title' | translate }}
-    </h2>
-    <div class="title-accent-bar">
-      <span class="line"></span>
-      <span class="dot"></span>
-      <span class="line reverse"></span>
-    </div>
-    <p class="max-w-2xl mx-auto text-xs sm:text-sm text-muted/80 leading-relaxed font-normal mb-14">
-      {{ 'home.stepProcess.description' | translate }}
-    </p>
-    <!-- Vertical Timeline Step Flow -->
-    <div class="relative max-w-3xl mx-auto mb-10">
-      <!-- Center Dashed Line -->
-      <div
-        class="absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-gold/30 hidden md:block"
-      ></div>
-      <div class="space-y-8 md:space-y-12 relative">
-        @for (objStep of arrRentalSteps(); track objStep.strNumber; let blnEven = $even) {
-          <div
-            class="flex flex-col md:flex-row items-center gap-6 group"
-            [class.md:flex-row-reverse]="blnEven"
-          >
-            <!-- Content Box -->
+  <section class="home-process-road-section relative w-full py-16 sm:py-20 border-t border-white/10 text-center section-divider overflow-hidden">
+    <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 reveal-on-scroll">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+        {{ 'home.stepProcess.title' | translate }}
+      </h2>
+      <div class="title-accent-bar">
+        <span class="line"></span>
+        <span class="dot"></span>
+        <span class="line reverse"></span>
+      </div>
+      <p class="max-w-2xl mx-auto text-xs sm:text-sm text-muted/80 leading-relaxed font-normal mb-14">
+        {{ 'home.stepProcess.description' | translate }}
+      </p>
+      <!-- Vertical Timeline Step Flow -->
+      <div class="relative max-w-3xl mx-auto mb-10">
+        <!-- Center Dashed Line -->
+        <div
+          class="absolute left-1/2 top-4 bottom-4 -translate-x-1/2 w-[2px] border-l-2 border-dashed border-gold/30 hidden md:block"
+        ></div>
+        <div class="space-y-8 md:space-y-12 relative">
+          @for (objStep of arrRentalSteps(); track objStep.strNumber; let blnEven = $even) {
             <div
-              class="w-full md:w-1/2 text-center"
-              [class.md:text-right]="!blnEven"
-              [class.md:text-left]="blnEven"
+              class="flex flex-col md:flex-row items-center gap-6 group"
+              [class.md:flex-row-reverse]="blnEven"
             >
+              <!-- Content Box -->
               <div
-                class="luxury-card-hover bg-[#14161E]/90 border border-white/10 hover:border-gold/40 rounded-2xl p-5 shadow-xl inline-block w-full max-w-sm"
+                class="w-full md:w-1/2 text-center"
+                [class.md:text-right]="!blnEven"
+                [class.md:text-left]="blnEven"
               >
                 <div
-                  class="flex items-center gap-3 mb-2"
-                  [class.justify-end]="!blnEven"
-                  [class.justify-start]="blnEven"
+                  class="luxury-card-hover bg-[#14161E]/90 border border-white/10 hover:border-gold/40 rounded-2xl p-5 shadow-xl inline-block w-full max-w-sm"
                 >
-                  <span
-                    class="w-7 h-7 rounded-lg bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/40 text-gold font-extrabold text-xs flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"
+                  <div
+                    class="flex items-center gap-3 mb-2"
+                    [class.justify-end]="!blnEven"
+                    [class.justify-start]="blnEven"
                   >
-                    {{ objStep.strNumber }}
-                  </span>
-                  <h4 class="text-sm font-bold text-white tracking-wide group-hover:text-gold transition-colors">
-                    {{ objStep.strTitleKey | translate }}
-                  </h4>
+                    <span
+                      class="w-7 h-7 rounded-lg bg-gradient-to-br from-gold/20 to-gold/5 border border-gold/40 text-gold font-extrabold text-xs flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform"
+                    >
+                      {{ objStep.strNumber }}
+                    </span>
+                    <h4 class="text-sm font-bold text-white tracking-wide group-hover:text-gold transition-colors">
+                      {{ objStep.strTitleKey | translate }}
+                    </h4>
+                  </div>
+                  <p class="text-xs text-muted/80 leading-relaxed">
+                    {{ objStep.strDescKey | translate }}
+                  </p>
                 </div>
-                <p class="text-xs text-muted/80 leading-relaxed">
-                  {{ objStep.strDescKey | translate }}
-                </p>
               </div>
+              <!-- Center Timeline Connector Icon -->
+              <div
+                class="icon-pop w-10 h-10 rounded-full bg-[#1C1F2A] border-2 border-gold text-gold flex items-center justify-center shrink-0 z-10 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:border-amber-400 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]"
+              >
+                @switch (objStep.strIcon) {
+                  @case ('car') {
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM3 9l2-4h14l2 4M3 9v7a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"
+                      />
+                    </svg>
+                  }
+                  @case ('whatsapp') {
+                    <app-icon-whatsapp class="w-5 h-5 fill-current" />
+                  }
+                  @case ('confirm') {
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      />
+                    </svg>
+                  }
+                  @default {
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                  }
+                }
+              </div>
+              <!-- Empty Spacer for 50/50 Layout -->
+              <div class="hidden md:block w-1/2"></div>
             </div>
-            <!-- Center Timeline Connector Icon -->
-            <div
-              class="icon-pop w-10 h-10 rounded-full bg-[#1C1F2A] border-2 border-gold text-gold flex items-center justify-center shrink-0 z-10 shadow-[0_0_15px_rgba(212,175,55,0.3)] group-hover:border-amber-400 group-hover:shadow-[0_0_25px_rgba(212,175,55,0.6)]"
-            >
-              @switch (objStep.strIcon) {
-                @case ('car') {
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM3 9l2-4h14l2 4M3 9v7a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18"
-                    />
-                  </svg>
-                }
-                @case ('whatsapp') {
-                  <app-icon-whatsapp class="w-5 h-5 fill-current" />
-                }
-                @case ('confirm') {
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                }
-                @default {
-                  <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                }
-              }
-            </div>
-            <!-- Empty Spacer for 50/50 Layout -->
-            <div class="hidden md:block w-1/2"></div>
-          </div>
-        }
+          }
+        </div>
       </div>
+      <!-- Start Booking Button -->
+      <a
+        [routerLink]="'/cars' | langUrl"
+        class="btn-shimmer bg-gold text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
+      >
+        {{ 'home.stepProcess.cta' | translate }}
+      </a>
     </div>
-    <!-- Start Booking Button -->
-    <a
-      [routerLink]="'/cars' | langUrl"
-      class="btn-shimmer bg-gold text-black hover:bg-amber-400 hover:shadow-[0_0_20px_rgba(212,175,55,0.35)] font-extrabold text-xs tracking-wider px-8 py-3 rounded-full transition-all duration-300 shadow-xl inline-block"
-    >
-      {{ 'home.stepProcess.cta' | translate }}
-    </a>
   </section>
   <!-- ==================== 9. WHY RENT WITH US / TRUST BADGE ==================== -->
   <section class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-white/5 section-divider reveal-on-scroll">

@@ -28,6 +28,13 @@
               Transfers & Tour Included
             </span>
           }
+          <!-- Mobile / Tablet Price Badge -->
+          @if (objPackage.priceUsd != null || objPackage.price) {
+            <span class="lg:hidden text-xs font-black text-gold bg-black/60 border border-gold/40 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
+              <span class="text-[10px] text-white/60 font-medium uppercase tracking-wider">{{ 'tours.from' | translate }}</span>
+              <span>{{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}</span>
+            </span>
+          }
         </div>
         
         <h2 class="font-hero-title text-2xl sm:text-3xl font-extrabold text-white mt-1">
@@ -39,8 +46,17 @@
       </div>
     </div>
 
-    <!-- Toggle Expand & Direct Contact Buttons -->
+    <!-- Toggle Expand & Direct Contact Buttons + Desktop Price -->
     <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+      @if (objPackage.priceUsd != null || objPackage.price) {
+        <div class="hidden lg:flex flex-col items-end mr-2 pr-3.5 border-r border-white/15">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-white/60">{{ 'tours.from' | translate }}</span>
+          <span class="font-hero-title text-2xl xl:text-3xl font-black text-gold leading-tight tracking-tight">
+            {{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}
+          </span>
+        </div>
+      }
+
       @if (strWhatsappHref()) {
         <a
           [href]="strWhatsappHref()!"
@@ -229,7 +245,14 @@
       <!-- ==================== FOOTER CTA BAR ==================== -->
       <div class="bg-gradient-to-r from-gold/15 via-[#12141e] to-gold/15 border border-gold/40 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
         <div>
-          <h4 class="font-hero-title text-lg font-bold text-white">ROYAL BAKU CAR RENTAL & TOURISM</h4>
+          <div class="flex flex-wrap items-center gap-3 justify-center md:justify-start">
+            <h4 class="font-hero-title text-lg font-bold text-white">ROYAL BAKU CAR RENTAL & TOURISM</h4>
+            @if (objPackage.priceUsd != null || objPackage.price) {
+              <span class="text-xs sm:text-sm font-black text-gold bg-black/70 border border-gold/40 px-3.5 py-1 rounded-full shadow-inner">
+                {{ 'tours.from' | translate }} {{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}
+              </span>
+            }
+          </div>
           <p class="text-xs text-white/70 mt-0.5">Contact us now to reserve your private luxury tour package</p>
         </div>
 

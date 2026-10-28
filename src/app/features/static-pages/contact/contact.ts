@@ -1,4 +1,5 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { InquiryService, CountryCode } from '../../../core/services/inquiry.service';
@@ -14,6 +15,12 @@ import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { STANDARD_CAR_DEPOSIT_USD } from '../../../core/constants/pricing.constants';
 
+const DEFAULT_MAP_EMBED_URL =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d189.97907433905314!2d49.839537630506676!3d40.37194764453228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40307dc067eb3d15%3A0xef92b6374df2a458!2sRoyal%20Baku%20Car%20Rental!5e0!3m2!1sen!2saz!4v1791614541792!5m2!1sen!2saz';
+
+const DEFAULT_ADDRESS =
+  'Khagani Mall, Office No: 09, 3rd Floor, Nizami St, Baku, Azerbaijan';
+
 @Component({
   selector: 'app-contact',
   standalone: true,
@@ -27,7 +34,18 @@ export class Contact implements OnInit {
   private readonly carService = inject(CarService);
   private readonly svcSog = inject(SeoService);
   private readonly svcLanguage = inject(LanguageService);
+  private readonly sanitizer = inject(DomSanitizer);
   protected readonly numStandardDeposit = STANDARD_CAR_DEPOSIT_USD;
+
+  // Map Signals
+  protected readonly strDefaultMapUrl = DEFAULT_MAP_EMBED_URL;
+  protected readonly strRawMapUrl = signal<string>(DEFAULT_MAP_EMBED_URL);
+  protected readonly safeMapUrl = computed<SafeResourceUrl>(() =>
+    this.sanitizer.bypassSecurityTrustResourceUrl(this.strRawMapUrl())
+  );
+  protected readonly mapDirectUrl = signal<string>(
+    `https://maps.google.com/?q=${encodeURIComponent(DEFAULT_ADDRESS)}`
+  );
 
   // Loading & View States
   protected readonly blnLoading = signal<boolean>(true);
@@ -42,7 +60,7 @@ export class Contact implements OnInit {
   protected readonly strPhoneNumberDisplay = signal<string>('');
   protected readonly strWhatsappNumberDisplay = signal<string>('');
   protected readonly strEmailDisplay = signal<string>('');
-  protected readonly strAddressDisplay = signal<string>('');
+  protected readonly strAddressDisplay = signal<string>(DEFAULT_ADDRESS);
   protected readonly strHoursDisplay = signal<string>('');
   protected readonly strSocialDisplay = signal<string>('');
 
@@ -90,13 +108,23 @@ export class Contact implements OnInit {
         this.strWhatsappNumberDisplay.set(settings.whatsapp_number || '');
         this.strEmailDisplay.set(settings.email || '');
 
-        if (settings.address) {
-          const addr =
-            typeof settings.address === 'object'
-              ? settings.address.en || settings.address.az || JSON.stringify(settings.address)
-              : String(settings.address);
-          this.strAddressDisplay.set(addr);
+        // Update Google Maps embed link from backend
+        if (settings.google_map_link && settings.google_map_link.trim()) {
+          const cleanMapUrl = this.siteSettingService.getGoogleMapLink(settings.google_map_link);
+          if (cleanMapUrl) {
+            this.strRawMapUrl.set(cleanMapUrl);
+          }
         }
+
+        // Update address display and direct map URL
+        const strLang = this.svcLanguage.strCurrentLang() || 'en';
+        const strAddr =
+          typeof settings.address === 'object'
+            ? settings.address[strLang] || settings.address['en'] || settings.address['az'] || ''
+            : String(settings.address || '');
+        const finalAddr = strAddr && strAddr.trim() ? strAddr.trim() : DEFAULT_ADDRESS;
+        this.strAddressDisplay.set(finalAddr);
+        this.mapDirectUrl.set(`https://maps.google.com/?q=${encodeURIComponent(finalAddr)}`);
 
         if (settings.working_hours) {
           const hours =

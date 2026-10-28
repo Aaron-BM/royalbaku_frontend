@@ -5,11 +5,13 @@ import { SiteSettingService } from '../../../../core/services/site-setting.servi
 import { ImagePreviewModal } from '../../../../shared/components/image-preview-modal/image-preview-modal';
 import { IconWhatsappComponent } from '../../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../../shared/components/icons/icon-phone';
+import { AppCurrencyPipe } from '../../../../shared/pipes/app-currency.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tour-package-card',
   standalone: true,
-  imports: [CommonModule, ImagePreviewModal, IconWhatsappComponent, IconPhoneComponent],
+  imports: [CommonModule, ImagePreviewModal, IconWhatsappComponent, IconPhoneComponent, AppCurrencyPipe, TranslatePipe],
   templateUrl: './tour-package-card.html',
   styleUrl: './tour-package-card.css',
 })

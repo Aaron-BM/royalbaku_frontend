@@ -290,10 +290,26 @@
   background-image:
     linear-gradient(180deg, rgba(8, 8, 8, 0.90) 0%, rgba(8, 8, 8, 0.74) 45%, rgba(8, 8, 8, 0.92) 100%),
     url('/assets/images/home/red-sports-car-wet-road.jpg');
-  background-position: center center;
+  background-position: center center, center center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: scroll;
+}
+
+@media (max-width: 1023px) {
+  .home-prices-parallax-section {
+    animation: mobileBgSlideCar 18s ease-in-out infinite alternate;
+    will-change: background-position;
+  }
+}
+
+@keyframes mobileBgSlideCar {
+  0% {
+    background-position: center center, 18% center;
+  }
+  100% {
+    background-position: center center, 82% center;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -302,8 +318,46 @@
   }
 }
 
+/* ==========================================================================
+   Road-Background Parallax Section (Step-By-Step Rental Process)
+   ========================================================================== */
+.home-process-road-section {
+  position: relative;
+  background-image:
+    linear-gradient(180deg, rgba(8, 8, 8, 0.90) 0%, rgba(8, 8, 8, 0.76) 45%, rgba(8, 8, 8, 0.92) 100%),
+    url('/assets/images/home/road_image.webp');
+  background-position: center center, center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+@media (max-width: 1023px) {
+  .home-process-road-section {
+    animation: mobileBgSlideRoad 18s ease-in-out infinite alternate;
+    will-change: background-position;
+  }
+}
+
+@keyframes mobileBgSlideRoad {
+  0% {
+    background-position: center center, 18% center;
+  }
+  100% {
+    background-position: center center, 82% center;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-process-road-section {
+    background-attachment: fixed;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .home-prices-parallax-section {
+  .home-prices-parallax-section,
+  .home-process-road-section {
     background-attachment: scroll !important;
+    animation: none !important;
   }
 }

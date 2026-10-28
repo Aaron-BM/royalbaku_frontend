@@ -1,464 +1,650 @@
 <div class="bg-[var(--bg-base)] min-h-screen text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8 font-sans">
-  <div class="max-w-6xl mx-auto space-y-8">
-    <!-- Breadcrumbs -->
-    <nav class="flex items-center gap-2 text-xs font-normal text-muted/80">
-      <a [routerLink]="'/' | langUrl" class="hover:text-gold transition-colors font-normal">
-        {{ 'carDetail.breadcrumbHome' | translate }}
-      </a>
-      <span>/</span>
-      <span class="text-white font-normal">{{ objCar()?.strTitle || 'Car Details' }}</span>
-    </nav>
+  @switch (state()) {
+    @case ('loading') {
+      <app-car-detail-skeleton />
+    }
 
-    <!-- Top Grid: Gallery (Left) & Specs/Price (Right) -->
-    @if (objCar(); as car) {
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <!-- Left Column: Main Image Slider + Gallery Thumbnails (7 Cols) -->
-        <div class="lg:col-span-7 flex flex-col gap-4">
-          <!-- Main Display Image Box -->
-          <div
-            class="relative bg-gradient-to-b from-[#ECEFF1] via-[#E2E6EA] to-[#D5DAE0] rounded-2xl h-80 sm:h-[400px] overflow-hidden shadow-2xl group border border-[var(--border-subtle)]"
-          >
-            <!-- Left Slider Control Arrow -->
-            @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
-              <button
-                type="button"
-                (click)="prevImage()"
-                class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center transition-all z-20 cursor-pointer"
-              >
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-              </button>
-            }
-
-            <!-- Continuous Horizontal Sliding Image Track -->
-            <div class="w-full h-full overflow-hidden">
-              <div
-                class="image-track"
-                [style.transform]="'translateX(-' + (numActiveImageIndex() * 100) + '%)'"
-              >
-                @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
-                  <div class="image-track-item">
-                    <img
-                      [src]="strImg"
-                      [alt]="car.strTitle"
-                      [attr.loading]="$index === 0 ? 'eager' : 'lazy'"
-                      (click)="openPreviewModal(strImg, car.strTitle, $index)"
-                      class="w-full h-full object-cover transition-transform duration-700 ease-out cursor-zoom-in drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
-                      [class.group-hover:scale-110]="$index === numActiveImageIndex()"
-                    />
-                  </div>
-                }
-              </div>
-            </div>
-
-            <!-- Full-screen Expand Zoom Button -->
-            <button
-              type="button"
-              (click)="openPreviewModal(strActiveImage(), car.strTitle, numActiveImageIndex())"
-              title="Expand image preview"
-              class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-lg hover:scale-105"
-            >
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              </svg>
-            </button>
-
-            <!-- Right Slider Control Arrow -->
-            @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
-              <button
-                type="button"
-                (click)="nextImage()"
-                class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center transition-all z-20 cursor-pointer"
-              >
-                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2.5"
-                    d="M9 5l7 7-7 7"
-                  />
-                </svg>
-              </button>
-            }
-          </div>
-
-          <!-- Gallery Thumbnails Carousel (5 Thumbnails) -->
-          <div class="grid grid-cols-5 gap-2.5">
-            @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
-              <button
-                type="button"
-                (click)="selectGalleryImage(strImg, $index)"
-                class="bg-gradient-to-b from-[#ECEFF1] to-[#D5DAE0] rounded-xl h-16 sm:h-20 flex items-center justify-center border-2 transition-all cursor-pointer overflow-hidden"
-                [class.border-gold]="numActiveImageIndex() === $index"
-                [class.border-transparent]="numActiveImageIndex() !== $index"
-              >
-                <img
-                  [src]="strImg"
-                  [alt]="car.strTitle"
-                  class="w-full h-full object-cover"
-                />
-              </button>
-            }
-          </div>
+    @case ('notFound') {
+      <div class="max-w-xl mx-auto py-16 sm:py-24 text-center space-y-6">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-2xl sm:text-3xl font-extrabold shadow-lg">
+          404
         </div>
-
-        <!-- Right Column: Specs & Pricing Box (5 Cols) -->
-        <div
-          class="lg:col-span-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-2xl flex flex-col justify-between"
-        >
-          <div>
-            <!-- Car Title (Heading h1 keeps bold) -->
-            <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-5">
-              {{ car.strTitle }}
-            </h1>
-
-            <!-- Specifications 2-Column Grid (Reflows dynamically) -->
-            @if (hasAnySpecs(car)) {
-              <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs mb-6">
-                <!-- Deposit -->
-                @if (car.numDepositUsd != null || car.objSpecs?.strDepositValue != null) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.deposit' | translate }}: </span>
-                    <span class="text-gold font-normal">
-                      {{ (car.numDepositUsd ?? numStandardDeposit) | appCurrency }}
-                    </span>
-                  </div>
-                }
-
-                <!-- Mileage Limit -->
-                @if (car.objSpecs?.numMileageLimitKm) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.mileageLimit' | translate }}: </span>
-                    <span class="text-gold font-normal">{{ car.objSpecs?.numMileageLimitKm }} km</span>
-                  </div>
-                }
-
-                <!-- Extra Mileage -->
-                @if (car.objSpecs?.strExtraMileageRate) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.extraMileage' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strExtraMileageRate }}</span>
-                  </div>
-                }
-
-                <!-- Payment Methods -->
-                @if (car.objSpecs?.strPaymentMethodsKey) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.payment' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strPaymentMethodsKey | translate }}</span>
-                  </div>
-                }
-
-                <!-- Color -->
-                @if (car.objSpecs?.strColor) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.color' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strColor }}</span>
-                  </div>
-                }
-
-                <!-- Transmission -->
-                @if (car.objSpecs?.strTransmission) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.transmission' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strTransmission }}</span>
-                  </div>
-                }
-
-                <!-- Car Type -->
-                @if (car.objSpecs?.strCarType) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.carType' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strCarType }}</span>
-                  </div>
-                }
-
-                <!-- Engine -->
-                @if (car.objSpecs?.strEngine) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.engine' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strEngine }}</span>
-                  </div>
-                }
-
-                <!-- Seats -->
-                @if (car.objSpecs?.numSeats) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.seats' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.numSeats }}</span>
-                  </div>
-                }
-
-                <!-- Doors -->
-                @if (car.objSpecs?.numDoors) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.doors' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.numDoors }}</span>
-                  </div>
-                }
-
-                <!-- Acceleration 0-100 -->
-                @if (car.objSpecs?.strAcceleration0To100) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.acceleration' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strAcceleration0To100 }}</span>
-                  </div>
-                }
-
-                <!-- Drivetrain -->
-                @if (car.objSpecs?.strDriveTrain) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.drive' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strDriveTrain }}</span>
-                  </div>
-                }
-
-                <!-- Fuel Type -->
-                @if (car.objSpecs?.strFuelType) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.fuel' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.strFuelType }}</span>
-                  </div>
-                }
-
-                <!-- Luggage Count -->
-                @if (car.objSpecs?.numLuggageCount) {
-                  <div>
-                    <span class="text-muted/80 font-normal">{{ 'carDetail.specs.luggage' | translate }}: </span>
-                    <span class="text-white font-normal">{{ car.objSpecs?.numLuggageCount }}</span>
-                  </div>
-                }
-              </div>
-            }
-
-            <!-- Pricing Table (Daily / Weekly / Monthly) -->
-            <div
-              class="flex flex-wrap items-center justify-around gap-2 text-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-3 mb-6"
-            >
-              <!-- Daily Price (Required) -->
-              <div class="flex-1 min-w-[80px]">
-                <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.daily' | translate }}</span>
-                <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
-                  {{ car.numDailyPrice | appCurrency }}
-                </span>
-              </div>
-
-              <!-- Weekly Price (Optional) -->
-              @if (car.numWeeklyPrice || car.strWeeklyPriceValue) {
-                <div class="flex-1 min-w-[80px]">
-                  <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.weekly' | translate }}</span>
-                  <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
-                    {{ car.numWeeklyPrice ? (car.numWeeklyPrice | appCurrency) : car.strWeeklyPriceValue }}
-                  </span>
-                </div>
-              }
-
-              <!-- Monthly Price (Optional) -->
-              @if (car.numMonthlyPrice || car.strMonthlyPriceValue) {
-                <div class="flex-1 min-w-[80px]">
-                  <span class="text-[10px] font-normal text-muted/70 block">{{ 'cars.monthly' | translate }}</span>
-                  <span class="text-xs sm:text-sm font-normal text-white mt-1 block">
-                    {{ car.numMonthlyPrice ? (car.numMonthlyPrice | appCurrency) : car.strMonthlyPriceValue }}
-                  </span>
-                </div>
-              }
-            </div>
-          </div>
-
-          <!-- CTAs Row: WhatsApp | Call us | Book Now -->
-          <div class="grid grid-cols-3 gap-2">
-            <!-- WhatsApp -->
-            <a
-              [href]="strWhatsappHref"
-              target="_blank"
-              class="bg-[#00D95A] hover:bg-[#00b84c] text-white font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
-            >
-              <app-icon-whatsapp class="w-4 h-4 fill-current" />
-              <span>{{ 'carDetail.actions.whatsapp' | translate }}</span>
-            </a>
-
-            <!-- Call us -->
-            <a
-              [href]="strPhoneHref"
-              class="bg-gold hover:bg-gold text-black font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
-            >
-              <app-icon-phone class="w-4 h-4" />
-              <span>{{ 'carDetail.actions.callUs' | translate }}</span>
-            </a>
-
-            <!-- Book Now -->
-            <a
-              href="#book-form-card"
-              class="bg-[#D9A326] hover:bg-gold text-black font-normal text-xs py-3 px-2 rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg cursor-pointer"
-            >
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span>{{ 'carDetail.actions.bookNow' | translate }}</span>
-            </a>
-          </div>
+        <div class="space-y-2">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            {{ 'carDetail.notFound.title' | translate }}
+          </h1>
+          <p class="text-xs sm:text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
+            {{ 'carDetail.notFound.desc' | translate }}
+          </p>
+        </div>
+        <div class="pt-2">
+          <a
+            [routerLink]="'/cars' | langUrl"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-gold/20 cursor-pointer"
+          >
+            <span>←</span>
+            <span>{{ 'carDetail.notFound.backToCars' | translate }}</span>
+          </a>
         </div>
       </div>
     }
 
-    <!-- Bottom Grid: Left (Description & Documents) + Right (Booking Form) -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
-      <!-- Left Column (7 cols): Vehicle Overview & Documents Required -->
-      <div class="lg:col-span-7 space-y-6">
-        <!-- Card 1: Description / Overview -->
-        @if (strCarDescription) {
-          <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-3">
-            <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
-              <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
+    @case ('error') {
+      <div class="max-w-xl mx-auto py-16 sm:py-24 text-center space-y-6">
+        <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 text-2xl sm:text-3xl shadow-lg">
+          ⚠
+        </div>
+        <div class="space-y-2">
+          <h1 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+            {{ 'carDetail.error.title' | translate }}
+          </h1>
+          <p class="text-xs sm:text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
+            {{ 'carDetail.error.desc' | translate }}
+          </p>
+        </div>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <button
+            type="button"
+            (click)="retryLoad()"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gold hover:bg-amber-400 text-black font-bold text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-gold/20 cursor-pointer"
+          >
+            <span>↻</span>
+            <span>{{ 'carDetail.error.tryAgain' | translate }}</span>
+          </button>
+          <a
+            [routerLink]="'/cars' | langUrl"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/10 hover:bg-white/15 text-white font-medium text-xs tracking-wider transition-all border border-white/15 cursor-pointer"
+          >
+            <span>{{ 'carDetail.notFound.backToCars' | translate }}</span>
+          </a>
+        </div>
+      </div>
+    }
+
+    @case ('loaded') {
+      @if (objCar(); as car) {
+        <div class="max-w-6xl mx-auto space-y-8">
+          <!-- Vehicle Hero Header Bar -->
+          <header class="space-y-4">
+            <!-- Breadcrumbs & Badges -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-3 text-xs font-normal">
+              <nav class="badges-scroll-strip flex items-center gap-2 text-muted/80 overflow-x-auto whitespace-nowrap py-0.5 max-w-full">
+                <a [routerLink]="'/' | langUrl" class="hover:text-gold transition-colors font-normal shrink-0">
+                  {{ 'carDetail.breadcrumbHome' | translate }}
+                </a>
+                <span class="text-gold/60 shrink-0">/</span>
+                <a [routerLink]="'/cars' | langUrl" class="hover:text-gold transition-colors font-normal shrink-0">
+                  {{ 'nav.cars' | translate }}
+                </a>
+                @if (car.strCategory) {
+                  <span class="text-gold/60 shrink-0">/</span>
+                  <a [routerLink]="['/cars', car.strCategory.toLowerCase()] | langUrl" class="hover:text-gold transition-colors font-normal shrink-0">
+                    {{ car.strCategory }}
+                  </a>
+                }
+                <span class="text-gold/60 shrink-0">/</span>
+                <span class="text-white font-medium truncate max-w-[180px] sm:max-w-none shrink-0">{{ car.strTitle }}</span>
+              </nav>
+
+              <!-- Luxury Badges Strip (Single-Row Horizontal Scroll on Mobile) -->
+              <div class="badges-scroll-strip flex items-center gap-2 overflow-x-auto whitespace-nowrap py-1 -mx-4 px-4 sm:mx-0 sm:px-0 sm:overflow-visible sm:flex-wrap">
+                @if (car.strBrand) {
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/10 text-white/90 border border-white/15 shrink-0">
+                    {{ car.strBrand }}
+                  </span>
+                }
+                @if (car.objSpecs?.strCarType || car.strCategory) {
+                  <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-white/5 text-gold border border-gold/30 shrink-0">
+                    {{ car.objSpecs?.strCarType || car.strCategory }}
+                  </span>
+                }
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold tracking-wider uppercase bg-gold/10 text-gold border border-gold/30 flex items-center gap-1 shrink-0">
+                  <span class="text-gold">✦</span> {{ 'carDetail.hero.badgeDeposit' | translate: { amount: ((car.numDepositUsd ?? numStandardDeposit) | appCurrency) } }}
+                </span>
               </div>
-              <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
-                {{ 'carDetail.overview.title' | translate }}
-              </h3>
             </div>
-            <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
-              {{ strCarDescription }}
-            </p>
-          </div>
-        }
 
-        <!-- Card 2: Documents Required -->
-        <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-4">
-          <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
-            <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-              </svg>
+            <!-- Grand Model Title & Quick Rate Strip -->
+            <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 pt-1 border-b border-white/10 pb-4">
+              <div>
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+                  {{ car.strTitle }}
+                </h1>
+                <div class="text-xs text-white/70 mt-2 flex flex-wrap items-center gap-2">
+                  <span class="inline-flex items-center gap-1.5 text-emerald-400 font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>{{ 'carDetail.hero.availableForDelivery' | translate }}</span>
+                  </span>
+                  @if (car.strCategory || car.objSpecs?.strTransmission || car.objSpecs?.strEngine) {
+                    <span class="text-white/30">•</span>
+                    <span class="text-white/60 flex flex-wrap items-center gap-1.5">
+                      @if (car.strCategory) {
+                        <span>{{ car.strCategory }}</span>
+                      }
+                      @if (car.objSpecs?.strTransmission) {
+                        @if (car.strCategory) { <span class="text-white/30">•</span> }
+                        <span>{{ car.objSpecs.strTransmission }}</span>
+                      }
+                      @if (car.objSpecs?.strEngine) {
+                        @if (car.strCategory || car.objSpecs?.strTransmission) { <span class="text-white/30">•</span> }
+                        <span>{{ car.objSpecs.strEngine }}</span>
+                      }
+                    </span>
+                  }
+                </div>
+              </div>
             </div>
-            <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
-              {{ 'carDetail.docs.title' | translate }}
-            </h3>
-          </div>
-          <ul class="space-y-3 text-xs sm:text-sm text-white/90">
-            <li class="flex items-center gap-3">
-              <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
-              <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist1' | translate }}</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
-              <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist2' | translate }}</span>
-            </li>
-          </ul>
-        </div>
-      </div>
+          </header>
 
-      <!-- Right Column (5 cols): BOOK NOW (Inquiry Form) -->
-      <div
-        id="book-form-card"
-        class="lg:col-span-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl"
-      >
-        <div>
-          <div class="flex items-center justify-center gap-2 border-b border-[var(--border-subtle)] pb-3 mb-4">
-            <span class="text-gold">✦</span>
-            <h3 class="text-sm sm:text-base font-bold text-white tracking-widest uppercase">
-              {{ 'carDetail.bookForm.title' | translate }}
-            </h3>
+          <!-- Top Grid: Gallery (Left) & Specs/Price (Right) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Column: Main Image Slider + Gallery Thumbnails (7 Cols) -->
+            <div class="lg:col-span-7 flex flex-col gap-4">
+              <!-- Main Display Image Box -->
+              <div
+                class="relative bg-gradient-to-b from-[#151821] via-[#0E1017] to-[#07080B] rounded-2xl h-80 sm:h-[400px] overflow-hidden shadow-2xl group border border-white/10"
+              >
+                <!-- Radial Champagne Underglow -->
+                <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-transparent to-transparent pointer-events-none"></div>
+
+                <!-- Left Slider Control Arrow -->
+                @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
+                  <button
+                    type="button"
+                    (click)="prevImage()"
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center transition-all z-20 cursor-pointer"
+                  >
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                }
+
+                <!-- Continuous Horizontal Sliding Image Track -->
+                <div class="w-full h-full overflow-hidden">
+                  <div
+                    class="image-track"
+                    [style.transform]="'translateX(-' + (numActiveImageIndex() * 100) + '%)'"
+                  >
+                    @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
+                      <div class="image-track-item">
+                        <img
+                          [src]="strImg"
+                          [alt]="car.strTitle"
+                          [attr.loading]="$index === 0 ? 'eager' : 'lazy'"
+                          (click)="openPreviewModal(strImg, car.strTitle, $index)"
+                          class="w-full h-full object-cover transition-transform duration-700 ease-out cursor-zoom-in drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
+                          [class.group-hover:scale-110]="$index === numActiveImageIndex()"
+                        />
+                      </div>
+                    }
+                  </div>
+                </div>
+
+                <!-- Right Slider Control Arrow -->
+                @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
+                  <button
+                    type="button"
+                    (click)="nextImage()"
+                    class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/40 hover:bg-black/80 text-white flex items-center justify-center transition-all z-20 cursor-pointer"
+                  >
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                }
+
+                <!-- Full-screen Expand Zoom Button -->
+                <button
+                  type="button"
+                  (click)="openPreviewModal(strActiveImage() || car.strImagePath, car.strTitle, numActiveImageIndex())"
+                  title="Expand image preview"
+                  class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-lg hover:scale-105"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                </button>
+              </div>
+
+              <!-- Gallery Thumbnails Carousel (5 Thumbnails) -->
+              <div class="grid grid-cols-5 gap-2.5">
+                @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
+                  <button
+                    type="button"
+                    (click)="selectGalleryImage(strImg, $index)"
+                    class="relative bg-gradient-to-b from-[#161822] to-[#0B0D13] rounded-xl h-16 sm:h-20 flex items-center justify-center border transition-all cursor-pointer overflow-hidden p-1"
+                    [class.border-gold]="numActiveImageIndex() === $index"
+                    [class.ring-1]="numActiveImageIndex() === $index"
+                    [class.ring-gold/50]="numActiveImageIndex() === $index"
+                    [class.border-white/10]="numActiveImageIndex() !== $index"
+                    [class.hover:border-white/30]="numActiveImageIndex() !== $index"
+                    [class.opacity-100]="numActiveImageIndex() === $index"
+                    [class.opacity-60]="numActiveImageIndex() !== $index"
+                  >
+                    <img
+                      [src]="strImg"
+                      [alt]="car.strTitle"
+                      class="w-full h-full object-cover rounded-lg"
+                      loading="lazy"
+                    />
+                  </button>
+                }
+              </div>
+            </div>
+
+            <!-- Right Column: Specs Panel, Rate Strip & Booking Actions (5 Cols) -->
+            <div class="lg:col-span-5 flex flex-col gap-5">
+              <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-5 sm:p-6 shadow-xl flex flex-col justify-between">
+                <div>
+                  <!-- Rate Tier Box -->
+                  <div class="border-b border-white/10 pb-4 mb-4">
+                    <div class="flex items-baseline justify-between gap-2">
+                      <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-muted/80 block">
+                          {{ 'cars.daily' | translate }}
+                        </span>
+                        <div class="flex items-baseline gap-1 mt-0.5">
+                          <span class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                            {{ car.numDailyPrice | appCurrency }}
+                          </span>
+                          <span class="text-xs text-muted/80 font-normal">
+                            {{ 'carDetail.hero.perDay' | translate }}
+                          </span>
+                        </div>
+                      </div>
+
+                      @if (car.numWeeklyPrice || car.strWeeklyPriceValue || car.numMonthlyPrice || car.strMonthlyPriceValue) {
+                        <div class="flex flex-col items-end gap-1 text-right text-xs">
+                          @if (car.numWeeklyPrice || car.strWeeklyPriceValue) {
+                            <div class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
+                              <span class="text-muted/70 text-[10px] uppercase mr-1">{{ 'cars.weekly' | translate }}:</span>
+                              <span class="text-white font-medium">
+                                {{ car.numWeeklyPrice ? (car.numWeeklyPrice | appCurrency) : car.strWeeklyPriceValue }}
+                              </span>
+                            </div>
+                          }
+                          @if (car.numMonthlyPrice || car.strMonthlyPriceValue) {
+                            <div class="px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
+                              <span class="text-muted/70 text-[10px] uppercase mr-1">{{ 'cars.monthly' | translate }}:</span>
+                              <span class="text-white font-medium">
+                                {{ car.numMonthlyPrice ? (car.numMonthlyPrice | appCurrency) : car.strMonthlyPriceValue }}
+                              </span>
+                            </div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+
+                  <!-- Comprehensive Specifications Grid (2-Column Key/Value Layout) -->
+                  @if (hasAnySpecs(car)) {
+                    <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-xs mb-6">
+                      <!-- Deposit -->
+                      @if (car.numDepositUsd != null || car.objSpecs?.strDepositValue != null) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.deposit' | translate }}: </span>
+                          <span class="text-gold font-normal">
+                            {{ (car.numDepositUsd ?? numStandardDeposit) | appCurrency }}
+                          </span>
+                        </div>
+                      }
+
+                      <!-- Mileage Limit -->
+                      @if (car.objSpecs?.numMileageLimitKm) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.mileageLimit' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.numMileageLimitKm }} km/day</span>
+                        </div>
+                      }
+
+                      <!-- Transmission -->
+                      @if (car.objSpecs?.strTransmission) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.transmission' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.strTransmission }}</span>
+                        </div>
+                      }
+
+                      <!-- Car Type -->
+                      @if (car.objSpecs?.strCarType || car.strCategory) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.carType' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.strCarType || car.strCategory }}</span>
+                        </div>
+                      }
+
+                      <!-- Engine -->
+                      @if (car.objSpecs?.strEngine) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.engine' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.strEngine }}</span>
+                        </div>
+                      }
+
+                      <!-- Color -->
+                      @if (car.objSpecs?.strColor) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.color' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.strColor }}</span>
+                        </div>
+                      }
+
+                      <!-- Seats -->
+                      @if (car.objSpecs?.numSeats) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.seats' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.numSeats }}</span>
+                        </div>
+                      }
+
+                      <!-- Doors -->
+                      @if (car.objSpecs?.numDoors) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.doors' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.numDoors }}</span>
+                        </div>
+                      }
+
+                      <!-- Fuel -->
+                      @if (car.objSpecs?.strFuelType) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.fuel' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.strFuelType }}</span>
+                        </div>
+                      }
+
+                      <!-- Luggage -->
+                      @if (car.objSpecs?.numLuggageCount) {
+                        <div>
+                          <span class="text-muted/80 font-normal">{{ 'carDetail.specs.luggage' | translate }}: </span>
+                          <span class="text-white font-normal">{{ car.objSpecs?.numLuggageCount }}</span>
+                        </div>
+                      }
+                    </div>
+                  }
+                </div>
+
+                <!-- Direct Action Buttons Row (WhatsApp & Call Us) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-white/10">
+                  @if (strWhatsappHref) {
+                    <a
+                      [href]="strWhatsappHref"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="px-4 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE57] text-white font-bold text-xs tracking-wider transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer text-center w-full"
+                    >
+                      <app-icon-whatsapp class="w-4 h-4 fill-current shrink-0"></app-icon-whatsapp>
+                      <span>{{ 'carDetail.actions.whatsapp' | translate }}</span>
+                    </a>
+                  }
+
+                  @if (strPhoneHref) {
+                    <a
+                      [href]="strPhoneHref"
+                      class="px-4 py-3 rounded-xl bg-gold hover:bg-amber-400 text-black font-bold text-xs tracking-wider transition-all duration-300 shadow-md flex items-center justify-center gap-2 cursor-pointer text-center w-full"
+                    >
+                      <app-icon-phone class="w-4 h-4 shrink-0"></app-icon-phone>
+                      <span>{{ 'carDetail.actions.callUs' | translate }}</span>
+                    </a>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
-          <form (ngSubmit)="onBookingSubmit()" class="space-y-3.5 font-normal">
-            <div>
-              <input
-                type="text"
-                [(ngModel)]="strCustomerName"
-                name="customerName"
-                [placeholder]="'carDetail.bookForm.namePlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
-                required
-              />
+
+          <!-- Bottom Grid: Left (Description & Documents) + Right (Booking Form) -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
+            <!-- Left Column (7 cols): Vehicle Overview & Documents Required -->
+            <div class="lg:col-span-7 space-y-6">
+              <!-- Card 1: Description / Overview -->
+              @if (strCarDescription) {
+                <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-3">
+                  <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
+                    <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                      </svg>
+                    </div>
+                    <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
+                      {{ 'carDetail.overview.title' | translate }}
+                    </h3>
+                  </div>
+                  <p class="text-xs sm:text-sm text-neutral-300 leading-relaxed font-normal">
+                    {{ strCarDescription }}
+                  </p>
+                </div>
+              }
+
+              <!-- Card 2: Documents Required -->
+              <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl space-y-4">
+                <div class="flex items-center gap-2.5 border-b border-[var(--border-subtle)] pb-3">
+                  <div class="w-8 h-8 rounded-lg bg-gold/10 border border-gold/30 flex items-center justify-center text-gold">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                  </div>
+                  <h3 class="text-sm sm:text-base font-bold text-white tracking-wide">
+                    {{ 'carDetail.docs.title' | translate }}
+                  </h3>
+                </div>
+                <ul class="space-y-3 text-xs sm:text-sm text-white/90">
+                  <li class="flex items-center gap-3">
+                    <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+                    <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist1' | translate }}</span>
+                  </li>
+                  <li class="flex items-center gap-3">
+                    <span class="w-6 h-6 rounded-full bg-gold/15 text-gold flex items-center justify-center shrink-0 text-xs font-bold">✓</span>
+                    <span class="font-medium text-neutral-200">{{ 'carDetail.docs.tourist2' | translate }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div>
-              <input
-                type="email"
-                [(ngModel)]="strCustomerEmail"
-                name="customerEmail"
-                [placeholder]="'carDetail.bookForm.emailPlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
-              />
+
+            <!-- Right Column (5 cols): BOOK NOW (Inquiry Form) -->
+            <div
+              id="book-form-card"
+              class="lg:col-span-5 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 shadow-xl"
+            >
+              <div>
+                <div class="flex items-center justify-center gap-2 border-b border-[var(--border-subtle)] pb-3 mb-4">
+                  <span class="text-gold">✦</span>
+                  <h3 class="text-sm sm:text-base font-bold text-white tracking-widest uppercase">
+                    {{ 'carDetail.bookForm.title' | translate }}
+                  </h3>
+                </div>
+                <form (ngSubmit)="onBookingSubmit()" class="space-y-3.5 font-normal">
+                  <div>
+                    <input
+                      type="text"
+                      [(ngModel)]="strCustomerName"
+                      name="customerName"
+                      [placeholder]="'carDetail.bookForm.namePlaceholder' | translate"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      [(ngModel)]="strCustomerEmail"
+                      name="customerEmail"
+                      [placeholder]="'carDetail.bookForm.emailPlaceholder' | translate"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                    />
+                  </div>
+                  <div>
+                    <select
+                      [(ngModel)]="strSelectedCarTitle"
+                      name="selectedCarTitle"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-gold transition-colors appearance-none font-normal"
+                    >
+                      <option [value]="car.strTitle">
+                        {{ car.strTitle }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    <app-country-code-select
+                      [(ngModel)]="strSelectedCountryCode"
+                      name="selectedCountryCode"
+                      [arrCodes]="arrCountryCodes()"
+                      class="shrink-0 max-w-[105px]"
+                      strButtonClass="w-full flex items-center justify-between gap-1.5 bg-[#1A1D27] border border-white/10 rounded-lg px-2.5 py-2.5 text-xs text-white focus:border-gold outline-none transition-colors cursor-pointer truncate"
+                    />
+                    <input
+                      type="tel"
+                      [(ngModel)]="strCustomerPhone"
+                      name="customerPhone"
+                      [placeholder]="'carDetail.bookForm.phonePlaceholder' | translate"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
+                      required
+                    />
+                  </div>
+                  <div class="grid grid-cols-2 gap-2">
+                    <input
+                      type="date"
+                      [(ngModel)]="strStartDate"
+                      name="startDate"
+                      [placeholder]="'carDetail.bookForm.startDate' | translate"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-2 py-2 text-[10px] text-white focus:outline-none focus:border-gold transition-colors font-normal"
+                    />
+                    <input
+                      type="date"
+                      [(ngModel)]="strEndDate"
+                      name="endDate"
+                      [placeholder]="'carDetail.bookForm.endDate' | translate"
+                      class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-2 py-2 text-[10px] text-white focus:outline-none focus:border-gold transition-colors font-normal"
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <button
+                      type="submit"
+                      class="w-full bg-gold hover:bg-amber-400 text-black font-semibold text-xs py-3 rounded-full transition-all shadow-lg cursor-pointer tracking-wider"
+                    >
+                      {{ 'carDetail.bookForm.submit' | translate }}
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-            <div>
-              <select
-                [(ngModel)]="strSelectedCarTitle"
-                name="selectedCarTitle"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white focus:outline-none focus:border-gold transition-colors appearance-none font-normal"
-              >
-                <option [value]="objCar()?.strTitle">
-                  {{ objCar()?.strTitle || 'Luxury Car' }}
-                </option>
-              </select>
+          </div>
+
+          <!-- Direct Vehicle Reservation Assistance Section -->
+          <section class="pt-8 border-t border-white/10">
+            <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-3xl p-6 sm:p-8 lg:p-10 relative overflow-hidden shadow-2xl">
+              <div class="absolute -top-24 -right-24 w-72 h-72 bg-gold/10 rounded-full blur-3xl pointer-events-none"></div>
+              <div class="absolute -bottom-24 -left-24 w-72 h-72 bg-gold/5 rounded-full blur-3xl pointer-events-none"></div>
+
+              <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                <!-- Left: Verified Guarantees & Concierge Overview -->
+                <div class="lg:col-span-7 space-y-5 text-left ltr:text-left rtl:text-right">
+                  <div class="inline-flex items-center gap-2 text-[11px] sm:text-xs tracking-[0.2em] font-extrabold text-gold bg-gold/10 border border-gold/30 px-3.5 py-1 rounded-full uppercase">
+                    <span>✦</span> <span>{{ 'carDetail.concierge.tag' | translate }}</span>
+                  </div>
+                  <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight leading-tight">
+                    {{ 'carDetail.concierge.titlePrefix' | translate }} {{ car.strTitle }}
+                  </h2>
+                  <p class="text-sm text-white/70 leading-relaxed max-w-xl">
+                    {{ 'carDetail.concierge.desc' | translate }}
+                  </p>
+
+                  <!-- 4 Verified Guarantee Bullets -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs text-white/85">
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-gold mt-0.5 shrink-0 text-sm">✦</span>
+                      <span>{{ 'carDetail.concierge.bulletDeposit' | translate }}</span>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-gold mt-0.5 shrink-0 text-sm">✦</span>
+                      <span>{{ 'carDetail.concierge.bulletInsurance' | translate }}</span>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-gold mt-0.5 shrink-0 text-sm">✦</span>
+                      <span>{{ 'carDetail.concierge.bulletDelivery' | translate }}</span>
+                    </div>
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-gold mt-0.5 shrink-0 text-sm">✦</span>
+                      <span>{{ 'carDetail.concierge.bulletRoadside' | translate }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right: Instant Direct Channels Cards -->
+                <div class="lg:col-span-5 flex flex-col gap-4">
+                  <!-- WhatsApp Vehicle Concierge Card -->
+                  <a
+                    [href]="getCarConciergeWhatsappHref()"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="group bg-gradient-to-r from-emerald-950/40 to-[var(--bg-surface)] hover:from-emerald-900/50 hover:to-[var(--bg-surface)] border border-emerald-500/30 hover:border-emerald-400/60 rounded-2xl p-5 sm:p-6 transition-all duration-300 shadow-lg flex items-center justify-between cursor-pointer"
+                  >
+                    <div class="flex items-center gap-3.5">
+                      <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center shrink-0">
+                        <app-icon-whatsapp class="w-6 h-6 fill-current"></app-icon-whatsapp>
+                      </div>
+                      <div>
+                        <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-400 block">
+                          {{ 'carDetail.concierge.cardWaTag' | translate }}
+                        </span>
+                        <span class="text-sm font-bold text-white group-hover:text-gold transition-colors block">
+                          {{ 'carDetail.concierge.cardWaTitle' | translate }}
+                        </span>
+                      </div>
+                    </div>
+                    <span class="text-emerald-400 text-lg group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">→</span>
+                  </a>
+
+                  <!-- Direct Phone Hotline Card -->
+                  @if (strPhoneHref) {
+                    <a
+                      [href]="strPhoneHref"
+                      class="group bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-gold/50 rounded-2xl p-5 sm:p-6 transition-all duration-300 shadow-lg flex items-center justify-between cursor-pointer"
+                    >
+                      <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-xl bg-gold/15 border border-gold/30 text-gold flex items-center justify-center shrink-0">
+                          <app-icon-phone class="w-6 h-6"></app-icon-phone>
+                        </div>
+                        <div>
+                          <span class="text-[10px] uppercase font-bold tracking-wider text-gold block">
+                            {{ 'carDetail.concierge.cardPhoneTag' | translate }}
+                          </span>
+                          <span class="text-sm font-bold text-white group-hover:text-gold transition-colors block">
+                            {{ 'carDetail.concierge.cardPhoneTitle' | translate }}
+                          </span>
+                        </div>
+                      </div>
+                      <span class="text-gold text-lg group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform">→</span>
+                    </a>
+                  }
+                </div>
+              </div>
             </div>
-            <div class="flex items-center gap-1.5">
-              <app-country-code-select
-                [(ngModel)]="strSelectedCountryCode"
-                name="selectedCountryCode"
-                [arrCodes]="arrCountryCodes()"
-                class="shrink-0 max-w-[105px]"
-                strButtonClass="w-full flex items-center justify-between gap-1.5 bg-[#1A1D27] border border-white/10 rounded-lg px-2.5 py-2.5 text-xs text-white focus:border-gold outline-none transition-colors cursor-pointer truncate"
-              />
-              <input
-                type="tel"
-                [(ngModel)]="strCustomerPhone"
-                name="customerPhone"
-                [placeholder]="'carDetail.bookForm.phonePlaceholder' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-3 py-2.5 text-xs text-white placeholder-muted/50 focus:outline-none focus:border-gold transition-colors font-normal"
-                required
-              />
-            </div>
-            <div class="grid grid-cols-2 gap-2">
-              <input
-                type="date"
-                [(ngModel)]="strStartDate"
-                name="startDate"
-                [placeholder]="'carDetail.bookForm.startDate' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-2 py-2 text-[10px] text-white focus:outline-none focus:border-gold transition-colors font-normal"
-              />
-              <input
-                type="date"
-                [(ngModel)]="strEndDate"
-                name="endDate"
-                [placeholder]="'carDetail.bookForm.endDate' | translate"
-                class="w-full bg-[#1A1D27] border border-white/10 rounded-lg px-2 py-2 text-[10px] text-white focus:outline-none focus:border-gold transition-colors font-normal"
-              />
-            </div>
-            <div class="pt-2">
-              <button
-                type="submit"
-                class="w-full bg-gold hover:bg-amber-400 text-black font-semibold text-xs py-3 rounded-full transition-all shadow-lg cursor-pointer tracking-wider"
-              >
-                {{ 'carDetail.bookForm.submit' | translate }}
-              </button>
-            </div>
-          </form>
+          </section>
+
+          <!-- Full Screen Lightbox Image Preview Modal -->
+          <app-image-preview-modal
+            [blnIsOpen]="blnIsImageModalOpen()"
+            [strImageUrl]="strPreviewImageUrl()"
+            [strAltText]="strPreviewAltText()"
+            [arrImages]="car.arrGalleryImages || (car.strImagePath ? [car.strImagePath] : [])"
+            [numActiveIndex]="numActiveImageIndex()"
+            (prevImage)="prevImage()"
+            (nextImage)="nextImage()"
+            (closeModal)="closePreviewModal()"
+          ></app-image-preview-modal>
         </div>
-      </div>
-    </div>
-  </div>
+      }
+    }
+  }
 </div>
-
-<!-- Full Screen Lightbox Image Preview Modal -->
-<app-image-preview-modal
-  [blnIsOpen]="blnIsImageModalOpen()"
-  [strImageUrl]="strPreviewImageUrl()"
-  [strAltText]="strPreviewAltText()"
-  [arrImages]="objCar()?.arrGalleryImages || (objCar()?.strImagePath ? [objCar()!.strImagePath] : [])"
-  [numActiveIndex]="numActiveImageIndex()"
-  (prevImage)="prevImage()"
-  (nextImage)="nextImage()"
-  (closeModal)="closePreviewModal()"
-></app-image-preview-modal>

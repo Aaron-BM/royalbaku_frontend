@@ -9,14 +9,14 @@
     "nextImage": "Növbəti şəkil"
   },
   "nav": {
-    "brandName": "Royal Baku",
+    "brandName": "ROYAL BAKU",
     "brandSub": "Rent A Car",
     "cars": "Avtomobillər",
     "carTypes": "Avtomobil növləri",
     "carBrands": "Avtomobil markaları",
-    "prices": "İcarə qiymətləri",
+    "prices": "Qiymətlər",
     "aboutUs": "Haqqımızda",
-    "faqs": "Tez-tez verilən suallar",
+    "faqs": "FAQ",
     "contacts": "Əlaqə",
     "tourPackages": "Tur Paketləri",
     "blog": "Bloq",
@@ -210,6 +210,17 @@
     "openInMaps": "Open in Maps"
   },
   "carDetail": {
+    "loading": "Avtomobil məlumatları yüklənir...",
+    "notFound": {
+      "title": "Avtomobil Tapılmadı",
+      "desc": "Axtardığınız avtomobil artıq mövcud deyil və ya keçid yanlışdır.",
+      "backToCars": "Bütün avtomobillərə baxın"
+    },
+    "error": {
+      "title": "Avtomobil məlumatı yüklənmədi",
+      "desc": "Müvəqqəti bağlantı xətası baş verdi. Zəhmət olmasa yenidən cəhd edin.",
+      "tryAgain": "Yenidən cəhd edin"
+    },
     "breadcrumbHome": "Ana səhifə",
     "breadcrumbCars": "Avtomobillər",
     "overview": {

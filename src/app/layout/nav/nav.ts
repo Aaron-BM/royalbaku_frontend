@@ -255,7 +255,7 @@ export class Nav implements OnInit, AfterViewInit {
 
   protected fnSetLanguage(strCode: string): void {
     this.svcLanguage.fnSetLanguage(strCode);
-    setTimeout(() => this.fnUpdateActiveIndicator(), 50);
+    setTimeout(() => this.fnUpdateActiveIndicator(), 150);
   }
 
   // ==================== Currency ====================

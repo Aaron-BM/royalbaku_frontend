@@ -48,7 +48,7 @@ export class TourPackageService {
     if (typeof item.price === 'number' && !isNaN(item.price as any)) {
       return item.price;
     }
-    if (typeof window !== 'undefined') {
+    if (item.price && typeof window !== 'undefined') {
       console.warn('[TourPackageService] Failed to parse numeric USD price for tour package:', item.title || item.slug, item.price);
     }
     return undefined;
@@ -77,7 +77,7 @@ export class TourPackageService {
       whatsapp: item.whatsapp || '',
       phone: item.phone || '',
       website: item.website || 'www.royalbakucarrental.com',
-      price: item.price || '$600',
+      price: item.price || '',
       priceUsd: this.parseNumericPriceUsd(item),
       stops,
     };

@@ -190,7 +190,16 @@
         @if (!blnSubmitSuccess()) {
           <div class="mb-6">
             <span class="text-[10px] font-bold text-gold uppercase tracking-widest">ROYAL BAKU TOURISM</span>
-            <h3 class="text-xl sm:text-2xl font-bold text-white mt-1">Book Tour Package</h3>
+            <div class="flex items-center justify-between gap-3 mt-1">
+              <h3 class="text-xl sm:text-2xl font-bold text-white">Tur Paketini Rezerv Edin</h3>
+              @if (objSelectedPackage(); as sel) {
+                @if (sel.priceUsd != null || sel.price) {
+                  <span class="text-xs sm:text-sm font-extrabold text-gold bg-gold/15 border border-gold/40 px-3 py-1 rounded-full whitespace-nowrap">
+                    {{ (sel.priceUsd ?? sel.price) | appCurrency }}
+                  </span>
+                }
+              }
+            </div>
             @if (objSelectedPackage(); as sel) {
               <p class="text-xs text-gold font-semibold mt-1">{{ sel.title }} — {{ sel.subtitle }}</p>
             }

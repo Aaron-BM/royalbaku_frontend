@@ -1,6 +1,7 @@
 import { Injectable, inject, DOCUMENT } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LanguageService } from './language.service';
 
 export interface SeoConfig {
@@ -24,12 +25,33 @@ export class SeoService {
   readonly strDefaultImage = `${this.strDomain}/assets/images/logo.png`;
   readonly strSiteName = 'Royal Baku Rent A Car';
 
+  constructor() {
+    this.router.events.pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd)).subscribe(() => {
+      // Remove any lingering robots tag on every route navigation
+      this.svcMeta.removeTag('name="robots"');
+    });
+  }
+
+  /**
+   * Sets non-indexable SEO metadata (title, description, and noindex tag).
+   */
+  fnSetNoIndex(title: string, description: string): void {
+    const fullTitle = title.includes('Royal Baku') ? title : `${title} | ${this.strSiteName}`;
+    this.svcTitle.setTitle(fullTitle);
+    this.svcMeta.updateTag({ name: 'description', content: description });
+    this.svcMeta.updateTag({ name: 'robots', content: 'noindex, nofollow' });
+    this.fnRemoveJsonLd();
+  }
+
   /**
    * Primary SEO update method. Sets page title, description, canonical link,
    * hreflang alternates, OpenGraph/Twitter tags, and JSON-LD structured data.
    */
   fnSetSeo(config: SeoConfig): void {
     const { title, description, image, url, type = 'website', jsonLd } = config;
+
+    // Ensure any previously set noindex tag is cleaned up
+    this.svcMeta.removeTag('name="robots"');
 
     // 1. Page Title
     const fullTitle = title.includes('Royal Baku') ? title : `${title} | ${this.strSiteName}`;

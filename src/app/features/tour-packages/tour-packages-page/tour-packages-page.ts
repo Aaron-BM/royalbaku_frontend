@@ -12,6 +12,7 @@ import { SeoService } from '../../../core/services/seo.service';
 import { LanguageService } from '../../../core/services/language.service';
 
 import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
+import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
@@ -19,7 +20,7 @@ import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone'
 @Component({
   selector: 'app-tour-packages-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe],
+  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe, AppCurrencyPipe],
   templateUrl: './tour-packages-page.html',
   styleUrl: './tour-packages-page.css',
 })

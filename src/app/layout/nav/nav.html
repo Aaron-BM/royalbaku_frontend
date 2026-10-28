@@ -1,4 +1,4 @@
-<header class="relative pt-2 sm:pt-3.5 pb-1 z-50 w-full px-2 sm:px-4 lg:px-6 max-w-[1420px] mx-auto font-sans transition-all duration-300">
+<header class="relative pt-2 sm:pt-3.5 pb-1 z-50 w-full px-2 sm:px-4 lg:px-3 xl:px-6 max-w-[1420px] mx-auto font-sans transition-all duration-300">
   <!-- Floating navigation container -->
   <div
     class="apple-gold-island relative backdrop-blur-2xl rounded-2xl lg:rounded-full transition-all duration-300 shadow-xl"
@@ -8,28 +8,28 @@
     [class.shadow-black/70]="blnIsScrolled()"
     [class.rounded-b-2xl]="blnIsMobileMenuOpen()"
   >
-    <nav class="relative z-10 flex items-center justify-between px-3 sm:px-5 lg:px-4 xl:px-6 py-2 sm:py-2.5 gap-2" aria-label="Main">
+    <nav class="relative z-10 flex items-center justify-between px-3 sm:px-5 lg:px-3 xl:px-5 2xl:px-6 py-2 sm:py-2.5 gap-1.5 xl:gap-2" aria-label="Main">
       <!-- ==================== Brand ==================== -->
       <a
         [routerLink]="'/' | langUrl"
         (click)="fnCloseDropdowns()"
-        class="flex items-center gap-2 xl:gap-3 shrink-0 group outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-xl"
+        class="flex items-center gap-1.5 xl:gap-2.5 shrink-0 group outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-xl"
       >
         <div class="logo-emblem flex items-center justify-center shrink-0">
           <img
             src="/assets/images/logo.png"
             alt="Royal Baku Logo"
-            class="h-8 sm:h-9 xl:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            class="h-7 sm:h-8 xl:h-9 2xl:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
         <div class="flex flex-col shrink-0">
           <span
-            class="text-xs sm:text-sm xl:text-base font-bold tracking-wider text-white leading-tight group-hover:text-gold group-focus-visible:text-gold transition-colors duration-150"
+            class="text-[11px] sm:text-xs xl:text-sm 2xl:text-base font-bold tracking-wider text-white leading-tight group-hover:text-gold group-focus-visible:text-gold transition-colors duration-150"
           >
             {{ 'nav.brandName' | translate }}
           </span>
-          <span class="text-[8px] xl:text-[9px] tracking-[0.18em] font-normal text-white/70">
+          <span class="text-[7.5px] xl:text-[8.5px] 2xl:text-[9px] tracking-[0.16em] font-normal text-white/70 hidden sm:block">
             {{ 'nav.brandSub' | translate }}
           </span>
         </div>
@@ -65,7 +65,7 @@
             aria-haspopup="true"
             aria-controls="nav-menu-types"
             [class.is-open]="blnIsCarTypesOpen()"
-            class="nav-link-item flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer whitespace-nowrap"
+            class="nav-link-item flex items-center gap-1 xl:gap-1.5 px-1.5 xl:px-2 2xl:px-2.5 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer whitespace-nowrap"
           >
             <span>{{ 'nav.carTypes' | translate }}</span>
             <svg
@@ -116,7 +116,7 @@
             aria-haspopup="true"
             aria-controls="nav-menu-brands"
             [class.is-open]="blnIsCarBrandsOpen()"
-            class="nav-link-item flex items-center gap-1 xl:gap-1.5 px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer whitespace-nowrap"
+            class="nav-link-item flex items-center gap-1 xl:gap-1.5 px-1.5 xl:px-2 2xl:px-2.5 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 cursor-pointer whitespace-nowrap"
           >
             <span>{{ 'nav.carBrands' | translate }}</span>
             <svg
@@ -175,7 +175,7 @@
             <a
               [routerLink]="objLink.strPath | langUrl"
               routerLinkActive="active"
-              class="nav-link-item inline-block px-2 xl:px-2.5 2xl:px-3 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 whitespace-nowrap"
+              class="nav-link-item inline-block px-1.5 xl:px-2 2xl:px-2.5 py-1.5 rounded-lg outline-none focus-visible:ring-1 focus-visible:ring-gold/40 whitespace-nowrap"
             >
               {{ objLink.strKey | translate }}
             </a>
@@ -184,7 +184,7 @@
       </ul>
 
       <!-- ==================== Language & Currency toggles + hamburger ==================== -->
-      <div class="flex items-center gap-1.5 xl:gap-2.5 shrink-0">
+      <div class="flex items-center gap-1 xl:gap-2 shrink-0">
         <!-- Currency toggle (desktop/tablet) -->
         <div class="lang-toggle-container relative hidden lg:flex items-center">
           <span
@@ -197,7 +197,7 @@
             (click)="fnSetCurrency('USD')"
             [class.is-active]="svcCurrency.strCurrentCurrency() === 'USD'"
             [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'USD'"
-            class="lang-btn px-2.5 xl:px-3 py-0.5 rounded-full text-[11px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+            class="lang-btn px-2 xl:px-2.5 py-0.5 rounded-full text-[10.5px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
           >
             USD
           </button>
@@ -206,7 +206,7 @@
             (click)="fnSetCurrency('AZN')"
             [class.is-active]="svcCurrency.strCurrentCurrency() === 'AZN'"
             [attr.aria-pressed]="svcCurrency.strCurrentCurrency() === 'AZN'"
-            class="lang-btn px-2.5 xl:px-3 py-0.5 rounded-full text-[11px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+            class="lang-btn px-2 xl:px-2.5 py-0.5 rounded-full text-[10.5px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
           >
             AZN
           </button>
@@ -225,7 +225,7 @@
             (click)="fnSetLanguage('en')"
             [class.is-active]="svcLanguage.strCurrentLang() === 'en'"
             [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'en'"
-            class="lang-btn px-2 xl:px-2.5 py-0.5 rounded-full text-[11px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+            class="lang-btn px-1.5 xl:px-2 py-0.5 rounded-full text-[10.5px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
           >
             EN
           </button>
@@ -234,7 +234,7 @@
             (click)="fnSetLanguage('az')"
             [class.is-active]="svcLanguage.strCurrentLang() === 'az'"
             [attr.aria-pressed]="svcLanguage.strCurrentLang() === 'az'"
-            class="lang-btn px-2 xl:px-2.5 py-0.5 rounded-full text-[11px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
+            class="lang-btn px-1.5 xl:px-2 py-0.5 rounded-full text-[10.5px] xl:text-xs font-medium cursor-pointer tracking-wider outline-none focus-visible:ring-1 focus-visible:ring-white/50"
           >
             AZ
           </button>

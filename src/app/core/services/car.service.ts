@@ -1,9 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, timeout } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { CarCategoryMeta, CarDetailItem, PriceTableItem, CarCategory, CarBrand } from '../models/car.model';
+
+export type CarDetailResult =
+  | { status: 'ok'; car: CarDetailItem }
+  | { status: 'notFound'; httpStatus: number }
+  | { status: 'error'; httpStatus?: number; error?: unknown };
 import {
   DRFCar,
   DRFBrand,
@@ -182,6 +187,29 @@ export class CarService {
     return this.http.get<DRFCar>(`${this.strApiBaseUrl}/${strSlug}/`).pipe(
       map((car) => mapDRFCarToCarDetailItem(car)),
       catchError(() => of(null))
+    );
+  }
+
+  /**
+   * Fetches car detail with typed status result (ok, notFound, error).
+   * Includes an 8s timeout to prevent hanging SSR renders.
+   */
+  getCarBySlugResult(strSlug: string): Observable<CarDetailResult> {
+    return this.http.get<DRFCar>(`${this.strApiBaseUrl}/${strSlug}/`).pipe(
+      timeout(8000),
+      map((car): CarDetailResult => ({
+        status: 'ok',
+        car: mapDRFCarToCarDetailItem(car),
+      })),
+      catchError((err: unknown): Observable<CarDetailResult> => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 404 || err.status === 410) {
+            return of({ status: 'notFound', httpStatus: err.status });
+          }
+          return of({ status: 'error', httpStatus: err.status, error: err });
+        }
+        return of({ status: 'error', error: err });
+      })
     );
   }
 
