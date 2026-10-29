@@ -79,10 +79,22 @@
     "whyUs": {
       "eyebrow": "Why Royal Baku Rent A Car",
       "title": "Why you should rent a car with us?",
-      "description": "Top rated car rental company in Baku on Google.",
+      "description": "Top rated luxury car rental company in Baku on Google.",
       "badgeTitle": "Royal Baku Rent A Car",
       "googleReviews": "Google Reviews",
-      "rating": "4.8"
+      "rating": "4.9",
+      "f1Title": "24/7 VIP Concierge",
+      "f1Desc": "Round-the-clock roadside assistance & multilingual care",
+      "f2Title": "Transparent Rates & Insurance",
+      "f2Desc": "Zero hidden fees with comprehensive CASCO & TPL coverage",
+      "f3Title": "Airport & Hotel Delivery",
+      "f3Desc": "Doorstep handover at GYD Airport or your luxury hotel in Baku",
+      "f4Title": "Pristine Luxury Fleet",
+      "f4Desc": "Strictly inspected, sanitized, and showroom-condition vehicles",
+      "f5Title": "Instant Booking in 5 Minutes",
+      "f5Desc": "Minimal paperwork with instant WhatsApp confirmation",
+      "f6Title": "Chauffeur & Private Tours",
+      "f6Desc": "Professional multilingual drivers and custom tours across Azerbaijan"
     },
     "reviews": {
       "review1Name": "Khalid S.",
@@ -164,7 +176,7 @@
     "daily": "Daily",
     "weekly": "Weekly",
     "monthly": "Monthly",
-    "askNow": "Ask Now",
+    "askNow": "-",
     "bookNow": "Book Now",
     "viewMore": "View More",
     "viewAllCars": "View All Cars"

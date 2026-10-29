@@ -325,7 +325,7 @@
   position: relative;
   background-image:
     linear-gradient(180deg, rgba(8, 8, 8, 0.90) 0%, rgba(8, 8, 8, 0.76) 45%, rgba(8, 8, 8, 0.92) 100%),
-    url('/assets/images/home/road_image.webp');
+    url('/assets/images/home/bg_section_02.jpeg');
   background-position: center center, center center;
   background-repeat: no-repeat;
   background-size: cover;

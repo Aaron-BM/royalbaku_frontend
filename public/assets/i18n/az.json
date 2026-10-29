@@ -79,10 +79,22 @@
     "whyUs": {
       "eyebrow": "Niyə Royal Baku Rent A Car",
       "title": "Niyə məhz bizimlə avtomobil icarəyə götürməlisiniz?",
-      "description": "Bakıda Google-da ən yüksək qiymətləndirilən avtomobil icarəsi şirkəti.",
+      "description": "Bakıda Google-da ən yüksək qiymətləndirilən lüks avtomobil icarəsi şirkəti.",
       "badgeTitle": "Royal Baku Rent A Car",
       "googleReviews": "Google rəyləri",
-      "rating": "4.8"
+      "rating": "4.9",
+      "f1Title": "24/7 Müştəri Dəstəyi",
+      "f1Desc": "Günün 24 saatı və təcili yol köməyi xidmətinizdədir",
+      "f2Title": "Şəffaf Qiymətlər və Sığorta",
+      "f2Desc": "Gizli xərclər yoxdur, tam KASKO və İcbari təminat",
+      "f3Title": "Hava Limanı və Otelə Çatdırılma",
+      "f3Desc": "Heydər Əliyev Hava Limanına və Bakı otellərinə birbaşa təhvil",
+      "f4Title": "Mükəmməl Vəziyyətdə Premium Park",
+      "f4Desc": "Hər icarədən öncə tam texniki yoxlanış və detallı təmizlik",
+      "f5Title": "Sürətli və Asan Rezervasiya",
+      "f5Desc": "Minimum sənəd tələbi və WhatsApp ilə dərhal təsdiq",
+      "f6Title": "Şəxsi Sürücü və Fərdi Turlar",
+      "f6Desc": "Peşəkar sürücülər və Azərbaycan bölgələrinə unudulmaz səyahətlər"
     },
     "reviews": {
       "review1Name": "Xalid S.",
@@ -164,7 +176,7 @@
     "daily": "Gündəlik",
     "weekly": "Həftəlik",
     "monthly": "Aylıq",
-    "askNow": "İndi soruşun",
+    "askNow": "-",
     "bookNow": "İndi bron edin",
     "viewMore": "Daha çox bax",
     "viewAllCars": "Bütün avtomobillərə baxın"

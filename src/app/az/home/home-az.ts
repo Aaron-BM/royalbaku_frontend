@@ -113,6 +113,16 @@ export class HomeAz implements OnInit, AfterViewInit, OnDestroy {
     { strNumber: '04', strTitleKey: 'home.stepProcess.step4Title', strDescKey: 'home.stepProcess.step4Desc', strPosition: 'right', strIcon: 'key' },
   ]);
 
+  // Why Choose Us Value Proposition Features
+  protected readonly arrWhyUsFeatures = [
+    { strId: 'f1', strIcon: 'headset', strTitleKey: 'home.whyUs.f1Title', strDescKey: 'home.whyUs.f1Desc' },
+    { strId: 'f2', strIcon: 'shield', strTitleKey: 'home.whyUs.f2Title', strDescKey: 'home.whyUs.f2Desc' },
+    { strId: 'f3', strIcon: 'plane', strTitleKey: 'home.whyUs.f3Title', strDescKey: 'home.whyUs.f3Desc' },
+    { strId: 'f4', strIcon: 'crown', strTitleKey: 'home.whyUs.f4Title', strDescKey: 'home.whyUs.f4Desc' },
+    { strId: 'f5', strIcon: 'clock', strTitleKey: 'home.whyUs.f5Title', strDescKey: 'home.whyUs.f5Desc' },
+    { strId: 'f6', strIcon: 'map-pin', strTitleKey: 'home.whyUs.f6Title', strDescKey: 'home.whyUs.f6Desc' },
+  ];
+
   // Reviews Data
   protected readonly arrReviews = signal<{ strNameKey: string; strTagKey: string; strTextKey: string; strInitial: string; strColor: string }[]>([
     { strNameKey: 'home.reviews.review1Name', strTagKey: 'home.reviews.review1Tag', strTextKey: 'home.reviews.review1Text', strInitial: 'K', strColor: 'bg-emerald-600' },
