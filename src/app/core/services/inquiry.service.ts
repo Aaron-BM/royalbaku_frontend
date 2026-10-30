@@ -26,6 +26,7 @@ export interface InquiryPayload {
   preferred_vehicle?: string;
   pickup_date?: string;
   dropoff_date?: string;
+  number_of_guests?: number;
   message?: string;
 }
 
@@ -85,6 +86,9 @@ export class InquiryService {
     }
     if (objPayload.tour_package_title) {
       lines.push(`• Tour Package: ${objPayload.tour_package_title}`);
+    }
+    if (objPayload.number_of_guests) {
+      lines.push(`• Number of Guests: ${objPayload.number_of_guests}`);
     }
     if (objPayload.pickup_date) {
       lines.push(`• Pickup Date: ${objPayload.pickup_date}`);

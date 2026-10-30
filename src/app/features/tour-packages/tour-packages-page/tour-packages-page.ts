@@ -13,6 +13,7 @@ import { LanguageService } from '../../../core/services/language.service';
 
 import { LangUrlPipe } from '../../../shared/pipes/lang-url.pipe';
 import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
+import { TranslatePipe } from '@ngx-translate/core';
 
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
 import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone';
@@ -20,7 +21,7 @@ import { IconPhoneComponent } from '../../../shared/components/icons/icon-phone'
 @Component({
   selector: 'app-tour-packages-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe, AppCurrencyPipe],
+  imports: [CommonModule, FormsModule, RouterLink, TourPackageCard, IconWhatsappComponent, IconPhoneComponent, LangUrlPipe, AppCurrencyPipe, TranslatePipe],
   templateUrl: './tour-packages-page.html',
   styleUrl: './tour-packages-page.css',
 })
@@ -51,6 +52,7 @@ export class TourPackagesPage implements OnInit {
   protected strCustomerName = '';
   protected strCustomerPhone = '';
   protected strTravelDate = '';
+  protected numGuests = 1;
   protected strSpecialRequest = '';
 
   ngOnInit(): void {
@@ -158,6 +160,7 @@ export class TourPackagesPage implements OnInit {
 
   protected openInquiryModal(pkg: TourPackage): void {
     this.objSelectedPackage.set(pkg);
+    this.numGuests = pkg.numberOfPersons || pkg.number_of_persons || 1;
     this.blnSubmitSuccess.set(false);
     this.blnIsModalOpen.set(true);
   }
@@ -183,6 +186,7 @@ export class TourPackagesPage implements OnInit {
 
     const pkg = this.objSelectedPackage();
     const pkgTitle = pkg ? (typeof pkg.title === 'string' ? pkg.title : (pkg.title as any)?.en || pkg.subtitle || '') : '';
+    const guests = Math.max(1, Number(this.numGuests) || 1);
 
     this.inquiryService
       .submitInquiry({
@@ -193,8 +197,9 @@ export class TourPackagesPage implements OnInit {
         tour_package: pkg?.slug || pkg?.id || null,
         tour_package_title: pkgTitle || undefined,
         pickup_date: this.strTravelDate || undefined,
+        number_of_guests: guests,
         message: this.strSpecialRequest || undefined,
-      })
+      }, pkg?.whatsapp)
       .subscribe({
         next: () => {
           this.blnSubmitSuccess.set(true);

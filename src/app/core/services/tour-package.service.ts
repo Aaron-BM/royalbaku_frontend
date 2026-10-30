@@ -67,6 +67,18 @@ export class TourPackageService {
         image: this.resolveImageUrl(s.image),
       }));
 
+    const rawPersons =
+      item.numberOfPersons ??
+      item.number_of_persons ??
+      item.persons ??
+      item.person_count;
+    const numPersons =
+      typeof rawPersons === 'number' && !isNaN(rawPersons) && rawPersons > 0
+        ? rawPersons
+        : typeof rawPersons === 'string' && !isNaN(parseInt(rawPersons, 10)) && parseInt(rawPersons, 10) > 0
+        ? parseInt(rawPersons, 10)
+        : 1;
+
     return {
       id: item.slug || String(item.id),
       slug: item.slug || String(item.id),
@@ -79,6 +91,8 @@ export class TourPackageService {
       website: item.website || 'www.royalbakucarrental.com',
       price: item.price || '',
       priceUsd: this.parseNumericPriceUsd(item),
+      number_of_persons: numPersons,
+      numberOfPersons: numPersons,
       stops,
     };
   }

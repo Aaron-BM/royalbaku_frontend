@@ -18,6 +18,8 @@ export interface TourPackage {
   website: string;
   price?: string;
   priceUsd?: number;
+  number_of_persons?: number;
+  numberOfPersons?: number;
 }
 
 export interface TourPackageStopApi {
@@ -39,6 +41,10 @@ export interface TourPackageApi {
   transfers_included?: boolean;
   price?: string;
   price_usd?: number;
+  number_of_persons?: number;
+  numberOfPersons?: number;
+  persons?: number;
+  person_count?: number;
   phone?: string;
   whatsapp?: string;
   website?: string;

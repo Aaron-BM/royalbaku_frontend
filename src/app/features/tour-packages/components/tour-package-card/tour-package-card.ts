@@ -38,16 +38,21 @@ export class TourPackageCard implements OnInit {
     this.siteSettingService.getSiteSettings().subscribe((settings) => {
       const rawPhone = this.objPackage?.phone || settings?.phone_number;
       const rawWa = this.objPackage?.whatsapp || settings?.whatsapp_number;
+      const persons = this.numPersons;
       this.strPhoneDisplay.set(rawPhone || '');
       this.strPhoneHref.set(this.siteSettingService.getPhoneUrl(rawPhone));
       this.strWhatsappDisplay.set(rawWa || '');
       this.strWhatsappHref.set(
         this.siteSettingService.getWhatsappUrl(
           rawWa,
-          `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}).`
+          `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for up to ${persons} persons.`
         )
       );
     });
+  }
+
+  protected get numPersons(): number {
+    return this.objPackage?.numberOfPersons || this.objPackage?.number_of_persons || 1;
   }
 
   protected onToggle(): void {
@@ -59,7 +64,7 @@ export class TourPackageCard implements OnInit {
   }
 
   protected onWhatsApp(): void {
-    const strText = `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}).`;
+    const strText = `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for up to ${this.numPersons} persons.`;
     const strWaUrl = this.siteSettingService.getWhatsappUrl(this.objPackage?.whatsapp, strText);
     if (strWaUrl && typeof window !== 'undefined') {
       window.open(strWaUrl, '_blank');

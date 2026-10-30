@@ -444,7 +444,15 @@
   },
   "tours": {
     "contactForPrice": "Contact for pricing",
-    "from": "From"
+    "from": "From",
+    "upToPersons": "Up to {{count}} Persons",
+    "personsCount": "{{count}} Persons",
+    "maxGuests": "Max {{count}} Guests",
+    "priceIncludesUpTo": "Price includes up to {{count}} persons",
+    "numberOfGuests": "Number of Guests",
+    "maxIncluded": "Up to {{count}} persons included in price",
+    "bookPackage": "Book Tour Package",
+    "transfersIncluded": "Transfers & Tour Included"
   },
   "blog": {
     "title": "Royal Baku Journal",

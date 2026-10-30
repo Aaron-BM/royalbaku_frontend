@@ -444,7 +444,15 @@
   },
   "tours": {
     "contactForPrice": "Qiymət üçün əlaqə saxlayın",
-    "from": "Qiyməti:"
+    "from": "Qiyməti:",
+    "upToPersons": "{{count}} nəfərə qədər",
+    "personsCount": "{{count}} nəfər",
+    "maxGuests": "Maksimum {{count}} qonaq",
+    "priceIncludesUpTo": "Qiymətə {{count}} nəfərə qədər daxildir",
+    "numberOfGuests": "Qonaq sayı",
+    "maxIncluded": "Qiymətə {{count}} nəfərə qədər daxildir",
+    "bookPackage": "Tur Paketini Sifariş Edin",
+    "transfersIncluded": "Transfer və Tur Daxildir"
   },
   "blog": {
     "title": "Royal Baku Jurnalı",

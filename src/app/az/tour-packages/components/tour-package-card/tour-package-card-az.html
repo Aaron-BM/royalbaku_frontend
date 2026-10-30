@@ -25,9 +25,16 @@
               <svg class="w-3.5 h-3.5 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 17a2 2 0 100 4 2 2 0 000-4zm8 0a2 2 0 100 4 2 2 0 000-4zM3 9l2-4h14l2 4M3 9v7a1 1 0 001 1h16a1 1 0 001-1V9M3 9h18" />
               </svg>
-              Transfers & Tour Included
+              {{ 'tours.transfersIncluded' | translate }}
             </span>
           }
+          <!-- Person Capacity Badge -->
+          <span class="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full flex items-center gap-1.5 bg-white/5 border border-white/15 text-white/90">
+            <svg class="w-3.5 h-3.5 text-gold shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            {{ 'tours.upToPersons' | translate: { count: (objPackage.numberOfPersons || objPackage.number_of_persons || 1) } }}
+          </span>
           <!-- Mobile / Tablet Price Badge -->
           @if (objPackage.priceUsd != null || objPackage.price) {
             <span class="lg:hidden text-xs font-black text-gold bg-black/60 border border-gold/40 px-3 py-1 rounded-full flex items-center gap-1.5 shadow-sm">
@@ -53,6 +60,9 @@
           <span class="text-[10px] font-bold uppercase tracking-widest text-white/60">{{ 'tours.from' | translate }}</span>
           <span class="font-hero-title text-2xl xl:text-3xl font-black text-gold leading-tight tracking-tight">
             {{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}
+          </span>
+          <span class="text-[10px] text-white/60 font-medium">
+            {{ 'tours.upToPersons' | translate: { count: (objPackage.numberOfPersons || objPackage.number_of_persons || 1) } }}
           </span>
         </div>
       }
@@ -248,9 +258,14 @@
           <div class="flex flex-wrap items-center gap-3 justify-center md:justify-start">
             <h4 class="font-hero-title text-lg font-bold text-white">ROYAL BAKU CAR RENTAL & TOURISM</h4>
             @if (objPackage.priceUsd != null || objPackage.price) {
-              <span class="text-xs sm:text-sm font-black text-gold bg-black/70 border border-gold/40 px-3.5 py-1 rounded-full shadow-inner">
-                {{ 'tours.from' | translate }} {{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}
-              </span>
+              <div class="flex items-center gap-2 bg-black/70 border border-gold/40 px-3.5 py-1 rounded-full shadow-inner">
+                <span class="text-xs sm:text-sm font-black text-gold">
+                  {{ 'tours.from' | translate }} {{ (objPackage.priceUsd ?? objPackage.price) | appCurrency }}
+                </span>
+                <span class="text-[10px] font-medium text-white/70 border-l border-gold/30 pl-2">
+                  {{ 'tours.upToPersons' | translate: { count: (objPackage.numberOfPersons || objPackage.number_of_persons || 1) } }}
+                </span>
+              </div>
             }
           </div>
           <p class="text-xs text-white/70 mt-0.5">Contact us now to reserve your private luxury tour package</p>
