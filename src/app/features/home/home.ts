@@ -244,6 +244,8 @@ export class Home implements OnInit, AfterViewInit, OnDestroy {
     // Fetch active car categories directly from DRF backend API (/api/categories/)
     this.carService.getCategories().subscribe((backendCategories) => {
       if (backendCategories && backendCategories.length > 0) {
+        console.log(backendCategories);
+        
         const mappedCategories: HomeCategory[] = backendCategories.map((cat) => ({
           strId: cat.idCategory,
           strNameKey: `categories.${cat.strSlug}`,
