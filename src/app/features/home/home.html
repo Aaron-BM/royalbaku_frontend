@@ -19,7 +19,7 @@
       [muted]="true"
       class="hero-bg-video hidden md:block absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
     >
-      <source src="/assets/videos/home/hero-video.mp4" type="video/mp4" />
+      <source src="/assets/videos/home/home_hero_video.mp4" type="video/mp4" />
     </video>
 
     <!-- Background Video Implementation (Mobile) -->
@@ -31,7 +31,7 @@
       [muted]="true"
       class="hero-bg-video block md:hidden absolute inset-0 w-full h-full object-cover z-0 pointer-events-none"
     >
-      <source src="/assets/videos/home/hero-video-mobile.mp4" type="video/mp4" />
+      <source src="/assets/videos/home/home_hero_mobile.mp4" type="video/mp4" />
     </video>
 
     <!-- Dark Backdrop Overlay for text contrast -->
@@ -635,14 +635,9 @@
           <h4 class="text-sm font-extrabold text-white">
             {{ 'home.whyUs.badgeTitle' | translate }}
           </h4>
-          <div class="flex items-center gap-2 mt-1">
-            <span class="text-xs font-bold text-amber-400"
-              >★★★★★ {{ 'home.whyUs.rating' | translate }}</span
-            >
-            <span class="text-[11px] text-muted font-medium"
-              >({{ 'home.whyUs.googleReviews' | translate }})</span
-            >
-          </div>
+          <p class="text-[11px] text-muted font-medium mt-1">
+            {{ 'home.whyUs.badgeSubtitle' | translate }}
+          </p>
         </div>
       </div>
     </div>

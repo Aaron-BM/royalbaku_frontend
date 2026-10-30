@@ -1,10 +1,10 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { AboutService } from '../../../core/services/about.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { AboutPageData, LocalizedString } from '../../../core/models/about.model';
-
+import { SiteSettingService } from '../../../core/services/site-setting.service';
 import { SeoService } from '../../../core/services/seo.service';
 
 @Component({
@@ -17,6 +17,7 @@ import { SeoService } from '../../../core/services/seo.service';
 export class AboutAz implements OnInit {
   private readonly aboutService = inject(AboutService);
   protected readonly languageService = inject(LanguageService);
+  protected readonly siteSettingService = inject(SiteSettingService);
   private readonly svcSog = inject(SeoService);
 
   // State Signals
@@ -24,7 +25,37 @@ export class AboutAz implements OnInit {
   protected readonly blnLoading = signal<boolean>(true);
   protected readonly strActiveTab = signal<'mission' | 'vision' | 'fleet'>('mission');
 
+  // Dynamic social links matching footer implementation
+  protected readonly arrSocialLinks = computed(() => {
+    const settings = this.siteSettingService.objSiteSettingsSignal();
+    const social = settings?.social_links;
+    const links: { platform: string; label: string; url: string; color: string }[] = [];
+
+    const instagramUrl =
+      (social && typeof social === 'object' && social['instagram']) ||
+      'https://instagram.com/royalbaku_car';
+    links.push({
+      platform: 'instagram',
+      label: 'Instagram',
+      url: instagramUrl,
+      color: 'bg-pink-500',
+    });
+
+    const facebookUrl =
+      (social && typeof social === 'object' && social['facebook']) ||
+      'https://facebook.com';
+    links.push({
+      platform: 'facebook',
+      label: 'Facebook',
+      url: facebookUrl,
+      color: 'bg-blue-500',
+    });
+
+    return links;
+  });
+
   ngOnInit(): void {
+    this.siteSettingService.getSiteSettings().subscribe();
     const isAz = this.languageService.strCurrentLang() === 'az';
     this.svcSog.fnSetSeo({
       title: isAz

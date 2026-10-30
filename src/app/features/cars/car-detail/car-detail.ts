@@ -340,32 +340,25 @@ export class CarDetail implements OnInit, OnDestroy {
       this.strStartDate || 'N/A'
     } to ${this.strEndDate || 'N/A'}. Name: ${this.strCustomerName}, Phone: ${fullPhone}`;
 
-    // Send inquiry lead to Django DRF API
+    // Submit booking inquiry directly via WhatsApp
     this.inquiryService
-      .submitInquiry({
-        type: 'car',
-        name: this.strCustomerName,
-        phone: fullPhone,
-        country_code: this.strSelectedCountryCode,
-        phone_number: cleanPhone,
-        email: this.strCustomerEmail || undefined,
-        is_whatsapp: true,
-        car: carId,
-        pickup_date: this.strStartDate || undefined,
-        dropoff_date: this.strEndDate || undefined,
-        message: strMessage,
-      })
-      .subscribe({
-        next: (res) => {
-          console.log('Inquiry registered on backend:', res);
+      .submitInquiry(
+        {
+          type: 'car',
+          name: this.strCustomerName,
+          phone: fullPhone,
+          country_code: this.strSelectedCountryCode,
+          phone_number: cleanPhone,
+          email: this.strCustomerEmail || undefined,
+          is_whatsapp: true,
+          car: carId,
+          pickup_date: this.strStartDate || undefined,
+          dropoff_date: this.strEndDate || undefined,
+          message: strMessage,
         },
-      });
-
-    // Open WhatsApp redirect
-    const urlWa = this.siteSettingService.getWhatsappUrl(currentCar?.strWhatsappNumber, strMessage);
-    if (typeof window !== 'undefined' && urlWa) {
-      window.open(urlWa, '_blank');
-    }
+        currentCar?.strWhatsappNumber
+      )
+      .subscribe();
   }
 
   protected get strWhatsappHref(): string | null {

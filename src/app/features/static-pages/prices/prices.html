@@ -194,9 +194,6 @@
                   {{ 'prices.colPerDay' | translate }}
                 </th>
                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-center">
-                  {{ 'prices.colWeekly' | translate }}
-                </th>
-                <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-center">
                   {{ 'prices.colMonthly' | translate }}
                 </th>
                 <th class="py-4 px-6 text-xs font-bold uppercase tracking-wider text-gold text-right">
@@ -252,11 +249,6 @@
                   <!-- Per Day Price -->
                   <td class="py-3.5 px-6 font-bold text-amber-400 text-center text-base">
                     {{ item.numDailyPrice | appCurrency }}
-                  </td>
-
-                  <!-- Weekly Price -->
-                  <td class="py-3.5 px-6 text-neutral-300 text-center font-medium">
-                    {{ item.numWeeklyPrice ? (item.numWeeklyPrice | appCurrency) : (item.strWeeklyPriceValue || 'N/A') }}
                   </td>
 
                   <!-- Monthly Price -->
@@ -346,27 +338,19 @@
               </div>
 
               <!-- Price Matrix Chip Row -->
-              <div class="grid grid-cols-3 gap-2 py-3 border-b border-white/10">
+              <div class="grid grid-cols-2 gap-2.5 py-3 border-b border-white/10">
                 <!-- Daily Price -->
-                <div class="bg-[#0A0B0F]/80 p-2 rounded-xl border border-white/5 text-center">
+                <div class="bg-[#0A0B0F]/80 p-2.5 rounded-xl border border-white/5 text-center">
                   <div class="text-[10px] text-neutral-400 font-medium uppercase tracking-tight">{{ 'prices.colPerDay' | translate }}</div>
-                  <div class="text-xs font-extrabold text-amber-400 mt-0.5">
+                  <div class="text-xs sm:text-sm font-extrabold text-amber-400 mt-0.5">
                     {{ item.numDailyPrice | appCurrency }}
                   </div>
                 </div>
 
-                <!-- Weekly Price -->
-                <div class="bg-[#0A0B0F]/80 p-2 rounded-xl border border-white/5 text-center">
-                  <div class="text-[10px] text-neutral-400 font-medium uppercase tracking-tight">{{ 'prices.colWeekly' | translate }}</div>
-                  <div class="text-xs font-semibold text-neutral-200 mt-0.5">
-                    {{ item.numWeeklyPrice ? (item.numWeeklyPrice | appCurrency) : (item.strWeeklyPriceValue || 'N/A') }}
-                  </div>
-                </div>
-
                 <!-- Monthly Price -->
-                <div class="bg-[#0A0B0F]/80 p-2 rounded-xl border border-white/5 text-center">
+                <div class="bg-[#0A0B0F]/80 p-2.5 rounded-xl border border-white/5 text-center">
                   <div class="text-[10px] text-neutral-400 font-medium uppercase tracking-tight">{{ 'prices.colMonthly' | translate }}</div>
-                  <div class="text-xs font-semibold text-neutral-200 mt-0.5">
+                  <div class="text-xs sm:text-sm font-semibold text-neutral-200 mt-0.5">
                     {{ item.numMonthlyPrice ? (item.numMonthlyPrice | appCurrency) : (item.strMonthlyPriceValue || 'N/A') }}
                   </div>
                 </div>
@@ -441,14 +425,10 @@
                 </a>
 
                 <!-- Pricing Chips -->
-                <div class="grid grid-cols-3 gap-2 bg-[#0A0B0F] p-2.5 rounded-xl border border-white/5 text-center text-xs">
+                <div class="grid grid-cols-2 gap-2.5 bg-[#0A0B0F] p-2.5 rounded-xl border border-white/5 text-center text-xs">
                   <div>
                     <div class="text-[10px] text-neutral-400 font-semibold">{{ 'prices.colPerDay' | translate }}</div>
                     <div class="text-amber-400 font-bold mt-0.5">{{ item.numDailyPrice | appCurrency }}</div>
-                  </div>
-                  <div>
-                    <div class="text-[10px] text-neutral-400 font-semibold">{{ 'prices.colWeekly' | translate }}</div>
-                    <div class="text-neutral-300 font-medium mt-0.5">{{ item.numWeeklyPrice ? (item.numWeeklyPrice | appCurrency) : (item.strWeeklyPriceValue || 'N/A') }}</div>
                   </div>
                   <div>
                     <div class="text-[10px] text-neutral-400 font-semibold">{{ 'prices.colMonthly' | translate }}</div>

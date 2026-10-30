@@ -332,29 +332,23 @@ export class CarDetailAz implements OnInit, OnDestroy {
     } to ${this.strEndDate || 'N/A'}. Name: ${this.strCustomerName}, Phone: ${fullPhone}`;
 
     this.inquiryService
-      .submitInquiry({
-        type: 'car',
-        name: this.strCustomerName,
-        phone: fullPhone,
-        country_code: this.strSelectedCountryCode,
-        phone_number: cleanPhone,
-        email: this.strCustomerEmail || undefined,
-        is_whatsapp: true,
-        car: carId,
-        pickup_date: this.strStartDate || undefined,
-        dropoff_date: this.strEndDate || undefined,
-        message: strMessage,
-      })
-      .subscribe({
-        next: (res) => {
-          console.log('Inquiry registered on backend:', res);
+      .submitInquiry(
+        {
+          type: 'car',
+          name: this.strCustomerName,
+          phone: fullPhone,
+          country_code: this.strSelectedCountryCode,
+          phone_number: cleanPhone,
+          email: this.strCustomerEmail || undefined,
+          is_whatsapp: true,
+          car: carId,
+          pickup_date: this.strStartDate || undefined,
+          dropoff_date: this.strEndDate || undefined,
+          message: strMessage,
         },
-      });
-
-    const urlWa = this.siteSettingService.getWhatsappUrl(currentCar?.strWhatsappNumber, strMessage);
-    if (typeof window !== 'undefined' && urlWa) {
-      window.open(urlWa, '_blank');
-    }
+        currentCar?.strWhatsappNumber
+      )
+      .subscribe();
   }
 
   protected get strWhatsappHref(): string | null {

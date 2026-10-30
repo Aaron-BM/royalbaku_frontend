@@ -157,7 +157,7 @@ export class CarList implements OnInit {
             : 'All Cars Rental Baku | Royal Baku Car Rental',
           description: isAz
             ? 'Ekonom və SUV modellərindən tutmuş lüks və idman avtomobillərinə qədər geniş avtomobil çeşidimizi kəşf edin. Büdcənizə və səyahət ehtiyaclarınıza uyğun ideal avtomobili çevik gündəlik, həftəlik və aylıq icarə seçimləri ilə seçin.'
-            : 'Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily, weekly, and monthly rental options.',
+            : 'Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily and monthly rental options.',
         });
       } else if (meta) {
         const titleName = meta.strTitle || meta.strSlug;

@@ -210,32 +210,16 @@
     <!-- 3. Company Overview Section -->
     @if (data.company; as comp) {
       <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
-        <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-3xl p-6 sm:p-8 shadow-2xl">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Left Showroom Image Preview -->
-            <div
-              class="lg:col-span-5 relative rounded-2xl overflow-hidden group border border-white/10 shadow-lg min-h-[220px]"
-            >
-              <img
-                [src]="comp.showroom_image || '/assets/images/home/supercars-banner.png'"
-                alt="Royal Baku Showroom"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 min-h-[240px]"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex items-end p-5"
-              >
-                <span class="text-xs font-extrabold text-gold tracking-widest">
-                  ♦ Royal Baku Showroom Fleet
-                </span>
-              </div>
-            </div>
-
-            <!-- Right Content & Bullets -->
+        <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl space-y-8">
+          
+          <!-- Top Content Grid: Left Story, Right Bullets & Socials -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Left: Tag, Title, Descriptions -->
             <div class="lg:col-span-7 space-y-4">
               <div class="text-[10px] font-bold tracking-widest text-gold">
                 {{ resolveText(comp.tag) }}
               </div>
-              <h2 class="text-xl sm:text-2xl font-extrabold text-white">
+              <h2 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-white">
                 {{ resolveText(comp.title) }}
               </h2>
 
@@ -244,117 +228,69 @@
                   {{ resolveText(desc) }}
                 </p>
               }
+            </div>
 
+            <!-- Right: Highlights Bullets & Social Links -->
+            <div class="lg:col-span-5 space-y-4 bg-white/[0.02] border border-white/10 rounded-2xl p-5 sm:p-6">
               <!-- Bullets Grid -->
               @if (comp.bullets && comp.bullets.length > 0) {
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
+                <div class="space-y-2.5">
                   @for (b of comp.bullets; track $index) {
-                    <div class="flex items-center gap-2 text-xs font-semibold text-white/90">
-                      <span class="w-1.5 h-1.5 rounded-full bg-gold"></span>
-                      <span>{{ resolveText(b) }}</span>
+                    <div class="flex items-start gap-2.5 text-xs font-semibold text-white/90">
+                      <span class="w-1.5 h-1.5 rounded-full bg-gold mt-1.5 shrink-0"></span>
+                      <span class="leading-relaxed">{{ resolveText(b) }}</span>
                     </div>
                   }
                 </div>
               }
 
-              <!-- Social Media Links Pills -->
-              @if (comp.social_links && comp.social_links.length > 0) {
-                <div class="flex items-center gap-3 pt-4 border-t border-white/10">
-                  @for (s of comp.social_links; track s.platform) {
+              <!-- Social Media Links Pills (Dynamic from Site Settings) -->
+              <div class="pt-4 border-t border-white/10">
+                <div class="flex items-center gap-2.5 flex-wrap">
+                  @for (s of arrSocialLinks(); track s.platform) {
                     <a
                       [href]="s.url"
                       target="_blank"
+                      rel="noopener noreferrer"
                       class="px-3.5 py-1.5 rounded-lg bg-surface border border-white/15 text-xs text-muted hover:text-white hover:border-gold/40 transition-all flex items-center gap-2 cursor-pointer"
                     >
-                      <span
-                        class="w-2 h-2 rounded-full"
-                        [ngClass]="{
-                          'bg-pink-500': s.platform === 'instagram',
-                          'bg-blue-500': s.platform === 'facebook',
-                          'bg-red-500': s.platform === 'youtube',
-                          'bg-gold': s.platform !== 'instagram' && s.platform !== 'facebook' && s.platform !== 'youtube'
-                        }"
-                      ></span>
-                      <span>{{ resolveText(s.label) }}</span>
+                      <span class="w-2 h-2 rounded-full" [ngClass]="s.color"></span>
+                      <span>{{ s.label }}</span>
                     </a>
                   }
                 </div>
-              }
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    }
 
-    <!-- 4. Founder & CEO Section -->
-    @if (data.ceo; as ceo) {
-      <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-10 border-t border-white/10">
-        <div class="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-3xl p-6 sm:p-8 shadow-2xl">
-          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <!-- Left Founder Content -->
-            <div class="lg:col-span-7 space-y-4">
-              <div class="text-[10px] font-bold tracking-widest text-gold">
-                {{ resolveText(ceo.tag) }}
-              </div>
-              <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
-                {{ ceo.name }}
-              </h2>
-
-              @for (desc of ceo.descriptions; track $index) {
-                <p class="text-xs sm:text-sm text-muted/90 leading-relaxed">
-                  {{ resolveText(desc) }}
-                </p>
-              }
-
-              <!-- Social Media Pills -->
-              @if (ceo.social_links && ceo.social_links.length > 0) {
-                <div class="flex items-center gap-3 pt-4 border-t border-white/10">
-                  @for (s of ceo.social_links; track s.platform) {
-                    <a
-                      [href]="s.url"
-                      target="_blank"
-                      class="px-3.5 py-1.5 rounded-lg bg-surface border border-white/15 text-xs text-muted hover:text-white hover:border-gold/40 transition-all flex items-center gap-2 cursor-pointer"
-                    >
-                      <span
-                        class="w-2 h-2 rounded-full"
-                        [ngClass]="{
-                          'bg-pink-500': s.platform === 'instagram',
-                          'bg-blue-500': s.platform === 'facebook',
-                          'bg-red-500': s.platform === 'youtube',
-                          'bg-gold': s.platform !== 'instagram' && s.platform !== 'facebook' && s.platform !== 'youtube'
-                        }"
-                      ></span>
-                      <span>{{ resolveText(s.label) }}</span>
-                    </a>
-                  }
-                </div>
-              }
-            </div>
-
-            <!-- Right Founder Image Preview -->
+          <!-- Wide Showroom Panoramic Image Container (Full Image Fit) -->
+          <div
+            class="relative rounded-2xl overflow-hidden group border border-white/10 shadow-2xl w-full aspect-[2056/765] bg-black/40"
+          >
+            <img
+              src="/assets/images/about/showroom.jpg"
+              alt="Royal Baku Showroom"
+              class="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500"
+            />
             <div
-              class="lg:col-span-5 relative rounded-2xl overflow-hidden group border border-white/10 shadow-xl min-h-[260px]"
+              class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4 sm:p-6"
             >
-              <img
-                [src]="ceo.image || '/assets/images/home/supercars-banner.png'"
-                [alt]="ceo.name + ' - CEO'"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 min-h-[280px]"
-              />
-              <div
-                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5"
-              >
-                <div>
-                  <p class="text-xs font-bold text-white">{{ ceo.name }}</p>
-                  <p class="text-[10px] text-gold tracking-wider">{{ resolveText(ceo.title) }}</p>
-                </div>
+              <div class="flex items-center justify-between w-full">
+                <span class="text-xs sm:text-sm font-extrabold text-gold tracking-widest drop-shadow">
+                  ♦ Royal Baku Showroom Fleet
+                </span>
+                <span class="text-[11px] text-white/80 font-medium hidden sm:inline-block drop-shadow">
+                  Nizami St, Baku, Azerbaijan
+                </span>
               </div>
             </div>
           </div>
+
         </div>
       </section>
     }
 
-    <!-- 5. Interactive Tabs Section (Our Mission / Our Vision / Our Fleet) -->
+    <!-- 4. Interactive Tabs Section (Our Mission / Our Vision / Our Fleet) -->
     @if (data.tabs; as tabs) {
       <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-8">
         <div

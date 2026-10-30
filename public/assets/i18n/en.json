@@ -17,7 +17,7 @@
     "prices": "Prices",
     "aboutUs": "About Us",
     "faqs": "FAQ's",
-    "contacts": "Contacts",
+    "contacts": "Contact Us",
     "tourPackages": "Tour Packages",
     "blog": "Blog",
     "home": "Home",
@@ -27,7 +27,7 @@
     "breadcrumbHome": "Home",
     "breadcrumbCategory": "All Cars",
     "title": "All Cars",
-    "description": "Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily, weekly, and monthly rental options."
+    "description": "Explore a wide range of vehicles, from economy and SUVs to luxury and sports cars. Choose the perfect car based on your budget and travel needs, with flexible daily and monthly rental options."
   },
   "home": {
     "welcomeSub": "PREMIUM CAR RENTAL IN BAKU",
@@ -49,8 +49,8 @@
       "send": "Send"
     },
     "rentLuxury": {
-      "title": "Explore Baku Your Way",
-      "description": "Cruise through the beautiful streets of Baku, discover hidden gems, and make every moment unforgettable. Find the perfect car for your city adventures, scenic drives, and memorable getaways."
+      "title": "Customer Favourites",
+      "description": "Discover the cars our customers love most."
     },
     "dailyOffers": {
       "title": "Daily Offers",
@@ -79,19 +79,19 @@
     "whyUs": {
       "eyebrow": "Why Royal Baku Rent A Car",
       "title": "Why you should rent a car with us?",
-      "description": "Top rated luxury car rental company in Baku on Google.",
-      "badgeTitle": "Royal Baku Rent A Car",
-      "googleReviews": "Google Reviews",
+      "description": "Your perfect ride, just a booking away.",
+      "badgeTitle": "ROYAL BAKU",
+      "badgeSubtitle": "Your journey, our priority.",
       "rating": "4.9",
       "f1Title": "24/7 VIP Concierge",
       "f1Desc": "Round-the-clock roadside assistance & multilingual care",
       "f2Title": "Transparent Rates & Insurance",
-      "f2Desc": "Zero hidden fees with comprehensive CASCO & TPL coverage",
+      "f2Desc": "Zero hidden fees",
       "f3Title": "Airport & Hotel Delivery",
       "f3Desc": "Doorstep handover at GYD Airport or your luxury hotel in Baku",
       "f4Title": "Pristine Luxury Fleet",
       "f4Desc": "Strictly inspected, sanitized, and showroom-condition vehicles",
-      "f5Title": "Instant Booking in 5 Minutes",
+      "f5Title": "Instant Booking",
       "f5Desc": "Minimal paperwork with instant WhatsApp confirmation",
       "f6Title": "Chauffeur & Private Tours",
       "f6Desc": "Professional multilingual drivers and custom tours across Azerbaijan"

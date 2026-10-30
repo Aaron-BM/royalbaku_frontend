@@ -42,12 +42,12 @@
       {{ objCar.strDepositInfoKey ? (objCar.strDepositInfoKey | translate) : ('cars.depositNotice' | translate: { amount: ((objCar.numDepositUsd ?? numStandardDeposit) | appCurrency) }) }}
     </p>
 
-    <!-- Pricing Grid (Daily | Weekly | Monthly) -->
+    <!-- Pricing Grid (Daily | Monthly) -->
     <div
-      class="grid grid-cols-3 gap-1.5 text-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-3 mb-5"
+      class="grid grid-cols-2 divide-x divide-white/10 text-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xl p-3 mb-5"
     >
       <!-- Daily Price -->
-      <div>
+      <div class="px-2">
         <span class="text-[10px] font-normal text-muted/80 tracking-wider block">
           {{ 'cars.daily' | translate }}
         </span>
@@ -56,18 +56,8 @@
         </span>
       </div>
 
-      <!-- Weekly Price -->
-      <div>
-        <span class="text-[10px] font-normal text-muted/80 tracking-wider block">
-          {{ 'cars.weekly' | translate }}
-        </span>
-        <span class="text-xs sm:text-sm font-medium text-white/90 mt-1 block">
-          {{ objCar.numWeeklyPrice ? (objCar.numWeeklyPrice | appCurrency) : (objCar.strWeeklyPriceKey || 'cars.askNow' | translate) }}
-        </span>
-      </div>
-
       <!-- Monthly Price -->
-      <div>
+      <div class="px-2">
         <span class="text-[10px] font-normal text-muted/80 tracking-wider block">
           {{ 'cars.monthly' | translate }}
         </span>

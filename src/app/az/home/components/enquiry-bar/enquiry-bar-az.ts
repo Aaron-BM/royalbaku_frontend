@@ -148,7 +148,6 @@ export class EnquiryBarAz implements OnInit {
       phone_number: cleanMobile,
       pickup_date: this.strStartDate,
       dropoff_date: this.strEndDate,
-      message: `Enquiry submitted from Home Page bar (AZ)`,
     };
 
     this.inquiryService.submitInquiry(objPayload).subscribe({

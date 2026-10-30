@@ -56,8 +56,8 @@ export class PricesAz implements OnInit {
         ? 'Avtomobil İcarəsi Qiymətləri | Royal Baku Rent A Car'
         : 'Car Rental Prices in Baku | Royal Baku Car Rental',
       description: isAz
-        ? 'Bakıda lüks, SUV və ekonom avtomobillərin şəffaf icarə qiymətləri siyahısı. 100$ geri qaytarılan depozit ilə gündəlik, həftəlik və aylıq qiymətlər.'
-        : 'Transparent car rental prices in Baku, Azerbaijan. Compare daily, weekly, and monthly rates for luxury, SUV, and economy cars with $100 refundable deposit.',
+        ? 'Bakıda lüks, SUV və ekonom avtomobillərin şəffaf icarə qiymətləri siyahısı. 100$ geri qaytarılan depozit ilə gündəlik və aylıq qiymətlər.'
+        : 'Transparent car rental prices in Baku, Azerbaijan. Compare daily and monthly rates for luxury, SUV, and economy cars with $100 refundable deposit.',
     });
 
     this.fnLoadBrands();

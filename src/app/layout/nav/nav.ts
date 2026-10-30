@@ -54,9 +54,7 @@ export class Nav implements OnInit, AfterViewInit {
   protected readonly arrNavLinks: NavLink[] = [
     { strPath: '/tour-packages/discover-azerbaijan', strKey: 'nav.tourPackages' },
     { strPath: '/prices', strKey: 'nav.prices' },
-    { strPath: '/blog', strKey: 'nav.blog' },
     { strPath: '/about', strKey: 'nav.aboutUs' },
-    { strPath: '/faq', strKey: 'nav.faqs' },
     { strPath: '/contact', strKey: 'nav.contacts' },
   ];
 
