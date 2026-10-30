@@ -444,13 +444,14 @@
   },
   "tours": {
     "contactForPrice": "Contact for pricing",
-    "from": "From",
-    "upToPersons": "Up to {{count}} Persons",
+    "from": "Price:",
+    "upToPersons": "{{count}} Persons",
     "personsCount": "{{count}} Persons",
     "maxGuests": "Max {{count}} Guests",
-    "priceIncludesUpTo": "Price includes up to {{count}} persons",
+    "priceIncludes": "Price includes {{count}} persons",
+    "priceIncludesUpTo": "Price includes {{count}} persons",
     "numberOfGuests": "Number of Guests",
-    "maxIncluded": "Up to {{count}} persons included in price",
+    "maxIncluded": "{{count}} persons included in price",
     "bookPackage": "Book Tour Package",
     "transfersIncluded": "Transfers & Tour Included"
   },

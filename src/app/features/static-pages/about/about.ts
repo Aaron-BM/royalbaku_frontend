@@ -23,7 +23,6 @@ export class About implements OnInit {
   // State Signals
   protected readonly objAboutData = signal<AboutPageData | null>(null);
   protected readonly blnLoading = signal<boolean>(true);
-  protected readonly strActiveTab = signal<'mission' | 'vision' | 'fleet'>('mission');
 
   // Dynamic social links matching footer implementation
   protected readonly arrSocialLinks = computed(() => {
@@ -76,10 +75,6 @@ export class About implements OnInit {
         this.blnLoading.set(false);
       },
     });
-  }
-
-  protected fnSelectTab(strTab: 'mission' | 'vision' | 'fleet'): void {
-    this.strActiveTab.set(strTab);
   }
 
   /**

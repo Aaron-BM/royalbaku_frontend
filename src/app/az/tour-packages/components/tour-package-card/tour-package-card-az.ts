@@ -45,7 +45,7 @@ export class TourPackageCardAz implements OnInit {
       this.strWhatsappHref.set(
         this.siteSettingService.getWhatsappUrl(
           rawWa,
-          `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for up to ${persons} persons.`
+          `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for ${persons} persons.`
         )
       );
     });
@@ -64,7 +64,7 @@ export class TourPackageCardAz implements OnInit {
   }
 
   protected onWhatsApp(): void {
-    const strText = `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for up to ${this.numPersons} persons.`;
+    const strText = `Hello Royal Baku, I would like to book/enquire about ${this.objPackage.title} (${this.objPackage.subtitle}) for ${this.numPersons} persons.`;
     const strWaUrl = this.siteSettingService.getWhatsappUrl(this.objPackage?.whatsapp, strText);
     if (strWaUrl && typeof window !== 'undefined') {
       window.open(strWaUrl, '_blank');

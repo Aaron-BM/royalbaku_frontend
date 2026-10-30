@@ -445,12 +445,13 @@
   "tours": {
     "contactForPrice": "Qiymət üçün əlaqə saxlayın",
     "from": "Qiyməti:",
-    "upToPersons": "{{count}} nəfərə qədər",
+    "upToPersons": "{{count}} nəfər",
     "personsCount": "{{count}} nəfər",
     "maxGuests": "Maksimum {{count}} qonaq",
-    "priceIncludesUpTo": "Qiymətə {{count}} nəfərə qədər daxildir",
+    "priceIncludes": "Qiymətə {{count}} nəfər daxildir",
+    "priceIncludesUpTo": "Qiymətə {{count}} nəfər daxildir",
     "numberOfGuests": "Qonaq sayı",
-    "maxIncluded": "Qiymətə {{count}} nəfərə qədər daxildir",
+    "maxIncluded": "Qiymətə {{count}} nəfər daxildir",
     "bookPackage": "Tur Paketini Sifariş Edin",
     "transfersIncluded": "Transfer və Tur Daxildir"
   },

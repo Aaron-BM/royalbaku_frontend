@@ -29,7 +29,7 @@ export class Prices implements OnInit {
   protected readonly strSelectedSort = signal<string>('default');
   protected readonly strSearchQuery = signal<string>('');
   protected readonly blnLoading = signal<boolean>(true);
-  protected readonly strViewMode = signal<'table' | 'grid'>('table');
+  protected readonly strViewMode = signal<'table' | 'grid'>('grid');
 
   /**
    * Computed list filtering by client-side search input keyword

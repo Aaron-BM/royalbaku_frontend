@@ -13,19 +13,19 @@
       <a
         [routerLink]="'/' | langUrl"
         (click)="fnCloseDropdowns()"
-        class="flex items-center gap-1.5 xl:gap-2.5 shrink-0 group outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-xl"
+        class="flex items-center gap-2 sm:gap-1.5 xl:gap-2.5 shrink-0 group outline-none focus-visible:ring-2 focus-visible:ring-gold/50 rounded-xl"
       >
         <div class="logo-emblem flex items-center justify-center shrink-0">
           <img
             src="/assets/images/logo.png"
             alt="Royal Baku Logo"
-            class="h-7 sm:h-8 xl:h-9 2xl:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+            class="h-8 sm:h-8 xl:h-9 2xl:h-10 w-auto object-contain group-hover:scale-105 transition-transform duration-300"
           />
         </div>
 
-        <div class="flex flex-col shrink-0">
+        <div class="flex flex-col shrink-0 justify-center">
           <span
-            class="text-[11px] sm:text-xs xl:text-sm 2xl:text-base font-bold tracking-wider text-white leading-tight group-hover:text-gold group-focus-visible:text-gold transition-colors duration-150"
+            class="text-[17px] sm:text-xs xl:text-sm 2xl:text-base font-black sm:font-bold tracking-wide sm:tracking-wider text-white leading-tight group-hover:text-gold group-focus-visible:text-gold transition-colors duration-150"
           >
             {{ 'nav.brandName' | translate }}
           </span>
