@@ -49,8 +49,17 @@ export interface CarSpecification {
   numLuggageCount?: number;
 }
 
+export interface CarImageVariants {
+  thumbnail: string;
+  detail: string;
+  original: string;
+  srcset: string;
+}
+
 export interface CarDetailItem extends CarItem {
   arrGalleryImages?: string[];
+  arrGalleryVariants?: CarImageVariants[];
+  strDetailImagePath?: string;
   objSpecs?: CarSpecification;
   strWeeklyPriceValue?: string;
   strMonthlyPriceValue?: string;

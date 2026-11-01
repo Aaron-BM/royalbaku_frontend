@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject, signal, PLATFORM_ID, RESPONSE_INIT } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal, computed, PLATFORM_ID, RESPONSE_INIT } from '@angular/core';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,7 @@ import { switchMap, map } from 'rxjs/operators';
 import { CarService, CarDetailResult } from '../../../core/services/car.service';
 import { InquiryService, CountryCode } from '../../../core/services/inquiry.service';
 import { SiteSettingService } from '../../../core/services/site-setting.service';
-import { CarDetailItem } from '../../../core/models/car.model';
+import { CarDetailItem, CarImageVariants } from '../../../core/models/car.model';
 import { ImagePreviewModal } from '../../../shared/components/image-preview-modal/image-preview-modal';
 import { AppCurrencyPipe } from '../../../shared/pipes/app-currency.pipe';
 import { IconWhatsappComponent } from '../../../shared/components/icons/icon-whatsapp';
@@ -81,6 +81,27 @@ export class CarDetailAz implements OnInit, OnDestroy {
   protected readonly objCar = signal<CarDetailItem | null>(null);
   protected readonly strActiveImage = signal<string>('');
   protected readonly numActiveImageIndex = signal<number>(0);
+
+  // Structured gallery items computed signal
+  protected readonly galleryItems = computed<CarImageVariants[]>(() => {
+    const car = this.objCar();
+    if (!car) return [];
+    if (car.arrGalleryVariants && car.arrGalleryVariants.length > 0) {
+      return car.arrGalleryVariants;
+    }
+    const fallbackImages = car.arrGalleryImages || (car.strImagePath ? [car.strImagePath] : []);
+    return fallbackImages.map((img) => ({
+      thumbnail: img,
+      detail: img,
+      original: img,
+      srcset: `${img} 1400w`,
+    }));
+  });
+
+  // Lightbox images computed signal (uses original if available, otherwise detail)
+  protected readonly lightboxImages = computed<string[]>(() => {
+    return this.galleryItems().map((v) => v.original || v.detail);
+  });
 
   // Full-screen Image Preview Modal state
   protected readonly blnIsImageModalOpen = signal<boolean>(false);
@@ -217,11 +238,13 @@ export class CarDetailAz implements OnInit, OnDestroy {
   private applyLoadedCar(objResult: CarDetailItem): void {
     this.objCar.set(objResult);
     this.strSelectedCarTitle = objResult.strTitle;
-    const arrImages = objResult.arrGalleryImages || [objResult.strImagePath];
-    this.strActiveImage.set(arrImages[0] || '');
+    const items = objResult.arrGalleryVariants || [];
+    const firstDetail = items[0]?.detail || objResult.strDetailImagePath || objResult.strImagePath || '';
+    this.strActiveImage.set(firstDetail);
     this.numActiveImageIndex.set(0);
 
     const isAz = this.svcLanguage.strCurrentLang() === 'az';
+    const seoImage = objResult.strDetailImagePath || items[0]?.detail || objResult.strImagePath;
     this.svcSog.fnSetSeo({
       title: isAz
         ? `${objResult.strTitle} İcarəsi Bakıda | Royal Baku Rent A Car`
@@ -229,13 +252,13 @@ export class CarDetailAz implements OnInit, OnDestroy {
       description: isAz
         ? `Bakıda ${objResult.strTitle} icarəsi. 100$ geri qaytarılan depozit, 24/7 hava limanı çatdırılması.`
         : `Rent ${objResult.strTitle} in Baku with transparent terms, $100 refundable deposit, and 24/7 airport delivery.`,
-      image: objResult.strImagePath,
+      image: seoImage,
       type: 'product',
       jsonLd: {
         '@context': 'https://schema.org',
         '@type': 'Product',
         name: objResult.strTitle,
-        image: objResult.strImagePath ? [objResult.strImagePath] : [],
+        image: seoImage ? [seoImage] : [],
         description: `Rent ${objResult.strTitle} in Baku, Azerbaijan.`,
         offers: {
           '@type': 'Offer',
@@ -277,8 +300,8 @@ export class CarDetailAz implements OnInit, OnDestroy {
     this.state.set('error');
   }
 
-  protected selectGalleryImage(strImg: string, numIndex: number): void {
-    this.strActiveImage.set(strImg);
+  protected selectGalleryImage(item: CarImageVariants, numIndex: number): void {
+    this.strActiveImage.set(item.detail);
     this.numActiveImageIndex.set(numIndex);
   }
 
@@ -286,7 +309,10 @@ export class CarDetailAz implements OnInit, OnDestroy {
     if (numIndex !== undefined) {
       this.numActiveImageIndex.set(numIndex);
     }
-    this.strPreviewImageUrl.set(strUrl);
+    const items = this.galleryItems();
+    const activeIdx = numIndex !== undefined ? numIndex : this.numActiveImageIndex();
+    const targetUrl = items[activeIdx]?.original || items[activeIdx]?.detail || strUrl;
+    this.strPreviewImageUrl.set(targetUrl);
     this.strPreviewAltText.set(strAlt);
     this.blnIsImageModalOpen.set(true);
   }
@@ -297,23 +323,23 @@ export class CarDetailAz implements OnInit, OnDestroy {
   }
 
   protected prevImage(): void {
-    const objCurrentCar = this.objCar();
-    if (!objCurrentCar || !objCurrentCar.arrGalleryImages) return;
+    const items = this.galleryItems();
+    if (!items || items.length === 0) return;
 
-    const numTotal = objCurrentCar.arrGalleryImages.length;
+    const numTotal = items.length;
     const numPrev = (this.numActiveImageIndex() - 1 + numTotal) % numTotal;
     this.numActiveImageIndex.set(numPrev);
-    this.strActiveImage.set(objCurrentCar.arrGalleryImages[numPrev]);
+    this.strActiveImage.set(items[numPrev].detail);
   }
 
   protected nextImage(): void {
-    const objCurrentCar = this.objCar();
-    if (!objCurrentCar || !objCurrentCar.arrGalleryImages) return;
+    const items = this.galleryItems();
+    if (!items || items.length === 0) return;
 
-    const numTotal = objCurrentCar.arrGalleryImages.length;
+    const numTotal = items.length;
     const numNext = (this.numActiveImageIndex() + 1) % numTotal;
     this.numActiveImageIndex.set(numNext);
-    this.strActiveImage.set(objCurrentCar.arrGalleryImages[numNext]);
+    this.strActiveImage.set(items[numNext].detail);
   }
 
   protected onBookingSubmit(): void {

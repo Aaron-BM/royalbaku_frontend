@@ -91,7 +91,7 @@
                   [src]="img"
                   [alt]="getSlideAltText($index)"
                   class="modal-image max-w-[92vw] max-h-[82vh] sm:max-w-[88vw] sm:max-h-[85vh] object-contain rounded-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/10"
-                  [attr.loading]="$index === numActiveIndex ? 'eager' : 'lazy'"
+                  [attr.loading]="$index >= numActiveIndex - 1 && $index <= numActiveIndex + 1 ? 'eager' : 'lazy'"
                 />
               </div>
             }

@@ -44,7 +44,7 @@
     <div class="lg:col-span-7 flex flex-col gap-4">
       <!-- Main Display Image Box -->
       <div
-        class="bg-gradient-to-b from-[#151821] via-[#0E1017] to-[#07080B] rounded-2xl h-80 sm:h-[400px] border border-white/10 relative overflow-hidden shadow-2xl flex items-center justify-center"
+        class="bg-gradient-to-b from-[#151821] via-[#0E1017] to-[#07080B] rounded-2xl aspect-[16/9] w-full border border-white/10 relative overflow-hidden shadow-2xl flex items-center justify-center"
       >
         <div class="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/20 skeleton-pulse">
           <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,9 +54,9 @@
       </div>
 
       <!-- 5 Thumbnail Placeholders -->
-      <div class="grid grid-cols-5 gap-2">
+      <div class="grid grid-cols-5 gap-2.5">
         @for (i of [1, 2, 3, 4, 5]; track i) {
-          <div class="h-14 sm:h-16 rounded-xl bg-white/5 border border-white/10 skeleton-pulse"></div>
+          <div class="aspect-[16/9] w-full rounded-xl bg-white/5 border border-white/10 skeleton-pulse"></div>
         }
       </div>
     </div>

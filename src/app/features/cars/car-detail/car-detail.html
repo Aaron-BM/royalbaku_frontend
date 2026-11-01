@@ -4,7 +4,7 @@
       <app-car-detail-skeleton />
     }
 
-    @case ('notFound') {
+    <!-- @case ('notFound') {
       <div class="max-w-xl mx-auto py-16 sm:py-24 text-center space-y-6">
         <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-gold/10 border border-gold/30 flex items-center justify-center text-gold text-2xl sm:text-3xl font-extrabold shadow-lg">
           404
@@ -27,7 +27,7 @@
           </a>
         </div>
       </div>
-    }
+    } -->
 
     @case ('error') {
       <div class="max-w-xl mx-auto py-16 sm:py-24 text-center space-y-6">
@@ -142,13 +142,13 @@
             <div class="lg:col-span-7 flex flex-col gap-4">
               <!-- Main Display Image Box -->
               <div
-                class="relative bg-gradient-to-b from-[#151821] via-[#0E1017] to-[#07080B] rounded-2xl h-80 sm:h-[400px] overflow-hidden shadow-2xl group border border-white/10"
+                class="relative bg-gradient-to-b from-[#151821] via-[#0E1017] to-[#07080B] rounded-2xl aspect-[16/9] w-full overflow-hidden shadow-2xl group border border-white/10"
               >
                 <!-- Radial Champagne Underglow -->
                 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gold/10 via-transparent to-transparent pointer-events-none"></div>
 
                 <!-- Left Slider Control Arrow -->
-                @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
+                @if (galleryItems().length > 1) {
                   <button
                     type="button"
                     (click)="prevImage()"
@@ -171,15 +171,17 @@
                     class="image-track"
                     [style.transform]="'translateX(-' + (numActiveImageIndex() * 100) + '%)'"
                   >
-                    @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
+                    @for (item of galleryItems(); track $index) {
                       <div class="image-track-item">
                         <img
-                          [src]="strImg"
+                          [src]="item.detail"
+                          [srcset]="item.srcset"
+                          sizes="(max-width: 639px) calc(100vw - 32px), (max-width: 1023px) calc(100vw - 48px), (max-width: 1279px) 58vw, 695px"
                           [alt]="car.strTitle"
                           [attr.loading]="$index === 0 ? 'eager' : 'lazy'"
-                          (click)="openPreviewModal(strImg, car.strTitle, $index)"
-                          class="w-full h-full object-cover transition-transform duration-700 ease-out cursor-zoom-in drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
-                          [class.group-hover:scale-110]="$index === numActiveImageIndex()"
+                          [attr.fetchpriority]="$index === 0 ? 'high' : null"
+                          (click)="openPreviewModal(item.original || item.detail, car.strTitle, $index)"
+                          class="w-full h-full object-contain object-center cursor-zoom-in drop-shadow-[0_20px_35px_rgba(0,0,0,0.4)]"
                         />
                       </div>
                     }
@@ -187,7 +189,7 @@
                 </div>
 
                 <!-- Right Slider Control Arrow -->
-                @if ((car.arrGalleryImages || [car.strImagePath]).length > 1) {
+                @if (galleryItems().length > 1) {
                   <button
                     type="button"
                     (click)="nextImage()"
@@ -207,7 +209,7 @@
                 <!-- Full-screen Expand Zoom Button -->
                 <button
                   type="button"
-                  (click)="openPreviewModal(strActiveImage() || car.strImagePath, car.strTitle, numActiveImageIndex())"
+                  (click)="openPreviewModal(galleryItems()[numActiveImageIndex()]?.original || galleryItems()[numActiveImageIndex()]?.detail || strActiveImage(), car.strTitle, numActiveImageIndex())"
                   title="Expand image preview"
                   class="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/50 hover:bg-black/80 border border-white/20 text-white flex items-center justify-center transition-all z-20 cursor-pointer shadow-lg hover:scale-105"
                 >
@@ -219,11 +221,11 @@
 
               <!-- Gallery Thumbnails Carousel (5 Thumbnails) -->
               <div class="grid grid-cols-5 gap-2.5">
-                @for (strImg of car.arrGalleryImages || [car.strImagePath]; track $index) {
+                @for (item of galleryItems(); track $index) {
                   <button
                     type="button"
-                    (click)="selectGalleryImage(strImg, $index)"
-                    class="relative bg-gradient-to-b from-[#161822] to-[#0B0D13] rounded-xl h-16 sm:h-20 flex items-center justify-center border transition-all cursor-pointer overflow-hidden p-1"
+                    (click)="selectGalleryImage(item, $index)"
+                    class="relative bg-gradient-to-b from-[#161822] to-[#0B0D13] rounded-xl aspect-[16/9] w-full flex items-center justify-center border transition-all cursor-pointer overflow-hidden p-1"
                     [class.border-gold]="numActiveImageIndex() === $index"
                     [class.ring-1]="numActiveImageIndex() === $index"
                     [class.ring-gold/50]="numActiveImageIndex() === $index"
@@ -233,9 +235,9 @@
                     [class.opacity-60]="numActiveImageIndex() !== $index"
                   >
                     <img
-                      [src]="strImg"
+                      [src]="item.thumbnail"
                       [alt]="car.strTitle"
-                      class="w-full h-full object-cover rounded-lg"
+                      class="w-full h-full object-contain object-center rounded-lg"
                       loading="lazy"
                     />
                   </button>
@@ -625,9 +627,9 @@
           <!-- Full Screen Lightbox Image Preview Modal -->
           <app-image-preview-modal
             [blnIsOpen]="blnIsImageModalOpen()"
-            [strImageUrl]="strPreviewImageUrl()"
+            [strImageUrl]="strPreviewImageUrl() || lightboxImages()[numActiveImageIndex()]"
             [strAltText]="strPreviewAltText()"
-            [arrImages]="car.arrGalleryImages || (car.strImagePath ? [car.strImagePath] : [])"
+            [arrImages]="lightboxImages()"
             [numActiveIndex]="numActiveImageIndex()"
             (prevImage)="prevImage()"
             (nextImage)="nextImage()"
