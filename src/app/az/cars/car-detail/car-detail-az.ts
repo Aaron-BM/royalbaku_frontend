@@ -81,7 +81,6 @@ export class CarDetailAz implements OnInit, OnDestroy {
   protected readonly objCar = signal<CarDetailItem | null>(null);
   protected readonly strActiveImage = signal<string>('');
   protected readonly numActiveImageIndex = signal<number>(0);
-  protected readonly blnMainImageLoaded = signal<boolean>(false);
 
   // Structured gallery items computed signal
   protected readonly galleryItems = computed<CarImageVariants[]>(() => {
@@ -230,7 +229,6 @@ export class CarDetailAz implements OnInit, OnDestroy {
     this.objCar.set(null);
     this.strActiveImage.set('');
     this.numActiveImageIndex.set(0);
-    this.blnMainImageLoaded.set(false);
     this.blnIsImageModalOpen.set(false);
     this.strPreviewImageUrl.set(null);
     this.strPreviewAltText.set('');
@@ -240,7 +238,6 @@ export class CarDetailAz implements OnInit, OnDestroy {
   private applyLoadedCar(objResult: CarDetailItem): void {
     this.objCar.set(objResult);
     this.strSelectedCarTitle = objResult.strTitle;
-    this.blnMainImageLoaded.set(false);
     const items = objResult.arrGalleryVariants || [];
     const firstDetail = items[0]?.detail || objResult.strDetailImagePath || objResult.strImagePath || '';
     this.strActiveImage.set(firstDetail);
@@ -306,10 +303,6 @@ export class CarDetailAz implements OnInit, OnDestroy {
   protected selectGalleryImage(item: CarImageVariants, numIndex: number): void {
     this.strActiveImage.set(item.detail);
     this.numActiveImageIndex.set(numIndex);
-  }
-
-  protected onMainImageLoaded(): void {
-    this.blnMainImageLoaded.set(true);
   }
 
   protected openPreviewModal(strUrl: string, strAlt: string = '', numIndex?: number): void {

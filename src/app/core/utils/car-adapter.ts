@@ -128,23 +128,13 @@ export function extractImageUrl(img: any): string | null {
   if (!img) return null;
   if (typeof img === 'string') return img;
   if (typeof img === 'object') {
-    return (
-      img.image_card ||
-      img.card ||
-      img.image_thumbnail ||
-      img.thumbnail ||
-      img.image_detail ||
-      img.detail ||
-      img.image ||
-      img.url ||
-      null
-    );
+    return img.thumbnail || img.detail || img.image || img.url || null;
   }
   return null;
 }
 
 /**
- * Safely extracts structured image variants (thumbnail, card, detail, original, srcset)
+ * Safely extracts structured image variants (thumbnail, detail, original, srcset)
  * from DRF image object or string, falling back gracefully for plain-string images.
  */
 export function extractCarImageVariants(img: any): CarImageVariants | null {
@@ -156,7 +146,6 @@ export function extractCarImageVariants(img: any): CarImageVariants | null {
     const url = parseMediaUrl(strClean) || strClean;
     return {
       thumbnail: url,
-      card: url,
       detail: url,
       original: url,
       srcset: `${url} 1400w`,
@@ -166,59 +155,26 @@ export function extractCarImageVariants(img: any): CarImageVariants | null {
   if (typeof img === 'object') {
     const target = img.image && typeof img.image === 'object' ? img.image : img;
 
-    const rawThumb =
-      target.image_thumbnail ||
-      target.thumbnail ||
-      target.image_card ||
-      target.card ||
-      target.image_detail ||
-      target.detail ||
-      target.image ||
-      target.url;
+    const rawThumb = target.thumbnail || target.detail || target.original || target.url || target.image;
+    const rawDetail = target.detail || target.original || target.thumbnail || target.url || target.image;
+    const rawOrig = target.original || target.detail || target.thumbnail || target.url || target.image;
 
-    const rawCard =
-      target.image_card ||
-      target.card ||
-      target.image_thumbnail ||
-      target.thumbnail ||
-      target.image_detail ||
-      target.detail ||
-      target.image ||
-      target.url;
-
-    const rawDetail =
-      target.image_detail ||
-      target.detail ||
-      target.image_card ||
-      target.card ||
-      target.image ||
-      target.url;
-
-    const rawOrig =
-      target.original ||
-      target.image ||
-      target.image_detail ||
-      target.detail ||
-      target.url;
-
-    if (!rawThumb && !rawDetail && !rawOrig && !rawCard) return null;
+    if (!rawThumb && !rawDetail && !rawOrig) return null;
 
     const thumbUrl = parseMediaUrl(rawThumb) || rawThumb;
-    const cardUrl = parseMediaUrl(rawCard) || rawCard;
     const detailUrl = parseMediaUrl(rawDetail) || rawDetail;
     const origUrl = parseMediaUrl(rawOrig) || rawOrig;
 
-    const srcsetParts: string[] = [];
-    if (thumbUrl) srcsetParts.push(`${thumbUrl} 600w`);
-    if (cardUrl && cardUrl !== thumbUrl) srcsetParts.push(`${cardUrl} 800w`);
-    if (detailUrl && detailUrl !== thumbUrl && detailUrl !== cardUrl) srcsetParts.push(`${detailUrl} 1400w`);
+    const srcset =
+      thumbUrl !== detailUrl
+        ? `${thumbUrl} 600w, ${detailUrl} 1400w`
+        : `${detailUrl} 1400w`;
 
     return {
       thumbnail: thumbUrl,
-      card: cardUrl,
       detail: detailUrl,
       original: origUrl,
-      srcset: srcsetParts.join(', ') || `${detailUrl} 1400w`,
+      srcset: srcset,
     };
   }
 
@@ -229,11 +185,7 @@ export function extractCarImageVariants(img: any): CarImageVariants | null {
  * Maps DRF CarCategory model to frontend CarCategory model
  */
 export function mapDRFCategoryToItem(cat: DRFCategory): CarCategory {
-  const strRawImg =
-    (cat as any).image_card ||
-    (cat as any).image_thumbnail ||
-    (cat as any).image ||
-    cat.icon;
+  const strRawImg = (cat as any).image || cat.icon;
   const strParsedImg = parseMediaUrl(strRawImg);
   return {
     idCategory: String(cat.id),
@@ -325,16 +277,7 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
 
   const arrRawVariants: CarImageVariants[] = [];
 
-  // 1. Try to find the primary image object inside car.images to get full WebP variants
-  let primaryFromImages: CarImageVariants | null = null;
-  if (car.images && Array.isArray(car.images) && car.images.length > 0) {
-    const primaryObj = car.images.find((img) => img && img.is_primary) || car.images[0];
-    if (primaryObj) {
-      primaryFromImages = extractCarImageVariants(primaryObj);
-    }
-  }
-
-  const primaryVariant = primaryFromImages || extractCarImageVariants(car.primary_image);
+  const primaryVariant = extractCarImageVariants(car.primary_image);
   if (primaryVariant) {
     arrRawVariants.push(primaryVariant);
   }
@@ -348,21 +291,19 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     });
   }
 
-  // De-duplicate by detail or original URL while keeping primary image first
+  // De-duplicate by detail URL while keeping primary image first
   const arrGalleryVariants: CarImageVariants[] = [];
-  const seenUrls = new Set<string>();
+  const seenDetailUrls = new Set<string>();
 
   arrRawVariants.forEach((v) => {
-    const key = v.detail || v.original;
-    if (key && !seenUrls.has(key)) {
-      seenUrls.add(key);
+    if (v.detail && !seenDetailUrls.has(v.detail)) {
+      seenDetailUrls.add(v.detail);
       arrGalleryVariants.push(v);
     }
   });
 
   const arrGalleryImages: string[] = arrGalleryVariants.map((v) => v.detail);
   const strDetailImage = arrGalleryVariants[0]?.detail || '';
-  const strCardImage = arrGalleryVariants[0]?.card || '';
   const strThumbnailImage = arrGalleryVariants[0]?.thumbnail || '';
 
   const strCategorySlug = car.category?.slug || '';
@@ -372,8 +313,8 @@ export function mapDRFCarToCarDetailItem(car: DRFCar): CarDetailItem {
     idCar: String(car.id),
     strTitle: strTitle,
     strSlug: car.slug || `car-${car.id}`,
-    strImagePath: strCardImage || strThumbnailImage || arrGalleryImages[0] || '',
-    strDetailImagePath: strDetailImage || strCardImage || strThumbnailImage || '',
+    strImagePath: strThumbnailImage || arrGalleryImages[0] || '',
+    strDetailImagePath: strDetailImage || strThumbnailImage || '',
     arrGalleryVariants: arrGalleryVariants,
     blnIsOffer: Boolean(car.is_offer),
     numDailyPrice: numDailyPrice,
