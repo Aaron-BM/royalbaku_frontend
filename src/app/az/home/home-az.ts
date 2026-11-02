@@ -97,6 +97,7 @@ export class HomeAz implements OnInit, AfterViewInit, OnDestroy {
 
   // Car Categories Signal (Backend API driven)
   protected readonly arrCategories = signal<HomeCategory[]>([]);
+  protected readonly blnIsCategoriesLoading = signal<boolean>(true);
 
   // Active FAQ toggled ID signal
   protected readonly strOpenFaqId = signal<string | null>(null);
@@ -242,16 +243,22 @@ export class HomeAz implements OnInit, AfterViewInit, OnDestroy {
     this.carService.getOfferCars().subscribe((cars) => this.arrDailyOfferCars.set(cars));
 
     // Fetch active car categories directly from DRF backend API (/api/categories/)
-    this.carService.getCategories().subscribe((backendCategories) => {
-      if (backendCategories && backendCategories.length > 0) {
-        const mappedCategories: HomeCategory[] = backendCategories.map((cat) => ({
-          strId: cat.idCategory,
-          strNameKey: `categories.${cat.strSlug}`,
-          strSlug: cat.strSlug,
-          strImagePath: cat.strImagePath || '',
-        }));
-        this.arrCategories.set(mappedCategories);
-      }
+    this.carService.getCategories().subscribe({
+      next: (backendCategories) => {
+        if (backendCategories && backendCategories.length > 0) {
+          const mappedCategories: HomeCategory[] = backendCategories.map((cat) => ({
+            strId: cat.idCategory,
+            strNameKey: `categories.${cat.strSlug}`,
+            strSlug: cat.strSlug,
+            strImagePath: cat.strImagePath || '',
+          }));
+          this.arrCategories.set(mappedCategories);
+        }
+        this.blnIsCategoriesLoading.set(false);
+      },
+      error: () => {
+        this.blnIsCategoriesLoading.set(false);
+      },
     });
 
     // Fetch brand marquee items directly from DRF backend endpoint /api/brands/

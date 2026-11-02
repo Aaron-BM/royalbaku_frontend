@@ -51,6 +51,7 @@ export interface CarSpecification {
 
 export interface CarImageVariants {
   thumbnail: string;
+  card?: string;
   detail: string;
   original: string;
   srcset: string;
